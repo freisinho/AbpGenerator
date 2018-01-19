@@ -1,8 +1,7 @@
 ﻿using System;
 using System.Windows.Forms;
-using AbpGenerator;
 
-namespace WindowsFormsApplication1
+namespace AbpGenerator
 {
     public partial class AbpBackEndGeneratorForm : Form
     {

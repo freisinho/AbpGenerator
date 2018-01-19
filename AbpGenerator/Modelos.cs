@@ -1,4 +1,4 @@
-﻿namespace WindowsFormsApplication1
+﻿namespace AbpGenerator
 {
     public abstract class Modelos
     {
@@ -16,7 +16,7 @@
 
         public static string Entidade(string nameSpace, string nomeEntidade, string tipoChave, string sigla, string gravacaoBanco, string interfacesComplementares, string filtroTenant)
         {
-            var entidadebase = @"
+            var entidadeBase = @"
         using System.ComponentModel.DataAnnotations;
         using System.ComponentModel.DataAnnotations.Schema;
         using Abp.Domain.Entities;
@@ -30,7 +30,7 @@
             }
         }";
 
-            return entidadebase;
+            return entidadeBase;
         }
 
         public static string Namespace(string projectName, string nomeSolucao, string nomePlural)

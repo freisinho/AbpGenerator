@@ -1,6 +1,5 @@
 ﻿using System.IO;
 using System.Windows.Forms;
-using WindowsFormsApplication1;
 using AbpGenerator.Properties;
 
 namespace AbpGenerator
