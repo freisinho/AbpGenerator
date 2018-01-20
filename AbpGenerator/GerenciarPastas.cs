@@ -1,16 +1,17 @@
 ﻿using System.IO;
 using System.Windows.Forms;
 using AbpGenerator.Properties;
+using System.Collections.Generic;
 
 namespace AbpGenerator
 {
     public class GerenciarPastas
     {
-        public static void CriaEntidade(string projectName, string nomeSolucao, string nome, string nomePlural, string sigla, string gravacaoBanco, string tipoDaChave, string interfacesComplementares, string tenant)
+        public static void CriaEntidade(string projectName, string nomeSolucao, string nome, string nomePlural, string sigla, string gravacaoBanco, string tipoDaChave, string interfacesComplementares, string tenant, List<CampoEntidade> listaDeCampos)
         {
-            var pastaRaiz = Modelos.PastaRaizArquivos;
+            var pastaRaiz = Utils.PastaRaizArquivos;
 
-            var entityFolder = Modelos.NomePastaEntidade;
+            var entityFolder = ModeloEntidade.NomePastaEntidade;
 
             var caminho = pastaRaiz + entityFolder;
 
@@ -22,9 +23,9 @@ namespace AbpGenerator
 
             caminhoEntidades = Path.Combine(caminhoEntidades, nomeDaEntidade);
 
-            var nameSpace = Modelos.Namespace(projectName, nomeSolucao, nomePlural);
+            var nameSpace = ModeloEntidade.Namespace(projectName, nomeSolucao, nomePlural);
 
-            var entidadebase = Modelos.Entidade(nameSpace, nome, tipoDaChave, sigla, gravacaoBanco, interfacesComplementares, tenant);
+            var entidadebase = ModeloEntidade.Entidade(nameSpace, nome, tipoDaChave, sigla, gravacaoBanco, interfacesComplementares, tenant,listaDeCampos);
 
             if (!File.Exists(caminhoEntidades))
                 using (var file = File.Create(caminhoEntidades))

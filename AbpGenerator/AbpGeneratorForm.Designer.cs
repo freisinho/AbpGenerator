@@ -32,8 +32,15 @@
             this.NomeEntidade = new System.Windows.Forms.TextBox();
             this.TabControl = new System.Windows.Forms.TabControl();
             this.Entidade = new System.Windows.Forms.TabPage();
-            this.LeituraEscritaCheck = new System.Windows.Forms.CheckBox();
-            this.ApenasLeituraCheck = new System.Windows.Forms.CheckBox();
+            this.panel2 = new System.Windows.Forms.Panel();
+            this.SemTenant = new System.Windows.Forms.CheckBox();
+            this.label9 = new System.Windows.Forms.Label();
+            this.TenantFacultativa = new System.Windows.Forms.CheckBox();
+            this.TenantObrigatoria = new System.Windows.Forms.CheckBox();
+            this.label7 = new System.Windows.Forms.Label();
+            this.InterfacesComplementares = new System.Windows.Forms.TextBox();
+            this.label6 = new System.Windows.Forms.Label();
+            this.TipoChavePrimaria = new System.Windows.Forms.TextBox();
             this.label2 = new System.Windows.Forms.Label();
             this.SiglaAplicacao = new System.Windows.Forms.TextBox();
             this.label1 = new System.Windows.Forms.Label();
@@ -43,21 +50,18 @@
             this.NomeProjeto = new System.Windows.Forms.TextBox();
             this.label4 = new System.Windows.Forms.Label();
             this.button1 = new System.Windows.Forms.Button();
-            this.label6 = new System.Windows.Forms.Label();
-            this.TipoChavePrimaria = new System.Windows.Forms.TextBox();
-            this.label7 = new System.Windows.Forms.Label();
-            this.InterfacesComplementares = new System.Windows.Forms.TextBox();
             this.panel1 = new System.Windows.Forms.Panel();
             this.label8 = new System.Windows.Forms.Label();
-            this.label9 = new System.Windows.Forms.Label();
-            this.TenantFacultativa = new System.Windows.Forms.CheckBox();
-            this.TenantObrigatoria = new System.Windows.Forms.CheckBox();
-            this.panel2 = new System.Windows.Forms.Panel();
-            this.SemTenant = new System.Windows.Forms.CheckBox();
+            this.LeituraEscritaCheck = new System.Windows.Forms.CheckBox();
+            this.ApenasLeituraCheck = new System.Windows.Forms.CheckBox();
+            this.TabelaNomes = new System.Windows.Forms.DataGridView();
+            this.NomeDoCampo = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            this.TipoDoCampo = new System.Windows.Forms.DataGridViewTextBoxColumn();
             this.TabControl.SuspendLayout();
             this.Entidade.SuspendLayout();
-            this.panel1.SuspendLayout();
             this.panel2.SuspendLayout();
+            this.panel1.SuspendLayout();
+            ((System.ComponentModel.ISupportInitialize)(this.TabelaNomes)).BeginInit();
             this.SuspendLayout();
             // 
             // label3
@@ -83,11 +87,12 @@
             this.TabControl.Location = new System.Drawing.Point(0, -2);
             this.TabControl.Name = "TabControl";
             this.TabControl.SelectedIndex = 0;
-            this.TabControl.Size = new System.Drawing.Size(533, 420);
+            this.TabControl.Size = new System.Drawing.Size(667, 511);
             this.TabControl.TabIndex = 8;
             // 
             // Entidade
             // 
+            this.Entidade.Controls.Add(this.TabelaNomes);
             this.Entidade.Controls.Add(this.panel2);
             this.Entidade.Controls.Add(this.label7);
             this.Entidade.Controls.Add(this.InterfacesComplementares);
@@ -108,36 +113,100 @@
             this.Entidade.Location = new System.Drawing.Point(4, 22);
             this.Entidade.Name = "Entidade";
             this.Entidade.Padding = new System.Windows.Forms.Padding(3);
-            this.Entidade.Size = new System.Drawing.Size(525, 394);
+            this.Entidade.Size = new System.Drawing.Size(659, 485);
             this.Entidade.TabIndex = 0;
             this.Entidade.Text = "Entidade";
             this.Entidade.UseVisualStyleBackColor = true;
             // 
-            // LeituraEscritaCheck
+            // panel2
             // 
-            this.LeituraEscritaCheck.AutoSize = true;
-            this.LeituraEscritaCheck.Checked = true;
-            this.LeituraEscritaCheck.CheckState = System.Windows.Forms.CheckState.Checked;
-            this.LeituraEscritaCheck.Cursor = System.Windows.Forms.Cursors.Hand;
-            this.LeituraEscritaCheck.Location = new System.Drawing.Point(12, 55);
-            this.LeituraEscritaCheck.Name = "LeituraEscritaCheck";
-            this.LeituraEscritaCheck.Size = new System.Drawing.Size(102, 17);
-            this.LeituraEscritaCheck.TabIndex = 8;
-            this.LeituraEscritaCheck.Text = "Leitura e Escrita";
-            this.LeituraEscritaCheck.UseVisualStyleBackColor = true;
-            this.LeituraEscritaCheck.CheckedChanged += new System.EventHandler(this.LeituraEscritaCheck_CheckedChanged);
+            this.panel2.Controls.Add(this.SemTenant);
+            this.panel2.Controls.Add(this.label9);
+            this.panel2.Controls.Add(this.TenantFacultativa);
+            this.panel2.Controls.Add(this.TenantObrigatoria);
+            this.panel2.Location = new System.Drawing.Point(437, 5);
+            this.panel2.Name = "panel2";
+            this.panel2.Size = new System.Drawing.Size(175, 90);
+            this.panel2.TabIndex = 24;
             // 
-            // ApenasLeituraCheck
+            // SemTenant
             // 
-            this.ApenasLeituraCheck.AutoSize = true;
-            this.ApenasLeituraCheck.Cursor = System.Windows.Forms.Cursors.Hand;
-            this.ApenasLeituraCheck.Location = new System.Drawing.Point(12, 31);
-            this.ApenasLeituraCheck.Name = "ApenasLeituraCheck";
-            this.ApenasLeituraCheck.Size = new System.Drawing.Size(97, 17);
-            this.ApenasLeituraCheck.TabIndex = 7;
-            this.ApenasLeituraCheck.Text = "Apenas Leitura";
-            this.ApenasLeituraCheck.UseVisualStyleBackColor = true;
-            this.ApenasLeituraCheck.CheckedChanged += new System.EventHandler(this.ApenasLeituraCheck_CheckedChanged);
+            this.SemTenant.AutoSize = true;
+            this.SemTenant.Cursor = System.Windows.Forms.Cursors.Hand;
+            this.SemTenant.Location = new System.Drawing.Point(13, 56);
+            this.SemTenant.Name = "SemTenant";
+            this.SemTenant.Size = new System.Drawing.Size(73, 17);
+            this.SemTenant.TabIndex = 25;
+            this.SemTenant.Text = "Sem FIltro";
+            this.SemTenant.UseVisualStyleBackColor = true;
+            this.SemTenant.CheckedChanged += new System.EventHandler(this.SemTenant_CheckedChanged);
+            // 
+            // label9
+            // 
+            this.label9.AutoSize = true;
+            this.label9.Location = new System.Drawing.Point(3, 7);
+            this.label9.Name = "label9";
+            this.label9.Size = new System.Drawing.Size(81, 13);
+            this.label9.TabIndex = 24;
+            this.label9.Text = "Filtro de Tenant";
+            // 
+            // TenantFacultativa
+            // 
+            this.TenantFacultativa.AutoSize = true;
+            this.TenantFacultativa.Cursor = System.Windows.Forms.Cursors.Hand;
+            this.TenantFacultativa.Location = new System.Drawing.Point(90, 33);
+            this.TenantFacultativa.Name = "TenantFacultativa";
+            this.TenantFacultativa.Size = new System.Drawing.Size(78, 17);
+            this.TenantFacultativa.TabIndex = 8;
+            this.TenantFacultativa.Text = "Facultativo";
+            this.TenantFacultativa.UseVisualStyleBackColor = true;
+            this.TenantFacultativa.CheckedChanged += new System.EventHandler(this.TenantFacultativa_CheckedChanged);
+            // 
+            // TenantObrigatoria
+            // 
+            this.TenantObrigatoria.AutoSize = true;
+            this.TenantObrigatoria.Checked = true;
+            this.TenantObrigatoria.CheckState = System.Windows.Forms.CheckState.Checked;
+            this.TenantObrigatoria.Cursor = System.Windows.Forms.Cursors.Hand;
+            this.TenantObrigatoria.Location = new System.Drawing.Point(13, 33);
+            this.TenantObrigatoria.Name = "TenantObrigatoria";
+            this.TenantObrigatoria.Size = new System.Drawing.Size(77, 17);
+            this.TenantObrigatoria.TabIndex = 7;
+            this.TenantObrigatoria.Text = "Obrigatório";
+            this.TenantObrigatoria.UseVisualStyleBackColor = true;
+            this.TenantObrigatoria.CheckedChanged += new System.EventHandler(this.TenantObrigatoria_CheckedChanged);
+            // 
+            // label7
+            // 
+            this.label7.AutoSize = true;
+            this.label7.Location = new System.Drawing.Point(434, 112);
+            this.label7.Name = "label7";
+            this.label7.Size = new System.Drawing.Size(134, 13);
+            this.label7.TabIndex = 21;
+            this.label7.Text = "Interfaces complementares";
+            // 
+            // InterfacesComplementares
+            // 
+            this.InterfacesComplementares.Location = new System.Drawing.Point(437, 128);
+            this.InterfacesComplementares.Name = "InterfacesComplementares";
+            this.InterfacesComplementares.Size = new System.Drawing.Size(175, 20);
+            this.InterfacesComplementares.TabIndex = 20;
+            // 
+            // label6
+            // 
+            this.label6.AutoSize = true;
+            this.label6.Location = new System.Drawing.Point(211, 112);
+            this.label6.Name = "label6";
+            this.label6.Size = new System.Drawing.Size(153, 13);
+            this.label6.TabIndex = 19;
+            this.label6.Text = "Tipo da chave primaria (Ex: int)";
+            // 
+            // TipoChavePrimaria
+            // 
+            this.TipoChavePrimaria.Location = new System.Drawing.Point(214, 128);
+            this.TipoChavePrimaria.Name = "TipoChavePrimaria";
+            this.TipoChavePrimaria.Size = new System.Drawing.Size(175, 20);
+            this.TipoChavePrimaria.TabIndex = 18;
             // 
             // label2
             // 
@@ -209,45 +278,13 @@
             // 
             // button1
             // 
-            this.button1.Location = new System.Drawing.Point(11, 354);
+            this.button1.Location = new System.Drawing.Point(246, 446);
             this.button1.Name = "button1";
-            this.button1.Size = new System.Drawing.Size(102, 23);
+            this.button1.Size = new System.Drawing.Size(143, 36);
             this.button1.TabIndex = 9;
             this.button1.Text = "Gerar Entidade";
             this.button1.UseVisualStyleBackColor = true;
             this.button1.Click += new System.EventHandler(this.button1_Click_1);
-            // 
-            // label6
-            // 
-            this.label6.AutoSize = true;
-            this.label6.Location = new System.Drawing.Point(211, 112);
-            this.label6.Name = "label6";
-            this.label6.Size = new System.Drawing.Size(153, 13);
-            this.label6.TabIndex = 19;
-            this.label6.Text = "Tipo da chave primaria (Ex: int)";
-            // 
-            // TipoChavePrimaria
-            // 
-            this.TipoChavePrimaria.Location = new System.Drawing.Point(214, 128);
-            this.TipoChavePrimaria.Name = "TipoChavePrimaria";
-            this.TipoChavePrimaria.Size = new System.Drawing.Size(175, 20);
-            this.TipoChavePrimaria.TabIndex = 18;
-            // 
-            // label7
-            // 
-            this.label7.AutoSize = true;
-            this.label7.Location = new System.Drawing.Point(211, 167);
-            this.label7.Name = "label7";
-            this.label7.Size = new System.Drawing.Size(134, 13);
-            this.label7.TabIndex = 21;
-            this.label7.Text = "Interfaces complementares";
-            // 
-            // InterfacesComplementares
-            // 
-            this.InterfacesComplementares.Location = new System.Drawing.Point(214, 183);
-            this.InterfacesComplementares.Name = "InterfacesComplementares";
-            this.InterfacesComplementares.Size = new System.Drawing.Size(175, 20);
-            this.InterfacesComplementares.TabIndex = 20;
             // 
             // panel1
             // 
@@ -256,7 +293,7 @@
             this.panel1.Controls.Add(this.ApenasLeituraCheck);
             this.panel1.Location = new System.Drawing.Point(11, 155);
             this.panel1.Name = "panel1";
-            this.panel1.Size = new System.Drawing.Size(153, 96);
+            this.panel1.Size = new System.Drawing.Size(153, 273);
             this.panel1.TabIndex = 23;
             // 
             // label8
@@ -268,69 +305,66 @@
             this.label8.TabIndex = 24;
             this.label8.Text = "Gravação no Banco";
             // 
-            // label9
+            // LeituraEscritaCheck
             // 
-            this.label9.AutoSize = true;
-            this.label9.Location = new System.Drawing.Point(3, 7);
-            this.label9.Name = "label9";
-            this.label9.Size = new System.Drawing.Size(81, 13);
-            this.label9.TabIndex = 24;
-            this.label9.Text = "Filtro de Tenant";
+            this.LeituraEscritaCheck.AutoSize = true;
+            this.LeituraEscritaCheck.Checked = true;
+            this.LeituraEscritaCheck.CheckState = System.Windows.Forms.CheckState.Checked;
+            this.LeituraEscritaCheck.Cursor = System.Windows.Forms.Cursors.Hand;
+            this.LeituraEscritaCheck.Location = new System.Drawing.Point(12, 55);
+            this.LeituraEscritaCheck.Name = "LeituraEscritaCheck";
+            this.LeituraEscritaCheck.Size = new System.Drawing.Size(102, 17);
+            this.LeituraEscritaCheck.TabIndex = 8;
+            this.LeituraEscritaCheck.Text = "Leitura e Escrita";
+            this.LeituraEscritaCheck.UseVisualStyleBackColor = true;
+            this.LeituraEscritaCheck.CheckedChanged += new System.EventHandler(this.LeituraEscritaCheck_CheckedChanged);
             // 
-            // TenantFacultativa
+            // ApenasLeituraCheck
             // 
-            this.TenantFacultativa.AutoSize = true;
-            this.TenantFacultativa.Cursor = System.Windows.Forms.Cursors.Hand;
-            this.TenantFacultativa.Location = new System.Drawing.Point(90, 33);
-            this.TenantFacultativa.Name = "TenantFacultativa";
-            this.TenantFacultativa.Size = new System.Drawing.Size(78, 17);
-            this.TenantFacultativa.TabIndex = 8;
-            this.TenantFacultativa.Text = "Facultativo";
-            this.TenantFacultativa.UseVisualStyleBackColor = true;
-            this.TenantFacultativa.CheckedChanged += new System.EventHandler(this.TenantFacultativa_CheckedChanged);
+            this.ApenasLeituraCheck.AutoSize = true;
+            this.ApenasLeituraCheck.Cursor = System.Windows.Forms.Cursors.Hand;
+            this.ApenasLeituraCheck.Location = new System.Drawing.Point(12, 31);
+            this.ApenasLeituraCheck.Name = "ApenasLeituraCheck";
+            this.ApenasLeituraCheck.Size = new System.Drawing.Size(97, 17);
+            this.ApenasLeituraCheck.TabIndex = 7;
+            this.ApenasLeituraCheck.Text = "Apenas Leitura";
+            this.ApenasLeituraCheck.UseVisualStyleBackColor = true;
+            this.ApenasLeituraCheck.CheckedChanged += new System.EventHandler(this.ApenasLeituraCheck_CheckedChanged);
             // 
-            // TenantObrigatoria
+            // TabelaNomes
             // 
-            this.TenantObrigatoria.AutoSize = true;
-            this.TenantObrigatoria.Checked = true;
-            this.TenantObrigatoria.CheckState = System.Windows.Forms.CheckState.Checked;
-            this.TenantObrigatoria.Cursor = System.Windows.Forms.Cursors.Hand;
-            this.TenantObrigatoria.Location = new System.Drawing.Point(13, 33);
-            this.TenantObrigatoria.Name = "TenantObrigatoria";
-            this.TenantObrigatoria.Size = new System.Drawing.Size(77, 17);
-            this.TenantObrigatoria.TabIndex = 7;
-            this.TenantObrigatoria.Text = "Obrigatório";
-            this.TenantObrigatoria.UseVisualStyleBackColor = true;
-            this.TenantObrigatoria.CheckedChanged += new System.EventHandler(this.TenantObrigatoria_CheckedChanged);
+            this.TabelaNomes.ColumnHeadersHeightSizeMode = System.Windows.Forms.DataGridViewColumnHeadersHeightSizeMode.AutoSize;
+            this.TabelaNomes.Columns.AddRange(new System.Windows.Forms.DataGridViewColumn[] {
+            this.NomeDoCampo,
+            this.TipoDoCampo});
+            this.TabelaNomes.Location = new System.Drawing.Point(214, 155);
+            this.TabelaNomes.MinimumSize = new System.Drawing.Size(398, 0);
+            this.TabelaNomes.Name = "TabelaNomes";
+            this.TabelaNomes.Size = new System.Drawing.Size(398, 273);
+            this.TabelaNomes.TabIndex = 25;
+            this.TabelaNomes.CellContentClick += new System.Windows.Forms.DataGridViewCellEventHandler(this.dataGridView1_CellContentClick);
             // 
-            // panel2
+            // NomeDoCampo
             // 
-            this.panel2.Controls.Add(this.SemTenant);
-            this.panel2.Controls.Add(this.label9);
-            this.panel2.Controls.Add(this.TenantFacultativa);
-            this.panel2.Controls.Add(this.TenantObrigatoria);
-            this.panel2.Location = new System.Drawing.Point(214, 223);
-            this.panel2.Name = "panel2";
-            this.panel2.Size = new System.Drawing.Size(175, 109);
-            this.panel2.TabIndex = 24;
+            this.NomeDoCampo.AutoSizeMode = System.Windows.Forms.DataGridViewAutoSizeColumnMode.Fill;
+            this.NomeDoCampo.FillWeight = 143.1472F;
+            this.NomeDoCampo.HeaderText = "Nome do campo";
+            this.NomeDoCampo.MinimumWidth = 150;
+            this.NomeDoCampo.Name = "NomeDoCampo";
             // 
-            // SemTenant
+            // TipoDoCampo
             // 
-            this.SemTenant.AutoSize = true;
-            this.SemTenant.Cursor = System.Windows.Forms.Cursors.Hand;
-            this.SemTenant.Location = new System.Drawing.Point(13, 56);
-            this.SemTenant.Name = "SemTenant";
-            this.SemTenant.Size = new System.Drawing.Size(73, 17);
-            this.SemTenant.TabIndex = 25;
-            this.SemTenant.Text = "Sem FIltro";
-            this.SemTenant.UseVisualStyleBackColor = true;
-            this.SemTenant.CheckedChanged += new System.EventHandler(this.SemTenant_CheckedChanged);
+            this.TipoDoCampo.AutoSizeMode = System.Windows.Forms.DataGridViewAutoSizeColumnMode.Fill;
+            this.TipoDoCampo.FillWeight = 456.8528F;
+            this.TipoDoCampo.HeaderText = "Tipo do Campo";
+            this.TipoDoCampo.MinimumWidth = 150;
+            this.TipoDoCampo.Name = "TipoDoCampo";
             // 
             // AbpBackEndGeneratorForm
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-            this.ClientSize = new System.Drawing.Size(418, 410);
+            this.ClientSize = new System.Drawing.Size(666, 511);
             this.Controls.Add(this.TabControl);
             this.Name = "AbpBackEndGeneratorForm";
             this.Text = "Form1";
@@ -338,10 +372,11 @@
             this.TabControl.ResumeLayout(false);
             this.Entidade.ResumeLayout(false);
             this.Entidade.PerformLayout();
-            this.panel1.ResumeLayout(false);
-            this.panel1.PerformLayout();
             this.panel2.ResumeLayout(false);
             this.panel2.PerformLayout();
+            this.panel1.ResumeLayout(false);
+            this.panel1.PerformLayout();
+            ((System.ComponentModel.ISupportInitialize)(this.TabelaNomes)).EndInit();
             this.ResumeLayout(false);
 
         }
@@ -373,6 +408,9 @@
         private System.Windows.Forms.Label label9;
         private System.Windows.Forms.CheckBox TenantFacultativa;
         private System.Windows.Forms.CheckBox TenantObrigatoria;
+        private System.Windows.Forms.DataGridView TabelaNomes;
+        private System.Windows.Forms.DataGridViewTextBoxColumn NomeDoCampo;
+        private System.Windows.Forms.DataGridViewTextBoxColumn TipoDoCampo;
     }
 }
 
