@@ -37,5 +37,40 @@ namespace AbpGenerator
 
             MessageBox.Show(Resources.ArquivoCriadoComSucesso_);
         }
+
+        public static void CriaManager(string projectName, string nomeSolucao, string nome, string nomePlural, string tipoDaChave)
+        {
+            nome = char.ToUpper(nome[0]) + nome.Substring(1);
+
+            var pastaRaiz = Utils.PastaRaizArquivos;
+
+            var entityFolder = ModeloManager.NomePastaManager;
+
+            var caminho = pastaRaiz + entityFolder;
+
+            var caminhoManagers = Path.Combine(pastaRaiz, caminho);
+
+            Directory.CreateDirectory(caminhoManagers);
+
+            var nomeDaInterfaceManager = "I"+nome + ModeloManager.NomePastaManager+ ".cs";
+
+            caminhoManagers = Path.Combine(caminhoManagers, nomeDaInterfaceManager);
+
+            var nameSpace = ModeloManager.Namespace(projectName, nomeSolucao, nomePlural);
+
+            var managerbase = ModeloManager.IManager(nameSpace, nome, tipoDaChave);
+
+            if (!File.Exists(caminhoManagers))
+                using (var file = File.Create(caminhoManagers))
+                {
+                    file.Close();
+                }
+
+            File.WriteAllText(caminhoManagers, managerbase);
+
+            MessageBox.Show(Resources.ArquivoCriadoComSucesso_);
+        }
+
+
     }
 }

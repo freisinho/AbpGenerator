@@ -57,6 +57,11 @@ namespace AbpGenerator
                 tenant,
                 lista
                 );
+            GerenciarPastas.CriaManager(NomeProjeto.Text,
+                NomeSolucao.Text,
+                NomeEntidade.Text,
+                NomeClassePlural.Text,
+                TipoChavePrimaria.Text);
         }
 
         private string SiglaBancoGravacao()

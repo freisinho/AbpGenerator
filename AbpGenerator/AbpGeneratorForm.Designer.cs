@@ -30,8 +30,11 @@
         {
             this.label3 = new System.Windows.Forms.Label();
             this.NomeEntidade = new System.Windows.Forms.TextBox();
-            this.TabControl = new System.Windows.Forms.TabControl();
+            this.Manager = new System.Windows.Forms.TabControl();
             this.Entidade = new System.Windows.Forms.TabPage();
+            this.TabelaNomes = new System.Windows.Forms.DataGridView();
+            this.NomeDoCampo = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            this.TipoDoCampo = new System.Windows.Forms.DataGridViewTextBoxColumn();
             this.panel2 = new System.Windows.Forms.Panel();
             this.SemTenant = new System.Windows.Forms.CheckBox();
             this.label9 = new System.Windows.Forms.Label();
@@ -54,14 +57,11 @@
             this.label8 = new System.Windows.Forms.Label();
             this.LeituraEscritaCheck = new System.Windows.Forms.CheckBox();
             this.ApenasLeituraCheck = new System.Windows.Forms.CheckBox();
-            this.TabelaNomes = new System.Windows.Forms.DataGridView();
-            this.NomeDoCampo = new System.Windows.Forms.DataGridViewTextBoxColumn();
-            this.TipoDoCampo = new System.Windows.Forms.DataGridViewTextBoxColumn();
-            this.TabControl.SuspendLayout();
+            this.Manager.SuspendLayout();
             this.Entidade.SuspendLayout();
+            ((System.ComponentModel.ISupportInitialize)(this.TabelaNomes)).BeginInit();
             this.panel2.SuspendLayout();
             this.panel1.SuspendLayout();
-            ((System.ComponentModel.ISupportInitialize)(this.TabelaNomes)).BeginInit();
             this.SuspendLayout();
             // 
             // label3
@@ -81,14 +81,14 @@
             this.NomeEntidade.TabIndex = 4;
             this.NomeEntidade.TextChanged += new System.EventHandler(this.textBox3_TextChanged);
             // 
-            // TabControl
+            // Manager
             // 
-            this.TabControl.Controls.Add(this.Entidade);
-            this.TabControl.Location = new System.Drawing.Point(0, -2);
-            this.TabControl.Name = "TabControl";
-            this.TabControl.SelectedIndex = 0;
-            this.TabControl.Size = new System.Drawing.Size(667, 511);
-            this.TabControl.TabIndex = 8;
+            this.Manager.Controls.Add(this.Entidade);
+            this.Manager.Location = new System.Drawing.Point(0, -2);
+            this.Manager.Name = "Manager";
+            this.Manager.SelectedIndex = 0;
+            this.Manager.Size = new System.Drawing.Size(667, 511);
+            this.Manager.TabIndex = 8;
             // 
             // Entidade
             // 
@@ -115,8 +115,37 @@
             this.Entidade.Padding = new System.Windows.Forms.Padding(3);
             this.Entidade.Size = new System.Drawing.Size(659, 485);
             this.Entidade.TabIndex = 0;
-            this.Entidade.Text = "Entidade";
+            this.Entidade.Text = "Configuração";
             this.Entidade.UseVisualStyleBackColor = true;
+            // 
+            // TabelaNomes
+            // 
+            this.TabelaNomes.ColumnHeadersHeightSizeMode = System.Windows.Forms.DataGridViewColumnHeadersHeightSizeMode.AutoSize;
+            this.TabelaNomes.Columns.AddRange(new System.Windows.Forms.DataGridViewColumn[] {
+            this.NomeDoCampo,
+            this.TipoDoCampo});
+            this.TabelaNomes.Location = new System.Drawing.Point(214, 155);
+            this.TabelaNomes.MinimumSize = new System.Drawing.Size(398, 0);
+            this.TabelaNomes.Name = "TabelaNomes";
+            this.TabelaNomes.Size = new System.Drawing.Size(398, 273);
+            this.TabelaNomes.TabIndex = 25;
+            this.TabelaNomes.CellContentClick += new System.Windows.Forms.DataGridViewCellEventHandler(this.dataGridView1_CellContentClick);
+            // 
+            // NomeDoCampo
+            // 
+            this.NomeDoCampo.AutoSizeMode = System.Windows.Forms.DataGridViewAutoSizeColumnMode.Fill;
+            this.NomeDoCampo.FillWeight = 143.1472F;
+            this.NomeDoCampo.HeaderText = "Nome do campo";
+            this.NomeDoCampo.MinimumWidth = 150;
+            this.NomeDoCampo.Name = "NomeDoCampo";
+            // 
+            // TipoDoCampo
+            // 
+            this.TipoDoCampo.AutoSizeMode = System.Windows.Forms.DataGridViewAutoSizeColumnMode.Fill;
+            this.TipoDoCampo.FillWeight = 456.8528F;
+            this.TipoDoCampo.HeaderText = "Tipo do Campo";
+            this.TipoDoCampo.MinimumWidth = 150;
+            this.TipoDoCampo.Name = "TipoDoCampo";
             // 
             // panel2
             // 
@@ -278,11 +307,11 @@
             // 
             // button1
             // 
-            this.button1.Location = new System.Drawing.Point(246, 446);
+            this.button1.Location = new System.Drawing.Point(255, 443);
             this.button1.Name = "button1";
             this.button1.Size = new System.Drawing.Size(143, 36);
             this.button1.TabIndex = 9;
-            this.button1.Text = "Gerar Entidade";
+            this.button1.Text = "Gerar Arquivos";
             this.button1.UseVisualStyleBackColor = true;
             this.button1.Click += new System.EventHandler(this.button1_Click_1);
             // 
@@ -331,52 +360,23 @@
             this.ApenasLeituraCheck.UseVisualStyleBackColor = true;
             this.ApenasLeituraCheck.CheckedChanged += new System.EventHandler(this.ApenasLeituraCheck_CheckedChanged);
             // 
-            // TabelaNomes
-            // 
-            this.TabelaNomes.ColumnHeadersHeightSizeMode = System.Windows.Forms.DataGridViewColumnHeadersHeightSizeMode.AutoSize;
-            this.TabelaNomes.Columns.AddRange(new System.Windows.Forms.DataGridViewColumn[] {
-            this.NomeDoCampo,
-            this.TipoDoCampo});
-            this.TabelaNomes.Location = new System.Drawing.Point(214, 155);
-            this.TabelaNomes.MinimumSize = new System.Drawing.Size(398, 0);
-            this.TabelaNomes.Name = "TabelaNomes";
-            this.TabelaNomes.Size = new System.Drawing.Size(398, 273);
-            this.TabelaNomes.TabIndex = 25;
-            this.TabelaNomes.CellContentClick += new System.Windows.Forms.DataGridViewCellEventHandler(this.dataGridView1_CellContentClick);
-            // 
-            // NomeDoCampo
-            // 
-            this.NomeDoCampo.AutoSizeMode = System.Windows.Forms.DataGridViewAutoSizeColumnMode.Fill;
-            this.NomeDoCampo.FillWeight = 143.1472F;
-            this.NomeDoCampo.HeaderText = "Nome do campo";
-            this.NomeDoCampo.MinimumWidth = 150;
-            this.NomeDoCampo.Name = "NomeDoCampo";
-            // 
-            // TipoDoCampo
-            // 
-            this.TipoDoCampo.AutoSizeMode = System.Windows.Forms.DataGridViewAutoSizeColumnMode.Fill;
-            this.TipoDoCampo.FillWeight = 456.8528F;
-            this.TipoDoCampo.HeaderText = "Tipo do Campo";
-            this.TipoDoCampo.MinimumWidth = 150;
-            this.TipoDoCampo.Name = "TipoDoCampo";
-            // 
             // AbpBackEndGeneratorForm
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.ClientSize = new System.Drawing.Size(666, 511);
-            this.Controls.Add(this.TabControl);
+            this.Controls.Add(this.Manager);
             this.Name = "AbpBackEndGeneratorForm";
             this.Text = "Form1";
             this.Load += new System.EventHandler(this.Form1_Load);
-            this.TabControl.ResumeLayout(false);
+            this.Manager.ResumeLayout(false);
             this.Entidade.ResumeLayout(false);
             this.Entidade.PerformLayout();
+            ((System.ComponentModel.ISupportInitialize)(this.TabelaNomes)).EndInit();
             this.panel2.ResumeLayout(false);
             this.panel2.PerformLayout();
             this.panel1.ResumeLayout(false);
             this.panel1.PerformLayout();
-            ((System.ComponentModel.ISupportInitialize)(this.TabelaNomes)).EndInit();
             this.ResumeLayout(false);
 
         }
@@ -384,7 +384,7 @@
         #endregion
         private System.Windows.Forms.Label label3;
         private System.Windows.Forms.TextBox NomeEntidade;
-        private System.Windows.Forms.TabControl TabControl;
+        private System.Windows.Forms.TabControl Manager;
         private System.Windows.Forms.TabPage Entidade;
         private System.Windows.Forms.Button button1;
         private System.Windows.Forms.TextBox NomeProjeto;
