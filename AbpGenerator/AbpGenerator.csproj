@@ -53,7 +53,9 @@
       <DependentUpon>AbpGeneratorForm.cs</DependentUpon>
     </Compile>
     <Compile Include="GerenciarPastas.cs" />
-    <Compile Include="Modelos.cs" />
+    <Compile Include="CampoEntidade.cs" />
+    <Compile Include="Utils.cs" />
+    <Compile Include="ModeloEntidade.cs" />
     <Compile Include="Program.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <EmbeddedResource Include="AbpGeneratorForm.resx">

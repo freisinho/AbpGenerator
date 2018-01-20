@@ -1,20 +1,12 @@
-﻿namespace AbpGenerator
+﻿using System.Collections.Generic;
+
+namespace AbpGenerator
 {
-    public abstract class Modelos
+    public abstract class ModeloEntidade
     {
         public static string NomePastaEntidade { get; } = @"Entidade";
 
-        public static string PastaRaizArquivos { get; } = @"C:\Arquivos Gerados\";
-
-        public static string ApenasLeitura { get; } = @"Tr";
-
-        public static string LeituraEscrita { get; } = @"Tw";
-
-        public static string TenantFacultativa { get; } = @"IMayHaveTenant";
-
-        public static string TenantObrigatoria { get; } = @"IMustHaveTenant";
-
-        public static string Entidade(string nameSpace, string nomeEntidade, string tipoChave, string sigla, string gravacaoBanco, string interfacesComplementares, string filtroTenant)
+        public static string Entidade(string nameSpace, string nomeEntidade, string tipoChave, string sigla, string gravacaoBanco, string interfacesComplementares, string filtroTenant, List<CampoEntidade> listaDeCampos)
         {
             var entidadeBase = @"
         using System.ComponentModel.DataAnnotations;
@@ -26,7 +18,8 @@
         {
             [Table(""" + MontaNomeTabelaBanco(sigla, gravacaoBanco, nomeEntidade) + @""")]
             public class " + nomeEntidade + @" : FullAuditedEntity<" + tipoChave + @">" + MontaInterfaces(interfacesComplementares) + MontaTenant(filtroTenant) + @"
-            {
+            {" +
+            MontaCamposDaEntidade(listaDeCampos).TrimEnd()+@"
             }
         }";
 
@@ -61,6 +54,28 @@
 
             return nomeTabela;
         }
+
+        private static string MontaCamposDaEntidade(List<CampoEntidade> listaDeCampos)
+        {
+            var campos = "\n              ";
+
+            foreach (var campo in listaDeCampos)
+            {
+
+                campos = campos + RetornaDeclaracaoDoTipo(campo) + "\n              ";
+            }
+
+            return campos;
+        }
+        private static string RetornaDeclaracaoDoTipo(CampoEntidade campo)
+        {
+
+            var nomeTipo = campo.Tipo + " " + campo.Nome;
+
+            return Utils.DeclaracaoCampo.Replace("insereAqui", nomeTipo);
+
+        }
+
 
     }
 }

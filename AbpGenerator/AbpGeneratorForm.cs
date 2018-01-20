@@ -1,10 +1,13 @@
 ﻿using System;
+using System.Collections.Generic;
 using System.Windows.Forms;
 
 namespace AbpGenerator
 {
     public partial class AbpBackEndGeneratorForm : Form
     {
+        private object campotemp;
+
         public AbpBackEndGeneratorForm()
         {
             InitializeComponent();
@@ -40,21 +43,33 @@ namespace AbpGenerator
             var siglaGravacao = SiglaBancoGravacao();
 
             var tenant = FiltroTenant();
+           var lista = ConverteTabelaDeCamposParaLista();
 
-            GerenciarPastas.CriaEntidade(NomeProjeto.Text, NomeSolucao.Text, NomeEntidade.Text, NomeClassePlural.Text, SiglaAplicacao.Text, siglaGravacao, TipoChavePrimaria.Text, InterfacesComplementares.Text, tenant);
+            GerenciarPastas.CriaEntidade(
+                NomeProjeto.Text,
+                NomeSolucao.Text,
+                NomeEntidade.Text,
+                NomeClassePlural.Text,
+                SiglaAplicacao.Text,
+                siglaGravacao,
+                TipoChavePrimaria.Text,
+                InterfacesComplementares.Text,
+                tenant,
+                lista
+                );
         }
 
         private string SiglaBancoGravacao()
         {
-            return LeituraEscritaCheck.Checked ? Modelos.ApenasLeitura : Modelos.LeituraEscrita;
+            return LeituraEscritaCheck.Checked ? Utils.ApenasLeitura : Utils.LeituraEscrita;
         }
 
         private string FiltroTenant()
         {
             if (TenantFacultativa.Checked)
-                return Modelos.TenantFacultativa;
+                return Utils.TenantFacultativa;
 
-            return TenantObrigatoria.Checked ? Modelos.TenantObrigatoria : "";
+            return TenantObrigatoria.Checked ? Utils.TenantObrigatoria : "";
         }
 
         private void label5_Click(object sender, EventArgs e)
@@ -140,6 +155,28 @@ namespace AbpGenerator
             TenantObrigatoria.Checked = false;
 
             TenantFacultativa.Checked = false;
+        }
+
+        private void dataGridView1_CellContentClick(object sender, DataGridViewCellEventArgs e)
+        {
+
+        }
+        private List<CampoEntidade> ConverteTabelaDeCamposParaLista()
+        {
+            var linhasTabela = TabelaNomes.Rows;
+
+            var lista = new List<CampoEntidade>();
+
+            for (var count = 0; count < linhasTabela.Count -1; count++)
+            {
+                var campoTemp = new CampoEntidade();
+                campoTemp.Nome = linhasTabela[count].Cells[0].Value.ToString();
+
+                campoTemp.Tipo = linhasTabela[count].Cells[1].Value.ToString();
+
+                lista.Add(campoTemp);
+            }
+            return lista;
         }
     }
 }
