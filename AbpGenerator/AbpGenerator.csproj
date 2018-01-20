@@ -54,6 +54,7 @@
     </Compile>
     <Compile Include="GerenciarPastas.cs" />
     <Compile Include="CampoEntidade.cs" />
+    <Compile Include="ModeloManager.cs" />
     <Compile Include="Utils.cs" />
     <Compile Include="ModeloEntidade.cs" />
     <Compile Include="Program.cs" />
