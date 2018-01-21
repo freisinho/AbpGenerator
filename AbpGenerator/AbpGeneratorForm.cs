@@ -57,7 +57,7 @@ namespace AbpGenerator
                 tenant,
                 lista
                 );
-            GerenciarPastas.CriaManager(NomeProjeto.Text,
+            GerenciarPastas.CriaInterfaceImplementacaoManager(NomeProjeto.Text,
                 NomeSolucao.Text,
                 NomeEntidade.Text,
                 NomeClassePlural.Text,
