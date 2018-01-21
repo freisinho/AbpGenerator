@@ -367,7 +367,7 @@
             this.ClientSize = new System.Drawing.Size(666, 511);
             this.Controls.Add(this.Manager);
             this.Name = "AbpBackEndGeneratorForm";
-            this.Text = "Form1";
+            this.Text = "AbpGenerator";
             this.Load += new System.EventHandler(this.Form1_Load);
             this.Manager.ResumeLayout(false);
             this.Entidade.ResumeLayout(false);
