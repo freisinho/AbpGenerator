@@ -18,7 +18,7 @@ namespace AbpGenerator
         {
             public class I" + nomeEntidade + NomePastaManager + @" : IDomainService
             { 
-                Task<" + tipoChave + ">" + @" Criar("+ nomeEntidade + " "+ nomeEntidade.ToLower()+ @");
+                Task<" + tipoChave + ">" + @" Criar(" + nomeEntidade + " " + nomeEntidade.ToLower() + @");
 
                 Task<" + nomeEntidade + ">" + @" Atualizar(" + nomeEntidade + " " + nomeEntidade.ToLower() + @");
 
@@ -26,11 +26,64 @@ namespace AbpGenerator
 
                 Task Deletar(" + tipoChave + @" id );
 
-                Task<List<" +nomeEntidade + ">>" + @" ObterTodos();          
+                Task<List<" + nomeEntidade + ">>" + @" ObterTodos();          
             }
         }";
 
             return iManager;
+        }
+
+        public static string Manager(string nameSpace, string nomeEntidade, string tipoChave)
+        {
+            var manager = @"
+        using System;
+        using System.Collections.Generic;
+        using System.Data.Entity;
+        using System.Threading.Tasks;
+        using Abp.Domain.Repositories;
+        using System.Linq;
+        using "+ nameSpace.Replace("Manager","Entidade") + @";
+
+        namespace " + nameSpace + @"
+        {
+            public class " + nomeEntidade + NomePastaManager + @" : I" + nomeEntidade + NomePastaManager + @"
+            { 
+                private readonly IRepository<" + nomeEntidade + ", " + tipoChave + @"> _repositorio" + nomeEntidade + @";
+               
+                public " + nomeEntidade + NomePastaManager + @"(
+                IRepository<" + nomeEntidade + ", " + tipoChave + @"> repositorio" + nomeEntidade + @")
+                {
+                    _repositorio" + nomeEntidade + @" = repositorio" + nomeEntidade + @";
+                }
+
+                public async Task <" + tipoChave + ">" + @" Criar(" + nomeEntidade + " " + nomeEntidade.ToLower() + @")
+                {
+                    return await _repositorio" + nomeEntidade + @".InsertAndGetIdAsync(" + nomeEntidade.ToLower() + @");
+                }
+
+                public async Task<" + nomeEntidade + ">" + @" Atualizar(" + nomeEntidade + " " + nomeEntidade.ToLower() + @")
+                {
+                    return await _repositorio" + nomeEntidade + @".UpdateAsync(" + nomeEntidade.ToLower() + @");
+                }
+
+                public async Task<" + nomeEntidade + ">" + @" ObterPorId(" + tipoChave + @" id )
+                {
+                    return await _repositorio" + nomeEntidade + @".FirstOrDefaultAsync(id);
+                }
+
+                public async Task Deletar(" + tipoChave + @" id )
+                {
+                    return await _repositorio" + nomeEntidade + @".DeleteAsync(id);
+                }
+
+                public async Task<List<" + nomeEntidade + ">>" + @" ObterTodos()
+                {
+                    return await _repositorio" + nomeEntidade + @".GetAllListAsync();
+                }          
+            }
+        }";
+
+            return manager;
         }
 
         public static string Namespace(string projectName, string nomeSolucao, string nomePlural)
@@ -38,51 +91,5 @@ namespace AbpGenerator
             var name = projectName + "." + nomeSolucao + "." + nomePlural + "." + NomePastaManager;
             return name;
         }
-
-        private static string MontaInterfaces(string interfacesComplementares)
-        {
-            if (interfacesComplementares != "")
-                return "," + interfacesComplementares;
-
-            return interfacesComplementares;
-        }
-
-        private static string MontaTenant(string tenant)
-        {
-            if (tenant != "")
-                return "," + tenant;
-
-            return tenant;
-        }
-
-        private static string MontaNomeTabelaBanco(string sigla, string gravacaoBanco, string nome)
-        {
-            var nomeTabela = sigla + gravacaoBanco + nome;
-
-            return nomeTabela;
-        }
-
-        private static string MontaCamposDaEntidade(List<CampoEntidade> listaDeCampos)
-        {
-            var campos = "\n              ";
-
-            foreach (var campo in listaDeCampos)
-            {
-
-                campos = campos + RetornaDeclaracaoDoTipo(campo) + "\n              ";
-            }
-
-            return campos;
-        }
-        private static string RetornaDeclaracaoDoTipo(CampoEntidade campo)
-        {
-
-            var nomeTipo = campo.Tipo + " " + campo.Nome;
-
-            return Utils.DeclaracaoCampo.Replace("insereAqui", nomeTipo);
-
-        }
-
-
     }
 }

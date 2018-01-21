@@ -52,7 +52,39 @@ namespace AbpGenerator
 
             Directory.CreateDirectory(caminhoManagers);
 
-            var nomeDaInterfaceManager = "I"+nome + ModeloManager.NomePastaManager+ ".cs";
+            var nomeDaInterfaceManager = nome + ModeloManager.NomePastaManager+ ".cs";
+
+            caminhoManagers = Path.Combine(caminhoManagers, nomeDaInterfaceManager);
+
+            var nameSpace = ModeloManager.Namespace(projectName, nomeSolucao, nomePlural);
+
+            var managerbase = ModeloManager.Manager(nameSpace, nome, tipoDaChave);
+
+            if (!File.Exists(caminhoManagers))
+                using (var file = File.Create(caminhoManagers))
+                {
+                    file.Close();
+                }
+
+            File.WriteAllText(caminhoManagers, managerbase);
+
+            MessageBox.Show(Resources.ArquivoCriadoComSucesso_);
+        }
+        public static void CriaInterfaceManager(string projectName, string nomeSolucao, string nome, string nomePlural, string tipoDaChave)
+        {
+            nome = char.ToUpper(nome[0]) + nome.Substring(1);
+
+            var pastaRaiz = Utils.PastaRaizArquivos;
+
+            var entityFolder = ModeloManager.NomePastaManager;
+
+            var caminho = pastaRaiz + entityFolder;
+
+            var caminhoManagers = Path.Combine(pastaRaiz, caminho);
+
+            Directory.CreateDirectory(caminhoManagers);
+
+            var nomeDaInterfaceManager = "I" + nome + ModeloManager.NomePastaManager + ".cs";
 
             caminhoManagers = Path.Combine(caminhoManagers, nomeDaInterfaceManager);
 
@@ -67,6 +99,13 @@ namespace AbpGenerator
                 }
 
             File.WriteAllText(caminhoManagers, managerbase);
+        }
+
+
+        public static void CriaInterfaceImplementacaoManager(string projectName, string nomeSolucao, string nome, string nomePlural, string tipoDaChave)
+        {
+            CriaInterfaceManager(projectName, nomeSolucao, nome, nomePlural, tipoDaChave);
+            CriaManager(projectName, nomeSolucao, nome, nomePlural, tipoDaChave);
 
             MessageBox.Show(Resources.ArquivoCriadoComSucesso_);
         }
