@@ -128,7 +128,7 @@
             this.TabelaNomes.MinimumSize = new System.Drawing.Size(398, 0);
             this.TabelaNomes.Name = "TabelaNomes";
             this.TabelaNomes.Size = new System.Drawing.Size(398, 273);
-            this.TabelaNomes.TabIndex = 25;
+            this.TabelaNomes.TabIndex = 14;
             this.TabelaNomes.CellContentClick += new System.Windows.Forms.DataGridViewCellEventHandler(this.dataGridView1_CellContentClick);
             // 
             // NomeDoCampo
@@ -165,7 +165,7 @@
             this.SemTenant.Location = new System.Drawing.Point(13, 56);
             this.SemTenant.Name = "SemTenant";
             this.SemTenant.Size = new System.Drawing.Size(73, 17);
-            this.SemTenant.TabIndex = 25;
+            this.SemTenant.TabIndex = 13;
             this.SemTenant.Text = "Sem FIltro";
             this.SemTenant.UseVisualStyleBackColor = true;
             this.SemTenant.CheckedChanged += new System.EventHandler(this.SemTenant_CheckedChanged);
@@ -186,7 +186,7 @@
             this.TenantFacultativa.Location = new System.Drawing.Point(90, 33);
             this.TenantFacultativa.Name = "TenantFacultativa";
             this.TenantFacultativa.Size = new System.Drawing.Size(78, 17);
-            this.TenantFacultativa.TabIndex = 8;
+            this.TenantFacultativa.TabIndex = 12;
             this.TenantFacultativa.Text = "Facultativo";
             this.TenantFacultativa.UseVisualStyleBackColor = true;
             this.TenantFacultativa.CheckedChanged += new System.EventHandler(this.TenantFacultativa_CheckedChanged);
@@ -200,7 +200,7 @@
             this.TenantObrigatoria.Location = new System.Drawing.Point(13, 33);
             this.TenantObrigatoria.Name = "TenantObrigatoria";
             this.TenantObrigatoria.Size = new System.Drawing.Size(77, 17);
-            this.TenantObrigatoria.TabIndex = 7;
+            this.TenantObrigatoria.TabIndex = 11;
             this.TenantObrigatoria.Text = "Obrigatório";
             this.TenantObrigatoria.UseVisualStyleBackColor = true;
             this.TenantObrigatoria.CheckedChanged += new System.EventHandler(this.TenantObrigatoria_CheckedChanged);
@@ -219,7 +219,7 @@
             this.InterfacesComplementares.Location = new System.Drawing.Point(437, 128);
             this.InterfacesComplementares.Name = "InterfacesComplementares";
             this.InterfacesComplementares.Size = new System.Drawing.Size(175, 20);
-            this.InterfacesComplementares.TabIndex = 20;
+            this.InterfacesComplementares.TabIndex = 8;
             // 
             // label6
             // 
@@ -235,7 +235,7 @@
             this.TipoChavePrimaria.Location = new System.Drawing.Point(214, 128);
             this.TipoChavePrimaria.Name = "TipoChavePrimaria";
             this.TipoChavePrimaria.Size = new System.Drawing.Size(175, 20);
-            this.TipoChavePrimaria.TabIndex = 18;
+            this.TipoChavePrimaria.TabIndex = 7;
             // 
             // label2
             // 
@@ -310,7 +310,7 @@
             this.button1.Location = new System.Drawing.Point(255, 443);
             this.button1.Name = "button1";
             this.button1.Size = new System.Drawing.Size(143, 36);
-            this.button1.TabIndex = 9;
+            this.button1.TabIndex = 15;
             this.button1.Text = "Gerar Arquivos";
             this.button1.UseVisualStyleBackColor = true;
             this.button1.Click += new System.EventHandler(this.button1_Click_1);
@@ -343,7 +343,7 @@
             this.LeituraEscritaCheck.Location = new System.Drawing.Point(12, 55);
             this.LeituraEscritaCheck.Name = "LeituraEscritaCheck";
             this.LeituraEscritaCheck.Size = new System.Drawing.Size(102, 17);
-            this.LeituraEscritaCheck.TabIndex = 8;
+            this.LeituraEscritaCheck.TabIndex = 10;
             this.LeituraEscritaCheck.Text = "Leitura e Escrita";
             this.LeituraEscritaCheck.UseVisualStyleBackColor = true;
             this.LeituraEscritaCheck.CheckedChanged += new System.EventHandler(this.LeituraEscritaCheck_CheckedChanged);
@@ -355,7 +355,7 @@
             this.ApenasLeituraCheck.Location = new System.Drawing.Point(12, 31);
             this.ApenasLeituraCheck.Name = "ApenasLeituraCheck";
             this.ApenasLeituraCheck.Size = new System.Drawing.Size(97, 17);
-            this.ApenasLeituraCheck.TabIndex = 7;
+            this.ApenasLeituraCheck.TabIndex = 9;
             this.ApenasLeituraCheck.Text = "Apenas Leitura";
             this.ApenasLeituraCheck.UseVisualStyleBackColor = true;
             this.ApenasLeituraCheck.CheckedChanged += new System.EventHandler(this.ApenasLeituraCheck_CheckedChanged);
