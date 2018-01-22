@@ -7,29 +7,12 @@ namespace AbpGenerator
 {
     public partial class AbpBackEndGeneratorForm : Form
     {
-        private object campotemp;
-
         public AbpBackEndGeneratorForm()
         {
             InitializeComponent();
         }
 
-        private void textBox1_TextChanged(object sender, EventArgs e)
-        {
-
-        }
-
-        private void label1_Click(object sender, EventArgs e)
-        {
-
-        }
-
         private void Form1_Load(object sender, EventArgs e)
-        {
-
-        }
-
-        private void label2_Click(object sender, EventArgs e)
         {
 
         }
@@ -60,25 +43,26 @@ namespace AbpGenerator
                 );
 
             GerenciarPastas.CriaDtos(
-            NomeProjeto.Text,
-            NomeSolucao.Text,
-            NomeClassePlural.Text,
-            NomeEntidade.Text,
-            TipoChavePrimaria.Text,
-            lista
+                NomeProjeto.Text,
+                NomeSolucao.Text,
+                NomeClassePlural.Text,
+                NomeEntidade.Text,
+                TipoChavePrimaria.Text,
+                lista
             );
 
-            GerenciarPastas.CriaInterfaceImplementacaoManager(NomeProjeto.Text,
+            GerenciarPastas.CriaInterfaceImplementacaoManager(
+                NomeProjeto.Text,
                 NomeSolucao.Text,
                 NomeEntidade.Text,
                 NomeClassePlural.Text,
                 TipoChavePrimaria.Text);
 
-            GerenciarPastas.CriaInterfaceImplementacaoService(NomeProjeto.Text,
+            GerenciarPastas.CriaInterfaceImplementacaoService(
+                NomeProjeto.Text,
                 NomeSolucao.Text,
                 NomeEntidade.Text,
                 NomeClassePlural.Text,
-                TipoChavePrimaria.Text,
                 tenant);
 
             MessageBox.Show(Resources.ArquivoCriadoComSucesso_);
@@ -117,16 +101,6 @@ namespace AbpGenerator
 
         }
 
-        private void checkBox1_CheckedChanged(object sender, EventArgs e)
-        {
-
-        }
-
-        private void checkBox2_CheckedChanged(object sender, EventArgs e)
-        {
-
-        }
-
         private void ApenasLeituraCheck_CheckedChanged(object sender, EventArgs e)
         {
             if (ApenasLeituraCheck.Checked)
@@ -140,20 +114,6 @@ namespace AbpGenerator
                 ApenasLeituraCheck.Checked = false;
         }
 
-        private void label6_Click(object sender, EventArgs e)
-        {
-
-        }
-
-        private void checkBox1_CheckedChanged_1(object sender, EventArgs e)
-        {
-
-        }
-
-        private void checkBox1_CheckedChanged_2(object sender, EventArgs e)
-        {
-
-        }
 
         private void TenantObrigatoria_CheckedChanged(object sender, EventArgs e)
         {
@@ -194,10 +154,11 @@ namespace AbpGenerator
 
             for (var count = 0; count < linhasTabela.Count - 1; count++)
             {
-                var campoTemp = new CampoEntidade();
-                campoTemp.Nome = linhasTabela[count].Cells[0].Value.ToString();
-
-                campoTemp.Tipo = linhasTabela[count].Cells[1].Value.ToString();
+                var campoTemp = new CampoEntidade
+                {
+                    Nome = linhasTabela[count].Cells[0].Value.ToString(),
+                    Tipo = linhasTabela[count].Cells[1].Value.ToString()
+                };
 
                 lista.Add(campoTemp);
             }
