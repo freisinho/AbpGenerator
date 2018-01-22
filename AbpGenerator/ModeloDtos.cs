@@ -189,5 +189,25 @@ namespace AbpGenerator
         }";
             return dtoBase;
         }
+
+        public static string ObterPorIdInput(string nameSpace, string tipoChave)
+        {
+            var dtoBase = @"
+        using System;
+        using System.ComponentModel.DataAnnotations;
+        using System.Text.RegularExpressions;
+        using Abp.Application.Services.Dto;
+        using Abp.Runtime.Validation;
+        using Abp.UI;
+
+        namespace " + nameSpace + @"
+        {
+            public class ObterPorIdInput
+            {
+                public " + tipoChave + @" Id { get; set; }
+            }
+        }";
+            return dtoBase;
+        }
     }
 }

@@ -224,6 +224,9 @@ namespace AbpGenerator
 
             CriarObterPorIdOutputDto(projectNome, nomeSolucao, nomePlural, tipoDaChave, listaDeCampos, caminhoDtos);
 
+            CriarObterPorIdInputDto(projectNome, nomeSolucao, nomePlural, tipoDaChave, listaDeCampos, caminhoDtos);
+
+
         }
 
         private static void CriarAtualizarInputDto(string projectNome, string nomeSolucao, string nomePlural, IEnumerable<CampoEntidade> listaDeCampos, string caminhoDtos)
@@ -429,6 +432,36 @@ namespace AbpGenerator
             var nameSpace = ModeloDtos.Namespace(projectNome, nomeSolucao, nomePlural, ModeloDtos.ObterPastaNome);
 
             var dtobase = ModeloDtos.ObterPorIdOutput(nameSpace, listaDeCampos, tipoChave);
+
+            if (!File.Exists(caminhoNovo))
+                using (var file = File.Create(caminhoNovo))
+                {
+                    file.Close();
+                }
+
+            File.WriteAllText(caminhoNovo, dtobase);
+
+        }
+
+        private static void CriarObterPorIdInputDto(string projectNome, string nomeSolucao, string nomePlural, string tipoChave, IEnumerable<CampoEntidade> listaDeCampos, string caminhoDtos)
+        {
+            var pastaRaiz = caminhoDtos + "\\";
+
+            var entityFolder = ModeloDtos.ObterPastaNome;
+
+            var caminho = pastaRaiz + entityFolder;
+
+            var caminhoNovo = Path.Combine(pastaRaiz, caminho);
+
+            Directory.CreateDirectory(caminhoNovo);
+
+            var nomeDaDto = ModeloDtos.ObterPorIdInputNome + ".cs";
+
+            caminhoNovo = Path.Combine(caminhoNovo, nomeDaDto);
+
+            var nameSpace = ModeloDtos.Namespace(projectNome, nomeSolucao, nomePlural, ModeloDtos.ObterPastaNome);
+
+            var dtobase = ModeloDtos.ObterPorIdInput(nameSpace, tipoChave);
 
             if (!File.Exists(caminhoNovo))
                 using (var file = File.Create(caminhoNovo))
