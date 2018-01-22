@@ -25,7 +25,7 @@ namespace AbpGenerator
 
             var nameSpace = ModeloEntidade.Namespace(projectName, nomeSolucao, nomePlural);
 
-            var entidadebase = ModeloEntidade.Entidade(nameSpace, nome, tipoDaChave, sigla, gravacaoBanco, interfacesComplementares, tenant,listaDeCampos);
+            var entidadebase = ModeloEntidade.Entidade(nameSpace, nome, tipoDaChave, sigla, gravacaoBanco, interfacesComplementares, tenant, listaDeCampos);
 
             if (!File.Exists(caminhoEntidades))
                 using (var file = File.Create(caminhoEntidades))
@@ -35,7 +35,7 @@ namespace AbpGenerator
 
             File.WriteAllText(caminhoEntidades, entidadebase);
 
-            MessageBox.Show(Resources.ArquivoCriadoComSucesso_);
+            //   MessageBox.Show(Resources.ArquivoCriadoComSucesso_);
         }
 
         public static void CriaManager(string projectName, string nomeSolucao, string nome, string nomePlural, string tipoDaChave)
@@ -52,7 +52,7 @@ namespace AbpGenerator
 
             Directory.CreateDirectory(caminhoManagers);
 
-            var nomeDaInterfaceManager = nome + ModeloManager.NomePastaManager+ ".cs";
+            var nomeDaInterfaceManager = nome + ModeloManager.NomePastaManager + ".cs";
 
             caminhoManagers = Path.Combine(caminhoManagers, nomeDaInterfaceManager);
 
@@ -68,7 +68,7 @@ namespace AbpGenerator
 
             File.WriteAllText(caminhoManagers, managerbase);
 
-            MessageBox.Show(Resources.ArquivoCriadoComSucesso_);
+            //    MessageBox.Show(Resources.ArquivoCriadoComSucesso_);
         }
         public static void CriaInterfaceManager(string projectName, string nomeSolucao, string nome, string nomePlural, string tipoDaChave)
         {
@@ -101,11 +101,11 @@ namespace AbpGenerator
             File.WriteAllText(caminhoManagers, managerbase);
         }
 
-        public static void CriaService(string projectName, string nomeSolucao, string nome, string nomePlural, string tipoDaChave)
+        public static void CriaService(string projectName, string nomeSolucao, string nome, string nomePlural, string tipoDaChave, string tenant)
         {
             nome = char.ToUpper(nome[0]) + nome.Substring(1);
             nomePlural = char.ToUpper(nomePlural[0]) + nomePlural.Substring(1);
-            
+
             var pastaRaiz = Utils.PastaRaizArquivos;
 
             var entityFolder = ModeloService.NomePastaService;
@@ -122,7 +122,7 @@ namespace AbpGenerator
 
             var nameSpace = ModeloService.Namespace(projectName, nomeSolucao, nomePlural);
 
-            var servicebase = ModeloService.Service(nameSpace, nome, tipoDaChave, nomePlural);
+            var servicebase = ModeloService.Service(nameSpace, nome, nomePlural, tenant);
 
             if (!File.Exists(caminhoServices))
                 using (var file = File.Create(caminhoServices))
@@ -132,7 +132,7 @@ namespace AbpGenerator
 
             File.WriteAllText(caminhoServices, servicebase);
 
-            MessageBox.Show(Resources.ArquivoCriadoComSucesso_);
+            //  MessageBox.Show(Resources.ArquivoCriadoComSucesso_);
         }
 
         public static void CriaInterfaceService(string projectName, string nomeSolucao, string nome, string nomePlural, string tipoDaChave)
@@ -141,7 +141,7 @@ namespace AbpGenerator
 
             var pastaRaiz = Utils.PastaRaizArquivos;
 
-            var entityFolder = ModeloService.NomeService;
+            var entityFolder = ModeloService.NomePastaService;
 
             var caminho = pastaRaiz + entityFolder;
 
@@ -172,15 +172,15 @@ namespace AbpGenerator
             CriaInterfaceManager(projectName, nomeSolucao, nome, nomePlural, tipoDaChave);
             CriaManager(projectName, nomeSolucao, nome, nomePlural, tipoDaChave);
 
-            MessageBox.Show(Resources.ArquivoCriadoComSucesso_);
+            //  MessageBox.Show(Resources.ArquivoCriadoComSucesso_);
         }
 
-        public static void CriaInterfaceImplementacaoService(string projectName, string nomeSolucao, string nome, string nomePlural, string tipoDaChave)
+        public static void CriaInterfaceImplementacaoService(string projectName, string nomeSolucao, string nome, string nomePlural, string tipoDaChave, string tenant)
         {
             CriaInterfaceService(projectName, nomeSolucao, nome, nomePlural, tipoDaChave);
-            CriaService(projectName, nomeSolucao, nome, nomePlural, tipoDaChave);
+            CriaService(projectName, nomeSolucao, nome, nomePlural, tipoDaChave, tenant);
 
-            MessageBox.Show(Resources.ArquivoCriadoComSucesso_);
+            //   MessageBox.Show(Resources.ArquivoCriadoComSucesso_);
         }
 
     }

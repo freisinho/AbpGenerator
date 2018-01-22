@@ -24,7 +24,7 @@ namespace AbpGenerator
         namespace " + nameSpace + @"
         {
             public interface I" + nomeEntidade + NomeService + @" : IApplicationService
-            { 
+            {
                 Task<CriarOutput> Criar(CriarInput input);
 
                 Task<AtualizarOutput> Atualizar(AtualizarInput input);
@@ -33,15 +33,22 @@ namespace AbpGenerator
 
                 Task Deletar(DeletarInput input);
 
-                Task<ObterTodosOutput> ObterTodos();          
+                Task<ObterTodosOutput> ObterTodos();
             }
         }";
 
             return iService;
         }
 
-        public static string Service(string nameSpace, string nomeEntidade, string tipoChave, string nomePlural)
+        public static string Service(string nameSpace, string nomeEntidade, string nomePlural, string tenant)
         {
+            var stringTenant = "";
+
+
+            if (tenant != "")
+                stringTenant = nomeEntidade.ToLower() + @".TenantId = AbpSession.GetTenantId();";
+
+
             var service = @"
         using System.Collections.Generic;
         using System.Threading.Tasks;
@@ -57,9 +64,9 @@ namespace AbpGenerator
         namespace " + nameSpace + @"
         {
             public class " + nomeEntidade + NomeService + @" : SolutionAppServiceBase, I" + nomeEntidade + NomeService + @"
-            { 
+            {
                 private readonly I" + nomeEntidade + "Manager _" + nomeEntidade.ToLower() + @"Manager;
-               
+
                 public " + nomeEntidade + NomeService + @"(
                 I" + nomeEntidade + "Manager " + nomeEntidade.ToLower() + @"Manager)
                 {
@@ -76,7 +83,7 @@ namespace AbpGenerator
                 public async Task<CriarOutput> Criar(CriarInput input)
                 {
                     var " + nomeEntidade.ToLower() + @" = input.MapTo<" + nomeEntidade + @">();
-                    " + nomeEntidade.ToLower() + @".TenantId = AbpSession.GetTenantId();
+                    " + stringTenant + @"
                     var id = await _" + nomeEntidade.ToLower() + @"Manager.Criar(" + nomeEntidade.ToLower() + @");
                     return new CriarInput { Id = id };
                 }
@@ -91,7 +98,7 @@ namespace AbpGenerator
                 public async Task<AtualizarOutput>" + @" Atualizar(AtualizarInput input)
                 {
                     var " + nomeEntidade.ToLower() + @" = input.MapTo<" + nomeEntidade + @">();
-                    " + nomeEntidade.ToLower() + @".TenantId = AbpSession.GetTenantId();
+                    " + stringTenant + @"
                     var " + nomeEntidade.ToLower() + @"Retornada = await _" + nomeEntidade.ToLower() + @"Manager.Atualizar(" + nomeEntidade.ToLower() + @");
 
                     return " + nomeEntidade.ToLower() + @"Retornada.MapTo<AtualizarOutput>();
@@ -135,13 +142,13 @@ namespace AbpGenerator
 
                     return new ObterTodosOutput
                     {
-                        "+ nomePlural+@" = " + nomeEntidade.ToLower() + @".MapTo<List<ItemOutput>>()
+                        " + nomePlural + @" = " + nomeEntidade.ToLower() + @".MapTo<List<ItemOutput>>()
                     };
-                }          
+                }
             }
         }";
 
-             return service;
+            return service;
         }
 
         public static string Namespace(string projectName, string nomeSolucao, string nomePlural)

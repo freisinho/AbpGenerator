@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Windows.Forms;
+using AbpGenerator.Properties;
 
 namespace AbpGenerator
 {
@@ -43,7 +44,7 @@ namespace AbpGenerator
             var siglaGravacao = SiglaBancoGravacao();
 
             var tenant = FiltroTenant();
-           var lista = ConverteTabelaDeCamposParaLista();
+            var lista = ConverteTabelaDeCamposParaLista();
 
             GerenciarPastas.CriaEntidade(
                 NomeProjeto.Text,
@@ -68,7 +69,9 @@ namespace AbpGenerator
                 NomeSolucao.Text,
                 NomeEntidade.Text,
                 NomeClassePlural.Text,
-                TipoChavePrimaria.Text);
+                TipoChavePrimaria.Text,
+                tenant);
+            MessageBox.Show(Resources.ArquivoCriadoComSucesso_);
         }
 
         private string SiglaBancoGravacao()
@@ -179,7 +182,7 @@ namespace AbpGenerator
 
             var lista = new List<CampoEntidade>();
 
-            for (var count = 0; count < linhasTabela.Count -1; count++)
+            for (var count = 0; count < linhasTabela.Count - 1; count++)
             {
                 var campoTemp = new CampoEntidade();
                 campoTemp.Nome = linhasTabela[count].Cells[0].Value.ToString();
