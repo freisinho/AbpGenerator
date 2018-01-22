@@ -59,6 +59,15 @@ namespace AbpGenerator
                 lista
                 );
 
+            GerenciarPastas.CriaDtos(
+            NomeProjeto.Text,
+            NomeSolucao.Text,
+            NomeClassePlural.Text,
+            NomeEntidade.Text,
+            TipoChavePrimaria.Text,
+            lista
+            );
+
             GerenciarPastas.CriaInterfaceImplementacaoManager(NomeProjeto.Text,
                 NomeSolucao.Text,
                 NomeEntidade.Text,
@@ -71,6 +80,7 @@ namespace AbpGenerator
                 NomeClassePlural.Text,
                 TipoChavePrimaria.Text,
                 tenant);
+
             MessageBox.Show(Resources.ArquivoCriadoComSucesso_);
         }
 

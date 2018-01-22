@@ -1,4 +1,5 @@
 ﻿using System.Collections.Generic;
+using System.Linq;
 
 namespace AbpGenerator
 {
@@ -57,13 +58,7 @@ namespace AbpGenerator
 
         private static string MontaCamposDaEntidade(List<CampoEntidade> listaDeCampos, string tenant)
         {
-            var campos = "\n              ";
-
-            foreach (var campo in listaDeCampos)
-            {
-
-                campos = campos + RetornaDeclaracaoDoTipo(campo) + "\n              ";
-            }
+            var campos = listaDeCampos.Aggregate("\n              ", (current, campo) => current + RetornaDeclaracaoDoTipo(campo) + "\n              ");
 
             if (tenant == "IMustHaveTenant")
                 campos = campos + Utils.DeclaracaoCampo.Replace("insereAqui", "int TenantId") + "\n              ";
@@ -75,13 +70,9 @@ namespace AbpGenerator
         }
         private static string RetornaDeclaracaoDoTipo(CampoEntidade campo)
         {
-
-            var nomeTipo = campo.Tipo + " " + campo.Nome;
+            var nomeTipo = campo.Tipo + " " + char.ToUpper(campo.Nome[0]) + campo.Nome.Substring(1);
 
             return Utils.DeclaracaoCampo.Replace("insereAqui", nomeTipo);
-
         }
-
-
     }
 }

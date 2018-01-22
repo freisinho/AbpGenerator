@@ -1,5 +1,4 @@
-﻿using System.Collections.Generic;
-
+﻿
 namespace AbpGenerator
 {
     public abstract class ModeloService
@@ -7,7 +6,7 @@ namespace AbpGenerator
         public static string NomePastaService { get; } = @"Application";
         public static string NomeService { get; } = @"AppService";
 
-        public static string IService(string nameSpace, string nomeEntidade, string tipoChave)
+        public static string IService(string nameSpace, string nomeEntidade)
         {
             var iService = @"
         using System.Collections.Generic;
@@ -15,11 +14,11 @@ namespace AbpGenerator
         using Abp.Authorization;
         using Abp.AutoMapper;
         using Abp.Runtime.Session;
-        using " + nameSpace.Replace(NomeService, "Dtos") + @".Criar;
-        using " + nameSpace.Replace(NomeService, "Dtos") + @".Deletar;
-        using " + nameSpace.Replace(NomeService, "Dtos") + @".Entidade;
-        using " + nameSpace.Replace(NomeService, "Dtos") + @".Obter;
-        using " + nameSpace.Replace(NomeService, "Dtos") + @".Atualizar;
+        using " + nameSpace.Replace(NomePastaService, "Dtos") + @".Criar;
+        using " + nameSpace.Replace(NomePastaService, "Dtos") + @".Deletar;
+        using " + nameSpace.Replace(NomePastaService, "Dtos") + @".Entidade;
+        using " + nameSpace.Replace(NomePastaService, "Dtos") + @".Obter;
+        using " + nameSpace.Replace(NomePastaService, "Dtos") + @".Atualizar;
 
         namespace " + nameSpace + @"
         {
@@ -55,11 +54,11 @@ namespace AbpGenerator
         using Abp.Authorization;
         using Abp.AutoMapper;
         using Abp.Runtime.Session;
-        using " + nameSpace.Replace(NomeService, "Dtos") + @".Criar;
-        using " + nameSpace.Replace(NomeService, "Dtos") + @".Deletar;
-        using " + nameSpace.Replace(NomeService, "Dtos") + @".Entidade;
-        using " + nameSpace.Replace(NomeService, "Dtos") + @".Obter;
-        using " + nameSpace.Replace(NomeService, "Dtos") + @".Atualizar;
+        using " + nameSpace.Replace(NomePastaService, "Dtos") + @".Criar;
+        using " + nameSpace.Replace(NomePastaService, "Dtos") + @".Deletar;
+        using " + nameSpace.Replace(NomePastaService, "Dtos") + @".Entidade;
+        using " + nameSpace.Replace(NomePastaService, "Dtos") + @".Obter;
+        using " + nameSpace.Replace(NomePastaService, "Dtos") + @".Atualizar;
 
         namespace " + nameSpace + @"
         {
