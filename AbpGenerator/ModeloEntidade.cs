@@ -27,9 +27,9 @@ namespace AbpGenerator
             return entidadeBase;
         }
 
-        public static string Namespace(string projectName, string nomeSolucao, string nomePlural)
+        public static string Namespace(string projectNome, string nomeSolucao, string nomePlural)
         {
-            var name = projectName + "." + nomeSolucao + "." + nomePlural + "." + NomePastaEntidade;
+            var name = projectNome + "." + nomeSolucao + "." + nomePlural + "." + NomePastaEntidade;
             return name;
         }
 
@@ -56,7 +56,7 @@ namespace AbpGenerator
             return nomeTabela;
         }
 
-        private static string MontaCamposDaEntidade(List<CampoEntidade> listaDeCampos, string tenant)
+        private static string MontaCamposDaEntidade(IEnumerable<CampoEntidade> listaDeCampos, string tenant)
         {
             var campos = listaDeCampos.Aggregate("\n              ", (current, campo) => current + RetornaDeclaracaoDoTipo(campo) + "\n              ");
 

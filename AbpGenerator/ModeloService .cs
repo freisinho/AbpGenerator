@@ -150,9 +150,9 @@ namespace AbpGenerator
             return service;
         }
 
-        public static string Namespace(string projectName, string nomeSolucao, string nomePlural)
+        public static string Namespace(string projectNome, string nomeSolucao, string nomePlural)
         {
-            var name = projectName + "." + nomeSolucao + "." + nomePlural + "." + NomePastaService;
+            var name = projectNome + "." + nomeSolucao + "." + nomePlural + "." + NomePastaService;
             return name;
         }
     }

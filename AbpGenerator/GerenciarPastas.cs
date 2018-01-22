@@ -5,7 +5,7 @@ namespace AbpGenerator
 {
     public static class GerenciarPastas
     {
-        public static void CriaEntidade(string projectName, string nomeSolucao, string nome, string nomePlural, string sigla, string gravacaoBanco, string tipoDaChave, string interfacesComplementares, string tenant, List<CampoEntidade> listaDeCampos)
+        public static void CriaEntidade(string projectNome, string nomeSolucao, string nome, string nomePlural, string sigla, string gravacaoBanco, string tipoDaChave, string interfacesComplementares, string tenant, List<CampoEntidade> listaDeCampos)
         {
             nome = char.ToUpper(nome[0]) + nome.Substring(1);
 
@@ -29,7 +29,7 @@ namespace AbpGenerator
 
             caminhoEntidades = Path.Combine(caminhoEntidades, nomeDaEntidade);
 
-            var nameSpace = ModeloEntidade.Namespace(projectName, nomeSolucao, nomePlural);
+            var nameSpace = ModeloEntidade.Namespace(projectNome, nomeSolucao, nomePlural);
 
             var entidadebase = ModeloEntidade.Entidade(nameSpace, nome, tipoDaChave, sigla, gravacaoBanco, interfacesComplementares, tenant, listaDeCampos);
 
@@ -43,7 +43,7 @@ namespace AbpGenerator
 
         }
 
-        private static void CriaManager(string projectName, string nomeSolucao, string nome, string nomePlural, string tipoDaChave)
+        private static void CriaManager(string projectNome, string nomeSolucao, string nome, string nomePlural, string tipoDaChave)
         {
             nome = char.ToUpper(nome[0]) + nome.Substring(1);
 
@@ -65,7 +65,7 @@ namespace AbpGenerator
 
             caminhoManagers = Path.Combine(caminhoManagers, nomeDaInterfaceManager);
 
-            var nameSpace = ModeloManager.Namespace(projectName, nomeSolucao, nomePlural);
+            var nameSpace = ModeloManager.Namespace(projectNome, nomeSolucao, nomePlural);
 
             var managerbase = ModeloManager.Manager(nameSpace, nome, tipoDaChave);
 
@@ -79,7 +79,7 @@ namespace AbpGenerator
 
         }
 
-        private static void CriaInterfaceManager(string projectName, string nomeSolucao, string nome, string nomePlural, string tipoDaChave)
+        private static void CriaInterfaceManager(string projectNome, string nomeSolucao, string nome, string nomePlural, string tipoDaChave)
         {
             nome = char.ToUpper(nome[0]) + nome.Substring(1);
 
@@ -101,7 +101,7 @@ namespace AbpGenerator
 
             caminhoManagers = Path.Combine(caminhoManagers, nomeDaInterfaceManager);
 
-            var nameSpace = ModeloManager.Namespace(projectName, nomeSolucao, nomePlural);
+            var nameSpace = ModeloManager.Namespace(projectNome, nomeSolucao, nomePlural);
 
             var managerbase = ModeloManager.IManager(nameSpace, nome, tipoDaChave);
 
@@ -114,7 +114,7 @@ namespace AbpGenerator
             File.WriteAllText(caminhoManagers, managerbase);
         }
 
-        private static void CriaService(string projectName, string nomeSolucao, string nome, string nomePlural, string tenant)
+        private static void CriaService(string projectNome, string nomeSolucao, string nome, string nomePlural, string tenant)
         {
             nome = char.ToUpper(nome[0]) + nome.Substring(1);
 
@@ -136,7 +136,7 @@ namespace AbpGenerator
 
             caminhoServices = Path.Combine(caminhoServices, nomeDaInterfaceService);
 
-            var nameSpace = ModeloService.Namespace(projectName, nomeSolucao, nomePlural);
+            var nameSpace = ModeloService.Namespace(projectNome, nomeSolucao, nomePlural);
 
             var servicebase = ModeloService.Service(nameSpace, nome, nomePlural, tenant);
 
@@ -150,7 +150,7 @@ namespace AbpGenerator
 
         }
 
-        private static void CriaInterfaceService(string projectName, string nomeSolucao, string nome, string nomePlural)
+        private static void CriaInterfaceService(string projectNome, string nomeSolucao, string nome, string nomePlural)
         {
             nome = char.ToUpper(nome[0]) + nome.Substring(1);
 
@@ -172,7 +172,7 @@ namespace AbpGenerator
 
             caminhoServices = Path.Combine(caminhoServices, nomeDaInterfaceService);
 
-            var nameSpace = ModeloService.Namespace(projectName, nomeSolucao, nomePlural);
+            var nameSpace = ModeloService.Namespace(projectNome, nomeSolucao, nomePlural);
 
             var servicebase = ModeloService.IService(nameSpace, nome);
 
@@ -185,14 +185,14 @@ namespace AbpGenerator
             File.WriteAllText(caminhoServices, servicebase);
         }
 
-        public static void CriaInterfaceImplementacaoManager(string projectName, string nomeSolucao, string nome, string nomePlural, string tipoDaChave)
+        public static void CriaInterfaceImplementacaoManager(string projectNome, string nomeSolucao, string nome, string nomePlural, string tipoDaChave)
         {
-            CriaInterfaceManager(projectName, nomeSolucao, nome, nomePlural, tipoDaChave);
-            CriaManager(projectName, nomeSolucao, nome, nomePlural, tipoDaChave);
+            CriaInterfaceManager(projectNome, nomeSolucao, nome, nomePlural, tipoDaChave);
+            CriaManager(projectNome, nomeSolucao, nome, nomePlural, tipoDaChave);
 
         }
 
-        public static void CriaDtos(string projectName, string nomeSolucao, string nomePlural, string nome, string tipoDaChave, List<CampoEntidade> listaDeCampos)
+        public static void CriaDtos(string projectNome, string nomeSolucao, string nomePlural, string nome, string tipoDaChave, List<CampoEntidade> listaDeCampos)
         {
             nomePlural = char.ToUpper(nomePlural[0]) + nomePlural.Substring(1);
 
@@ -210,17 +210,27 @@ namespace AbpGenerator
 
             Directory.CreateDirectory(caminhoDtos);
 
-            CriarInputDto(projectName, nomeSolucao, nomePlural, listaDeCampos, caminhoDtos);
-            CriarOutputDto(projectName, nomeSolucao, nomePlural, caminhoDtos, tipoDaChave);
+            CriarInputDto(projectNome, nomeSolucao, nomePlural, listaDeCampos, caminhoDtos);
 
-            CriarEntidadeDto(projectName, nomeSolucao, nomePlural, nome, tipoDaChave, listaDeCampos, caminhoDtos);
+            CriarOutputDto(projectNome, nomeSolucao, nomePlural, caminhoDtos, tipoDaChave);
+
+            ObterTodosOutputDto(projectNome, nomeSolucao, nomePlural, caminhoDtos);
+
+            CriarItemOutputDto(projectNome, nomeSolucao, nomePlural, nome, tipoDaChave, listaDeCampos, caminhoDtos);
+
+            CriarAtualizarInputDto(projectNome, nomeSolucao, nomePlural, listaDeCampos, caminhoDtos);
+
+            CriarAtualizarOutputDto(projectNome, nomeSolucao, nomePlural, tipoDaChave, listaDeCampos, caminhoDtos);
+
+            CriarObterPorIdOutputDto(projectNome, nomeSolucao, nomePlural, tipoDaChave, listaDeCampos, caminhoDtos);
+
         }
 
-        private static void CriarEntidadeDto(string projectName, string nomeSolucao, string nomePlural, string nome, string tipoChave, IEnumerable<CampoEntidade> listaDeCampos, string caminhoDtos)
+        private static void CriarAtualizarInputDto(string projectNome, string nomeSolucao, string nomePlural, IEnumerable<CampoEntidade> listaDeCampos, string caminhoDtos)
         {
             var pastaRaiz = caminhoDtos + "\\";
 
-            var entityFolder = ModeloEntidade.NomePastaEntidade;
+            var entityFolder = ModeloDtos.AtualizarPastaNome;
 
             var caminho = pastaRaiz + entityFolder;
 
@@ -228,13 +238,13 @@ namespace AbpGenerator
 
             Directory.CreateDirectory(caminhoNovo);
 
-            var nomeDaDto = nome + "Dto.cs";
+            var nomeDaDto = ModeloDtos.AtualizarInputNome + ".cs";
 
             caminhoNovo = Path.Combine(caminhoNovo, nomeDaDto);
 
-            var nameSpace = ModeloDtos.Namespace(projectName, nomeSolucao, nomePlural, ModeloEntidade.NomePastaEntidade);
+            var nameSpace = ModeloDtos.Namespace(projectNome, nomeSolucao, nomePlural, ModeloDtos.AtualizarPastaNome);
 
-            var dtobase = ModeloDtos.EntidadeDto(nameSpace, listaDeCampos, nome, tipoChave);
+            var dtobase = ModeloDtos.AtualizarInput(nameSpace, listaDeCampos);
 
             if (!File.Exists(caminhoNovo))
                 using (var file = File.Create(caminhoNovo))
@@ -246,11 +256,11 @@ namespace AbpGenerator
 
         }
 
-        private static void CriarInputDto(string projectName, string nomeSolucao, string nomePlural, IEnumerable<CampoEntidade> listaDeCampos, string caminhoDtos)
+        private static void CriarAtualizarOutputDto(string projectNome, string nomeSolucao, string nomePlural, string tipoChave, IEnumerable<CampoEntidade> listaDeCampos, string caminhoDtos)
         {
             var pastaRaiz = caminhoDtos + "\\";
 
-            var entityFolder = ModeloDtos.CriarPastaName;
+            var entityFolder = ModeloDtos.AtualizarPastaNome;
 
             var caminho = pastaRaiz + entityFolder;
 
@@ -258,11 +268,71 @@ namespace AbpGenerator
 
             Directory.CreateDirectory(caminhoNovo);
 
-            var nomeDaDto = ModeloDtos.CriarInputName + ".cs";
+            var nomeDaDto = ModeloDtos.AtualizarOutputNome + ".cs";
 
             caminhoNovo = Path.Combine(caminhoNovo, nomeDaDto);
 
-            var nameSpace = ModeloDtos.Namespace(projectName, nomeSolucao, nomePlural, ModeloDtos.CriarPastaName);
+            var nameSpace = ModeloDtos.Namespace(projectNome, nomeSolucao, nomePlural, ModeloDtos.AtualizarPastaNome);
+
+            var dtobase = ModeloDtos.AtualizarOutput(nameSpace, listaDeCampos, tipoChave);
+
+            if (!File.Exists(caminhoNovo))
+                using (var file = File.Create(caminhoNovo))
+                {
+                    file.Close();
+                }
+
+            File.WriteAllText(caminhoNovo, dtobase);
+
+        }
+
+        private static void CriarItemOutputDto(string projectNome, string nomeSolucao, string nomePlural, string nome, string tipoChave, IEnumerable<CampoEntidade> listaDeCampos, string caminhoDtos)
+        {
+            var pastaRaiz = caminhoDtos + "\\";
+
+            var entityFolder = ModeloEntidade.NomePastaEntidade;
+
+            var caminho = pastaRaiz + entityFolder;
+
+            var caminhoNovo = Path.Combine(pastaRaiz, caminho);
+
+            Directory.CreateDirectory(caminhoNovo);
+
+            var nomeDaDto = ModeloDtos.ItemOutputNome + ".cs";
+
+            caminhoNovo = Path.Combine(caminhoNovo, nomeDaDto);
+
+            var nameSpace = ModeloDtos.Namespace(projectNome, nomeSolucao, nomePlural, ModeloEntidade.NomePastaEntidade);
+
+            var dtobase = ModeloDtos.ItemOutput(nameSpace, listaDeCampos, nome, tipoChave);
+
+            if (!File.Exists(caminhoNovo))
+                using (var file = File.Create(caminhoNovo))
+                {
+                    file.Close();
+                }
+
+            File.WriteAllText(caminhoNovo, dtobase);
+
+        }
+
+        private static void CriarInputDto(string projectNome, string nomeSolucao, string nomePlural, IEnumerable<CampoEntidade> listaDeCampos, string caminhoDtos)
+        {
+            var pastaRaiz = caminhoDtos + "\\";
+
+            var entityFolder = ModeloDtos.CriarPastaNome;
+
+            var caminho = pastaRaiz + entityFolder;
+
+            var caminhoNovo = Path.Combine(pastaRaiz, caminho);
+
+            Directory.CreateDirectory(caminhoNovo);
+
+            var nomeDaDto = ModeloDtos.CriarInputNome + ".cs";
+
+            caminhoNovo = Path.Combine(caminhoNovo, nomeDaDto);
+
+            var nameSpace = ModeloDtos.Namespace(projectNome, nomeSolucao, nomePlural, ModeloDtos.CriarPastaNome);
 
             var dtobase = ModeloDtos.CriarInput(nameSpace, listaDeCampos);
 
@@ -276,11 +346,11 @@ namespace AbpGenerator
 
         }
 
-        private static void CriarOutputDto(string projectName, string nomeSolucao, string nomePlural, string caminhoDtos, string tipoChave)
+        private static void CriarOutputDto(string projectNome, string nomeSolucao, string nomePlural, string caminhoDtos, string tipoChave)
         {
             var pastaRaiz = caminhoDtos + "\\";
 
-            var entityFolder = ModeloDtos.CriarPastaName;
+            var entityFolder = ModeloDtos.CriarPastaNome;
 
             var caminho = pastaRaiz + entityFolder;
 
@@ -288,11 +358,11 @@ namespace AbpGenerator
 
             Directory.CreateDirectory(caminhoNovo);
 
-            var nomeDaDto = ModeloDtos.CriarOutputName + ".cs";
+            var nomeDaDto = ModeloDtos.CriarOutputNome + ".cs";
 
             caminhoNovo = Path.Combine(caminhoNovo, nomeDaDto);
 
-            var nameSpace = ModeloDtos.Namespace(projectName, nomeSolucao, nomePlural, ModeloDtos.CriarPastaName);
+            var nameSpace = ModeloDtos.Namespace(projectNome, nomeSolucao, nomePlural, ModeloDtos.CriarPastaNome);
 
             var dtobase = ModeloDtos.CriarOutput(nameSpace, tipoChave);
 
@@ -305,10 +375,70 @@ namespace AbpGenerator
             File.WriteAllText(caminhoNovo, dtobase);
         }
 
-        public static void CriaInterfaceImplementacaoService(string projectName, string nomeSolucao, string nome, string nomePlural, string tipoDaChave, string tenant)
+        private static void ObterTodosOutputDto(string projectNome, string nomeSolucao, string nomePlural, string caminhoDtos)
         {
-            CriaInterfaceService(projectName, nomeSolucao, nome, nomePlural);
-            CriaService(projectName, nomeSolucao, nome, nomePlural, tenant);
+            var pastaRaiz = caminhoDtos + "\\";
+
+            var entityFolder = ModeloDtos.ObterPastaNome;
+
+            var caminho = pastaRaiz + entityFolder;
+
+            var caminhoNovo = Path.Combine(pastaRaiz, caminho);
+
+            Directory.CreateDirectory(caminhoNovo);
+
+            var nomeDaDto = ModeloDtos.ObterTodosOutputNome + ".cs";
+
+            caminhoNovo = Path.Combine(caminhoNovo, nomeDaDto);
+
+            var nameSpace = ModeloDtos.Namespace(projectNome, nomeSolucao, nomePlural, ModeloDtos.ObterPastaNome);
+
+            var dtobase = ModeloDtos.ObterTodosOutput(nameSpace, nomePlural);
+
+            if (!File.Exists(caminhoNovo))
+                using (var file = File.Create(caminhoNovo))
+                {
+                    file.Close();
+                }
+
+            File.WriteAllText(caminhoNovo, dtobase);
         }
+
+        public static void CriaInterfaceImplementacaoService(string projectNome, string nomeSolucao, string nome, string nomePlural, string tenant)
+        {
+            CriaInterfaceService(projectNome, nomeSolucao, nome, nomePlural);
+            CriaService(projectNome, nomeSolucao, nome, nomePlural, tenant);
+        }
+
+        private static void CriarObterPorIdOutputDto(string projectNome, string nomeSolucao, string nomePlural, string tipoChave, IEnumerable<CampoEntidade> listaDeCampos, string caminhoDtos)
+        {
+            var pastaRaiz = caminhoDtos + "\\";
+
+            var entityFolder = ModeloDtos.ObterPastaNome;
+
+            var caminho = pastaRaiz + entityFolder;
+
+            var caminhoNovo = Path.Combine(pastaRaiz, caminho);
+
+            Directory.CreateDirectory(caminhoNovo);
+
+            var nomeDaDto = ModeloDtos.ObterPorIdOutputNome + ".cs";
+
+            caminhoNovo = Path.Combine(caminhoNovo, nomeDaDto);
+
+            var nameSpace = ModeloDtos.Namespace(projectNome, nomeSolucao, nomePlural, ModeloDtos.ObterPastaNome);
+
+            var dtobase = ModeloDtos.ObterPorIdOutput(nameSpace, listaDeCampos, tipoChave);
+
+            if (!File.Exists(caminhoNovo))
+                using (var file = File.Create(caminhoNovo))
+                {
+                    file.Close();
+                }
+
+            File.WriteAllText(caminhoNovo, dtobase);
+
+        }
+
     }
 }

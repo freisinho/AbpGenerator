@@ -63,35 +63,35 @@
             this.panel2.SuspendLayout();
             this.panel1.SuspendLayout();
             this.SuspendLayout();
-            // 
+            //
             // label3
-            // 
+            //
             this.label3.AutoSize = true;
             this.label3.Location = new System.Drawing.Point(8, 59);
             this.label3.Name = "label3";
             this.label3.Size = new System.Drawing.Size(137, 13);
             this.label3.TabIndex = 7;
             this.label3.Text = "Nome da classe no singular";
-            // 
+            //
             // NomeEntidade
-            // 
+            //
             this.NomeEntidade.Location = new System.Drawing.Point(11, 75);
             this.NomeEntidade.Name = "NomeEntidade";
             this.NomeEntidade.Size = new System.Drawing.Size(153, 20);
             this.NomeEntidade.TabIndex = 4;
             this.NomeEntidade.TextChanged += new System.EventHandler(this.textBox3_TextChanged);
-            // 
+            //
             // Manager
-            // 
+            //
             this.Manager.Controls.Add(this.Entidade);
             this.Manager.Location = new System.Drawing.Point(0, -2);
             this.Manager.Name = "Manager";
             this.Manager.SelectedIndex = 0;
             this.Manager.Size = new System.Drawing.Size(667, 511);
             this.Manager.TabIndex = 8;
-            // 
+            //
             // Entidade
-            // 
+            //
             this.Entidade.Controls.Add(this.TabelaNomes);
             this.Entidade.Controls.Add(this.panel2);
             this.Entidade.Controls.Add(this.label7);
@@ -117,9 +117,9 @@
             this.Entidade.TabIndex = 0;
             this.Entidade.Text = "Configuração";
             this.Entidade.UseVisualStyleBackColor = true;
-            // 
+            //
             // TabelaNomes
-            // 
+            //
             this.TabelaNomes.ColumnHeadersHeightSizeMode = System.Windows.Forms.DataGridViewColumnHeadersHeightSizeMode.AutoSize;
             this.TabelaNomes.Columns.AddRange(new System.Windows.Forms.DataGridViewColumn[] {
             this.NomeDoCampo,
@@ -130,25 +130,25 @@
             this.TabelaNomes.Size = new System.Drawing.Size(398, 273);
             this.TabelaNomes.TabIndex = 14;
             this.TabelaNomes.CellContentClick += new System.Windows.Forms.DataGridViewCellEventHandler(this.dataGridView1_CellContentClick);
-            // 
+            //
             // NomeDoCampo
-            // 
+            //
             this.NomeDoCampo.AutoSizeMode = System.Windows.Forms.DataGridViewAutoSizeColumnMode.Fill;
             this.NomeDoCampo.FillWeight = 143.1472F;
             this.NomeDoCampo.HeaderText = "Nome do campo";
             this.NomeDoCampo.MinimumWidth = 150;
             this.NomeDoCampo.Name = "NomeDoCampo";
-            // 
+            //
             // TipoDoCampo
-            // 
+            //
             this.TipoDoCampo.AutoSizeMode = System.Windows.Forms.DataGridViewAutoSizeColumnMode.Fill;
             this.TipoDoCampo.FillWeight = 456.8528F;
             this.TipoDoCampo.HeaderText = "Tipo do Campo";
             this.TipoDoCampo.MinimumWidth = 150;
             this.TipoDoCampo.Name = "TipoDoCampo";
-            // 
+            //
             // panel2
-            // 
+            //
             this.panel2.Controls.Add(this.SemTenant);
             this.panel2.Controls.Add(this.label9);
             this.panel2.Controls.Add(this.TenantFacultativa);
@@ -157,9 +157,9 @@
             this.panel2.Name = "panel2";
             this.panel2.Size = new System.Drawing.Size(175, 90);
             this.panel2.TabIndex = 24;
-            // 
+            //
             // SemTenant
-            // 
+            //
             this.SemTenant.AutoSize = true;
             this.SemTenant.Cursor = System.Windows.Forms.Cursors.Hand;
             this.SemTenant.Location = new System.Drawing.Point(13, 56);
@@ -169,18 +169,18 @@
             this.SemTenant.Text = "Sem FIltro";
             this.SemTenant.UseVisualStyleBackColor = true;
             this.SemTenant.CheckedChanged += new System.EventHandler(this.SemTenant_CheckedChanged);
-            // 
+            //
             // label9
-            // 
+            //
             this.label9.AutoSize = true;
             this.label9.Location = new System.Drawing.Point(3, 7);
             this.label9.Name = "label9";
             this.label9.Size = new System.Drawing.Size(81, 13);
             this.label9.TabIndex = 24;
             this.label9.Text = "Filtro de Tenant";
-            // 
+            //
             // TenantFacultativa
-            // 
+            //
             this.TenantFacultativa.AutoSize = true;
             this.TenantFacultativa.Cursor = System.Windows.Forms.Cursors.Hand;
             this.TenantFacultativa.Location = new System.Drawing.Point(90, 33);
@@ -190,9 +190,9 @@
             this.TenantFacultativa.Text = "Facultativo";
             this.TenantFacultativa.UseVisualStyleBackColor = true;
             this.TenantFacultativa.CheckedChanged += new System.EventHandler(this.TenantFacultativa_CheckedChanged);
-            // 
+            //
             // TenantObrigatoria
-            // 
+            //
             this.TenantObrigatoria.AutoSize = true;
             this.TenantObrigatoria.Checked = true;
             this.TenantObrigatoria.CheckState = System.Windows.Forms.CheckState.Checked;
@@ -204,57 +204,57 @@
             this.TenantObrigatoria.Text = "Obrigatório";
             this.TenantObrigatoria.UseVisualStyleBackColor = true;
             this.TenantObrigatoria.CheckedChanged += new System.EventHandler(this.TenantObrigatoria_CheckedChanged);
-            // 
+            //
             // label7
-            // 
+            //
             this.label7.AutoSize = true;
             this.label7.Location = new System.Drawing.Point(434, 112);
             this.label7.Name = "label7";
             this.label7.Size = new System.Drawing.Size(134, 13);
             this.label7.TabIndex = 21;
             this.label7.Text = "Interfaces complementares";
-            // 
+            //
             // InterfacesComplementares
-            // 
+            //
             this.InterfacesComplementares.Location = new System.Drawing.Point(437, 128);
             this.InterfacesComplementares.Name = "InterfacesComplementares";
             this.InterfacesComplementares.Size = new System.Drawing.Size(175, 20);
             this.InterfacesComplementares.TabIndex = 8;
-            // 
+            //
             // label6
-            // 
+            //
             this.label6.AutoSize = true;
             this.label6.Location = new System.Drawing.Point(211, 112);
             this.label6.Name = "label6";
             this.label6.Size = new System.Drawing.Size(153, 13);
             this.label6.TabIndex = 19;
             this.label6.Text = "Tipo da chave primaria (Ex: int)";
-            // 
+            //
             // TipoChavePrimaria
-            // 
+            //
             this.TipoChavePrimaria.Location = new System.Drawing.Point(214, 128);
             this.TipoChavePrimaria.Name = "TipoChavePrimaria";
             this.TipoChavePrimaria.Size = new System.Drawing.Size(175, 20);
             this.TipoChavePrimaria.TabIndex = 7;
-            // 
+            //
             // label2
-            // 
+            //
             this.label2.AutoSize = true;
             this.label2.Location = new System.Drawing.Point(8, 112);
             this.label2.Name = "label2";
             this.label2.Size = new System.Drawing.Size(171, 13);
             this.label2.TabIndex = 17;
             this.label2.Text = "Sigla aplicação (Ex: Mt para metra)";
-            // 
+            //
             // SiglaAplicacao
-            // 
+            //
             this.SiglaAplicacao.Location = new System.Drawing.Point(11, 128);
             this.SiglaAplicacao.Name = "SiglaAplicacao";
             this.SiglaAplicacao.Size = new System.Drawing.Size(153, 20);
             this.SiglaAplicacao.TabIndex = 6;
-            // 
+            //
             // label1
-            // 
+            //
             this.label1.AutoSize = true;
             this.label1.Location = new System.Drawing.Point(211, 59);
             this.label1.Name = "label1";
@@ -262,25 +262,25 @@
             this.label1.TabIndex = 15;
             this.label1.Text = "Nome da classe no plural";
             this.label1.Click += new System.EventHandler(this.label1_Click_1);
-            // 
+            //
             // NomeClassePlural
-            // 
+            //
             this.NomeClassePlural.Location = new System.Drawing.Point(214, 75);
             this.NomeClassePlural.Name = "NomeClassePlural";
             this.NomeClassePlural.Size = new System.Drawing.Size(175, 20);
             this.NomeClassePlural.TabIndex = 5;
             this.NomeClassePlural.TextChanged += new System.EventHandler(this.NomeClassePlural_TextChanged);
-            // 
+            //
             // NomeSolucao
-            // 
+            //
             this.NomeSolucao.Location = new System.Drawing.Point(214, 27);
             this.NomeSolucao.Name = "NomeSolucao";
             this.NomeSolucao.Size = new System.Drawing.Size(175, 20);
             this.NomeSolucao.TabIndex = 3;
             this.NomeSolucao.TextChanged += new System.EventHandler(this.textBox5_TextChanged);
-            // 
+            //
             // label5
-            // 
+            //
             this.label5.AutoSize = true;
             this.label5.Location = new System.Drawing.Point(211, 11);
             this.label5.Name = "label5";
@@ -288,25 +288,25 @@
             this.label5.TabIndex = 13;
             this.label5.Text = "Nome da Aplicação (Ex: MedTiss)";
             this.label5.Click += new System.EventHandler(this.label5_Click);
-            // 
+            //
             // NomeProjeto
-            // 
+            //
             this.NomeProjeto.Location = new System.Drawing.Point(11, 27);
             this.NomeProjeto.Name = "NomeProjeto";
             this.NomeProjeto.Size = new System.Drawing.Size(153, 20);
             this.NomeProjeto.TabIndex = 2;
-            // 
+            //
             // label4
-            // 
+            //
             this.label4.AutoSize = true;
             this.label4.Location = new System.Drawing.Point(8, 11);
             this.label4.Name = "label4";
             this.label4.Size = new System.Drawing.Size(148, 13);
             this.label4.TabIndex = 11;
             this.label4.Text = "Nome .sln (Ex: Soitic.Solution)";
-            // 
+            //
             // button1
-            // 
+            //
             this.button1.Location = new System.Drawing.Point(255, 443);
             this.button1.Name = "button1";
             this.button1.Size = new System.Drawing.Size(143, 36);
@@ -314,9 +314,9 @@
             this.button1.Text = "Gerar Arquivos";
             this.button1.UseVisualStyleBackColor = true;
             this.button1.Click += new System.EventHandler(this.button1_Click_1);
-            // 
+            //
             // panel1
-            // 
+            //
             this.panel1.Controls.Add(this.label8);
             this.panel1.Controls.Add(this.LeituraEscritaCheck);
             this.panel1.Controls.Add(this.ApenasLeituraCheck);
@@ -324,18 +324,18 @@
             this.panel1.Name = "panel1";
             this.panel1.Size = new System.Drawing.Size(153, 273);
             this.panel1.TabIndex = 23;
-            // 
+            //
             // label8
-            // 
+            //
             this.label8.AutoSize = true;
             this.label8.Location = new System.Drawing.Point(2, 5);
             this.label8.Name = "label8";
             this.label8.Size = new System.Drawing.Size(103, 13);
             this.label8.TabIndex = 24;
             this.label8.Text = "Gravação no Banco";
-            // 
+            //
             // LeituraEscritaCheck
-            // 
+            //
             this.LeituraEscritaCheck.AutoSize = true;
             this.LeituraEscritaCheck.Checked = true;
             this.LeituraEscritaCheck.CheckState = System.Windows.Forms.CheckState.Checked;
@@ -347,9 +347,9 @@
             this.LeituraEscritaCheck.Text = "Leitura e Escrita";
             this.LeituraEscritaCheck.UseVisualStyleBackColor = true;
             this.LeituraEscritaCheck.CheckedChanged += new System.EventHandler(this.LeituraEscritaCheck_CheckedChanged);
-            // 
+            //
             // ApenasLeituraCheck
-            // 
+            //
             this.ApenasLeituraCheck.AutoSize = true;
             this.ApenasLeituraCheck.Cursor = System.Windows.Forms.Cursors.Hand;
             this.ApenasLeituraCheck.Location = new System.Drawing.Point(12, 31);
@@ -359,9 +359,9 @@
             this.ApenasLeituraCheck.Text = "Apenas Leitura";
             this.ApenasLeituraCheck.UseVisualStyleBackColor = true;
             this.ApenasLeituraCheck.CheckedChanged += new System.EventHandler(this.ApenasLeituraCheck_CheckedChanged);
-            // 
+            //
             // AbpBackEndGeneratorForm
-            // 
+            //
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.ClientSize = new System.Drawing.Size(666, 511);

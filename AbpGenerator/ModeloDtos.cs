@@ -6,20 +6,27 @@ namespace AbpGenerator
     public abstract class ModeloDtos
     {
         public static string NomePastaDto { get; } = @"Dtos";
-        public static string CriarInputName { get; } = @"CriarInput";
-        public static string CriarOutputName { get; } = @"CriarOutput";
-        public static string ObterPorIdInputName { get; } = @"ObterPorIdInput";
-        public static string DeletarInputName { get; } = @"DeletarInput";
-        public static string ObterTodosInputName { get; } = @"ObterTodosInput";
-        public static string AtualizarInputName { get; } = @"AtualizarInput";
-        public static string CriarPastaName { get; } = @"Criar";
-        public static string AtualizarPastaName { get; } = @"Atualizar";
-        public static string ObterPastaName { get; } = @"Obter";
-        public static string DeletarPastaName { get; } = @"Deletar";
+        public static string CriarInputNome { get; } = @"CriarInput";
+        public static string CriarOutputNome { get; } = @"CriarOutput";
+        public static string ObterPorIdInputNome { get; } = @"ObterPorIdInput";
+        public static string ObterPorIdOutputNome { get; } = @"ObterPorIdOutput";
 
-        public static string Namespace(string projectName, string nomeSolucao, string nomePlural, string nomePasta)
+        public static string DeletarInputNome { get; } = @"DeletarInput";
+        public static string ObterTodosOutputNome { get; } = @"ObterTodosOutput";
+        public static string AtualizarInputNome { get; } = @"AtualizarInput";
+        public static string AtualizarOutputNome { get; } = @"AtualizarOutput";
+
+        public static string CriarPastaNome { get; } = @"Criar";
+        public static string AtualizarPastaNome { get; } = @"Atualizar";
+
+        public static string ObterPastaNome { get; } = @"Obter";
+        public static string DeletarPastaNome { get; } = @"Deletar";
+
+        public static string ItemOutputNome { get; } = @"ItemOutput";
+
+        public static string Namespace(string projectNome, string nomeSolucao, string nomePlural, string nomePasta)
         {
-            var name = projectName + "." + nomeSolucao + "." + nomePlural + "." + NomePastaDto + "." + nomePasta;
+            var name = projectNome + "." + nomeSolucao + "." + nomePlural + "." + NomePastaDto + "." + nomePasta;
             return name;
         }
 
@@ -41,10 +48,9 @@ namespace AbpGenerator
         {
             var dtoBase = @"
         using System;
-        using System.Collections.Generic;
-        using System.ComponentModel;
         using System.ComponentModel.DataAnnotations;
         using System.Text.RegularExpressions;
+        using Abp.Application.Services.Dto;
         using Abp.Runtime.Validation;
         using Abp.UI;
 
@@ -62,7 +68,47 @@ namespace AbpGenerator
             return dtoBase;
         }
 
-        public static string EntidadeDto(string nameSpace, IEnumerable<CampoEntidade> listaDeCampos, string nome, string tipoChave)
+        public static string AtualizarInput(string nameSpace, IEnumerable<CampoEntidade> listaDeCampos)
+        {
+            var dtoBase = @"
+        using System;
+        using System.ComponentModel.DataAnnotations;
+        using System.Text.RegularExpressions;
+        using Abp.Application.Services.Dto;
+        using Abp.Runtime.Validation;
+        using Abp.UI;
+
+        namespace " + nameSpace + @"
+        {
+            public class AtualizarInput
+            {" +
+            MontaCamposDto(listaDeCampos).TrimEnd() + @"
+            }
+        }";
+            return dtoBase;
+        }
+
+        public static string AtualizarOutput(string nameSpace, IEnumerable<CampoEntidade> listaDeCampos, string tipoChave)
+        {
+            var dtoBase = @"
+        using System;
+        using System.ComponentModel.DataAnnotations;
+        using System.Text.RegularExpressions;
+        using Abp.Application.Services.Dto;
+        using Abp.Runtime.Validation;
+        using Abp.UI;
+
+        namespace " + nameSpace + @"
+        {
+            public class AtualizarOutput : EntityDto<" + tipoChave + @">
+            {" +
+            MontaCamposDto(listaDeCampos).TrimEnd() + @"
+            }
+        }";
+            return dtoBase;
+        }
+
+        public static string ItemOutput(string nameSpace, IEnumerable<CampoEntidade> listaDeCampos, string nome, string tipoChave)
         {
             var dtoBase = @"
         using System;
@@ -75,13 +121,9 @@ namespace AbpGenerator
 
         namespace " + nameSpace + @"
         {
-            public class " + nome + @"Dto : EntityDto<" + tipoChave + @">, ICustomValidate
+            public class ItemOutput : EntityDto<" + tipoChave + @">
             {" +
             MontaCamposDto(listaDeCampos).TrimEnd() + @"
-         
-              public void AddValidationErrors(CustomValidationContext context)
-              {
-              }
             }
         }";
             return dtoBase;
@@ -90,6 +132,13 @@ namespace AbpGenerator
         public static string CriarOutput(string nameSpace, string tipoChave)
         {
             var dtoBase = @"
+        using System;
+        using System.ComponentModel.DataAnnotations;
+        using System.Text.RegularExpressions;
+        using Abp.Application.Services.Dto;
+        using Abp.Runtime.Validation;
+        using Abp.UI;
+
         namespace " + nameSpace + @"
         {
             public class CriarOutput
@@ -100,5 +149,45 @@ namespace AbpGenerator
             return dtoBase;
         }
 
+        public static string ObterTodosOutput(string nameSpace, string nomePlural)
+        {
+            var dtoBase = @"
+        using System;
+        using System.ComponentModel.DataAnnotations;
+        using System.Text.RegularExpressions;
+        using Abp.Application.Services.Dto;
+        using Abp.Runtime.Validation;
+        using Abp.UI;
+        using " + nameSpace.Replace(ObterPastaNome, ModeloEntidade.NomePastaEntidade) + @";
+
+        namespace " + nameSpace + @"
+        {
+            public class ObterTodosOutput
+            {
+                public IList<ItemOutput> " + nomePlural + @" { get; set; }
+            }
+        }";
+            return dtoBase;
+        }
+
+        public static string ObterPorIdOutput(string nameSpace, IEnumerable<CampoEntidade> listaDeCampos, string tipoChave)
+        {
+            var dtoBase = @"
+        using System;
+        using System.ComponentModel.DataAnnotations;
+        using System.Text.RegularExpressions;
+        using Abp.Application.Services.Dto;
+        using Abp.Runtime.Validation;
+        using Abp.UI;
+
+        namespace " + nameSpace + @"
+        {
+            public class ObterPorIdOutput : EntityDto<" + tipoChave + @">
+            {" +
+            MontaCamposDto(listaDeCampos).TrimEnd() + @"
+            }
+        }";
+            return dtoBase;
+        }
     }
 }

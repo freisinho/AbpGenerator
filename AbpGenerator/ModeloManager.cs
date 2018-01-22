@@ -86,9 +86,9 @@ namespace AbpGenerator
             return manager;
         }
 
-        public static string Namespace(string projectName, string nomeSolucao, string nomePlural)
+        public static string Namespace(string projectNome, string nomeSolucao, string nomePlural)
         {
-            var name = projectName + "." + nomeSolucao + "." + nomePlural + "." + NomePastaManager;
+            var name = projectNome + "." + nomeSolucao + "." + nomePlural + "." + NomePastaManager;
             return name;
         }
     }
