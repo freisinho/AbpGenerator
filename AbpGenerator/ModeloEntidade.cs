@@ -19,7 +19,7 @@ namespace AbpGenerator
             [Table(""" + MontaNomeTabelaBanco(sigla, gravacaoBanco, nomeEntidade) + @""")]
             public class " + nomeEntidade + @" : FullAuditedEntity<" + tipoChave + @">" + MontaInterfaces(interfacesComplementares) + MontaTenant(filtroTenant) + @"
             {" +
-            MontaCamposDaEntidade(listaDeCampos).TrimEnd()+@"
+            MontaCamposDaEntidade(listaDeCampos, filtroTenant).TrimEnd() + @"
             }
         }";
 
@@ -55,7 +55,7 @@ namespace AbpGenerator
             return nomeTabela;
         }
 
-        private static string MontaCamposDaEntidade(List<CampoEntidade> listaDeCampos)
+        private static string MontaCamposDaEntidade(List<CampoEntidade> listaDeCampos, string tenant)
         {
             var campos = "\n              ";
 
@@ -64,6 +64,12 @@ namespace AbpGenerator
 
                 campos = campos + RetornaDeclaracaoDoTipo(campo) + "\n              ";
             }
+
+            if (tenant == "IMustHaveTenant")
+                campos = campos + Utils.DeclaracaoCampo.Replace("insereAqui", "int TenantId") + "\n              ";
+
+            if (tenant == "IMayHaveTenant")
+                campos = campos + Utils.DeclaracaoCampo.Replace("insereAqui", "int? TenantId") + "\n              ";
 
             return campos;
         }
