@@ -101,6 +101,71 @@ namespace AbpGenerator
             File.WriteAllText(caminhoManagers, managerbase);
         }
 
+        public static void CriaService(string projectName, string nomeSolucao, string nome, string nomePlural, string tipoDaChave)
+        {
+            nome = char.ToUpper(nome[0]) + nome.Substring(1);
+            nomePlural = char.ToUpper(nomePlural[0]) + nomePlural.Substring(1);
+            
+            var pastaRaiz = Utils.PastaRaizArquivos;
+
+            var entityFolder = ModeloService.NomePastaService;
+
+            var caminho = pastaRaiz + entityFolder;
+
+            var caminhoServices = Path.Combine(pastaRaiz, caminho);
+
+            Directory.CreateDirectory(caminhoServices);
+
+            var nomeDaInterfaceService = nome + ModeloService.NomeService + ".cs";
+
+            caminhoServices = Path.Combine(caminhoServices, nomeDaInterfaceService);
+
+            var nameSpace = ModeloService.Namespace(projectName, nomeSolucao, nomePlural);
+
+            var servicebase = ModeloService.Service(nameSpace, nome, tipoDaChave, nomePlural);
+
+            if (!File.Exists(caminhoServices))
+                using (var file = File.Create(caminhoServices))
+                {
+                    file.Close();
+                }
+
+            File.WriteAllText(caminhoServices, servicebase);
+
+            MessageBox.Show(Resources.ArquivoCriadoComSucesso_);
+        }
+
+        public static void CriaInterfaceService(string projectName, string nomeSolucao, string nome, string nomePlural, string tipoDaChave)
+        {
+            nome = char.ToUpper(nome[0]) + nome.Substring(1);
+
+            var pastaRaiz = Utils.PastaRaizArquivos;
+
+            var entityFolder = ModeloService.NomeService;
+
+            var caminho = pastaRaiz + entityFolder;
+
+            var caminhoServices = Path.Combine(pastaRaiz, caminho);
+
+            Directory.CreateDirectory(caminhoServices);
+
+            var nomeDaInterfaceService = "I" + nome + ModeloService.NomeService + ".cs";
+
+            caminhoServices = Path.Combine(caminhoServices, nomeDaInterfaceService);
+
+            var nameSpace = ModeloService.Namespace(projectName, nomeSolucao, nomePlural);
+
+            var servicebase = ModeloService.IService(nameSpace, nome, tipoDaChave);
+
+            if (!File.Exists(caminhoServices))
+                using (var file = File.Create(caminhoServices))
+                {
+                    file.Close();
+                }
+
+            File.WriteAllText(caminhoServices, servicebase);
+        }
+
 
         public static void CriaInterfaceImplementacaoManager(string projectName, string nomeSolucao, string nome, string nomePlural, string tipoDaChave)
         {
@@ -110,6 +175,13 @@ namespace AbpGenerator
             MessageBox.Show(Resources.ArquivoCriadoComSucesso_);
         }
 
+        public static void CriaInterfaceImplementacaoService(string projectName, string nomeSolucao, string nome, string nomePlural, string tipoDaChave)
+        {
+            CriaInterfaceService(projectName, nomeSolucao, nome, nomePlural, tipoDaChave);
+            CriaService(projectName, nomeSolucao, nome, nomePlural, tipoDaChave);
+
+            MessageBox.Show(Resources.ArquivoCriadoComSucesso_);
+        }
 
     }
 }
