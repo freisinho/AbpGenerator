@@ -78,6 +78,13 @@ namespace AbpGenerator
                 NomeClassePlural.Text,
                 tenant);
 
+            GerenciarPastas.CriaTestes(
+              NomeProjeto.Text,
+              NomeSolucao.Text,
+              NomeEntidade.Text,
+              NomeClassePlural.Text
+              );
+
             MessageBox.Show(Resources.ArquivoCriadoComSucesso_);
         }
 

@@ -15,7 +15,7 @@
         namespace " + nameSpace + @"
         {
             public class I" + nomeEntidade + NomePastaManager + @" : IDomainService
-            { 
+            {
                 Task<" + tipoChave + ">" + @" Criar(" + nomeEntidade + " " + nomeEntidade.ToLower() + @");
 
                 Task<" + nomeEntidade + ">" + @" Atualizar(" + nomeEntidade + " " + nomeEntidade.ToLower() + @");
@@ -24,7 +24,7 @@
 
                 Task Deletar(" + tipoChave + @" id );
 
-                Task<List<" + nomeEntidade + ">>" + @" ObterTodos();          
+                Task<List<" + nomeEntidade + ">>" + @" ObterTodos();
             }
         }";
 
@@ -45,7 +45,7 @@
         namespace " + nameSpace + @"
         {
             public class " + nomeEntidade + NomePastaManager + @" : I" + nomeEntidade + NomePastaManager + @"
-            { 
+            {
                 private readonly IRepository<" + nomeEntidade + ", " + tipoChave + @"> _repositorio" + nomeEntidade +
                           @";
                
@@ -81,7 +81,7 @@
                 public async Task<List<" + nomeEntidade + ">>" + @" ObterTodos()
                 {
                     return await _repositorio" + nomeEntidade + @".GetAllListAsync();
-                }          
+                }
             }
         }";
 

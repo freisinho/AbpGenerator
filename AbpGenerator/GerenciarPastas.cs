@@ -268,11 +268,11 @@ namespace AbpGenerator
 
             CriarObterPorIdOutputDto(projectNome, nomeSolucao, nomePlural, tipoDaChave, listaDeCampos, caminhoDtos);
 
-            CriarObterPorIdInputDto(projectNome, nomeSolucao, nomePlural, tipoDaChave, listaDeCampos, caminhoDtos);
+            CriarObterPorIdInputDto(projectNome, nomeSolucao, nomePlural, tipoDaChave, caminhoDtos);
 
-            CriarDeletarInputDto(projectNome, nomeSolucao, nomePlural, tipoDaChave, listaDeCampos, caminhoDtos);
+            CriarDeletarInputDto(projectNome, nomeSolucao, nomePlural, tipoDaChave, caminhoDtos);
 
-            CriarDeletarOutputDto(projectNome, nomeSolucao, nomePlural, tipoDaChave, listaDeCampos, caminhoDtos);
+            CriarDeletarOutputDto(projectNome, nomeSolucao, nomePlural, caminhoDtos);
         }
 
         private static void CriarAtualizarInputDto(string projectNome, string nomeSolucao, string nomePlural,
@@ -493,7 +493,7 @@ namespace AbpGenerator
         }
 
         private static void CriarObterPorIdInputDto(string projectNome, string nomeSolucao, string nomePlural,
-            string tipoChave, IEnumerable<CampoEntidade> listaDeCampos, string caminhoDtos)
+            string tipoChave, string caminhoDtos)
         {
             var pastaRaiz = caminhoDtos + "\\";
 
@@ -523,7 +523,7 @@ namespace AbpGenerator
         }
 
         private static void CriarDeletarInputDto(string projectNome, string nomeSolucao, string nomePlural,
-            string tipoChave, IEnumerable<CampoEntidade> listaDeCampos, string caminhoDtos)
+            string tipoChave, string caminhoDtos)
         {
             var pastaRaiz = caminhoDtos + "\\";
 
@@ -553,7 +553,7 @@ namespace AbpGenerator
         }
 
         private static void CriarDeletarOutputDto(string projectNome, string nomeSolucao, string nomePlural,
-            string tipoChave, IEnumerable<CampoEntidade> listaDeCampos, string caminhoDtos)
+            string caminhoDtos)
         {
             var pastaRaiz = caminhoDtos + "\\";
 
@@ -581,5 +581,42 @@ namespace AbpGenerator
 
             File.WriteAllText(caminhoNovo, dtobase);
         }
+
+        public static void CriaTestes(string projectNome, string nomeSolucao, string nome, string nomePlural)
+        {
+            nome = char.ToUpper(nome[0]) + nome.Substring(1);
+
+            nomePlural = char.ToUpper(nomePlural[0]) + nomePlural.Substring(1);
+
+            nomeSolucao = char.ToUpper(nomeSolucao[0]) + nomeSolucao.Substring(1);
+
+            var pastaRaiz = Utils.PastaRaizArquivos;
+
+            var entityFolder = ModeloService.NomePastaService;
+
+            var caminho = pastaRaiz + entityFolder;
+
+            var caminhoServices = Path.Combine(pastaRaiz, caminho);
+
+            Directory.CreateDirectory(caminhoServices);
+
+            var nomeDaInterfaceService = "I" + nome + ModeloService.NomeService + ".cs";
+
+            caminhoServices = Path.Combine(caminhoServices, nomeDaInterfaceService);
+
+            var nameSpace = ModeloService.Namespace(projectNome, nomeSolucao, nomePlural);
+
+            var servicebase = ModeloService.IService(nameSpace, nome);
+
+            if (!File.Exists(caminhoServices))
+                using (var file = File.Create(caminhoServices))
+                {
+                    file.Close();
+                }
+
+            File.WriteAllText(caminhoServices, servicebase);
+        }
+
+
     }
 }
