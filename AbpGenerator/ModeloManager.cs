@@ -42,7 +42,7 @@ namespace AbpGenerator
         using System.Threading.Tasks;
         using Abp.Domain.Repositories;
         using System.Linq;
-        using "+ nameSpace.Replace("Manager","Entidade") + @";
+        using " + nameSpace.Replace("Manager", "Entidade") + @";
 
         namespace " + nameSpace + @"
         {
@@ -63,6 +63,7 @@ namespace AbpGenerator
 
                 public async Task<" + nomeEntidade + ">" + @" Atualizar(" + nomeEntidade + " " + nomeEntidade.ToLower() + @")
                 {
+                    " + nomeEntidade.ToLower() + @".CreationTime = (await _repositorio" + nomeEntidade + @".FirstOrDefaultAsync(" + nomeEntidade.ToLower() + @".Id)).CreationTime;
                     return await _repositorio" + nomeEntidade + @".UpdateAsync(" + nomeEntidade.ToLower() + @");
                 }
 

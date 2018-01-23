@@ -12,6 +12,8 @@ namespace AbpGenerator
         public static string ObterPorIdOutputNome { get; } = @"ObterPorIdOutput";
 
         public static string DeletarInputNome { get; } = @"DeletarInput";
+        public static string DeletarOutputNome { get; } = @"DeletarOutput";
+
         public static string ObterTodosOutputNome { get; } = @"ObterTodosOutput";
         public static string AtualizarInputNome { get; } = @"AtualizarInput";
         public static string AtualizarOutputNome { get; } = @"AtualizarOutput";
@@ -205,6 +207,38 @@ namespace AbpGenerator
             public class ObterPorIdInput
             {
                 public " + tipoChave + @" Id { get; set; }
+            }
+        }";
+            return dtoBase;
+        }
+
+        public static string DeletarInput(string nameSpace, string tipoChave)
+        {
+            var dtoBase = @"
+        using System;
+        using System.ComponentModel.DataAnnotations;
+        using System.Text.RegularExpressions;
+        using Abp.Application.Services.Dto;
+        using Abp.Runtime.Validation;
+        using Abp.UI;
+
+        namespace " + nameSpace + @"
+        {
+            public class DeletarInput
+            {
+                public " + tipoChave + @" Id { get; set; }
+            }
+        }";
+            return dtoBase;
+        }
+
+        public static string DeletarOutput(string nameSpace)
+        {
+            var dtoBase = @"
+        namespace " + nameSpace + @"
+        {
+            public class DeletarOutput
+            {
             }
         }";
             return dtoBase;

@@ -226,6 +226,9 @@ namespace AbpGenerator
 
             CriarObterPorIdInputDto(projectNome, nomeSolucao, nomePlural, tipoDaChave, listaDeCampos, caminhoDtos);
 
+            CriarDeletarInputDto(projectNome, nomeSolucao, nomePlural, tipoDaChave, listaDeCampos, caminhoDtos);
+
+            CriarDeletarOutputDto(projectNome, nomeSolucao, nomePlural, tipoDaChave, listaDeCampos, caminhoDtos);
 
         }
 
@@ -471,6 +474,64 @@ namespace AbpGenerator
 
             File.WriteAllText(caminhoNovo, dtobase);
 
+        }
+
+        private static void CriarDeletarInputDto(string projectNome, string nomeSolucao, string nomePlural, string tipoChave, IEnumerable<CampoEntidade> listaDeCampos, string caminhoDtos)
+        {
+            var pastaRaiz = caminhoDtos + "\\";
+
+            var entityFolder = ModeloDtos.DeletarPastaNome;
+
+            var caminho = pastaRaiz + entityFolder;
+
+            var caminhoNovo = Path.Combine(pastaRaiz, caminho);
+
+            Directory.CreateDirectory(caminhoNovo);
+
+            var nomeDaDto = ModeloDtos.DeletarInputNome + ".cs";
+
+            caminhoNovo = Path.Combine(caminhoNovo, nomeDaDto);
+
+            var nameSpace = ModeloDtos.Namespace(projectNome, nomeSolucao, nomePlural, ModeloDtos.DeletarPastaNome);
+
+            var dtobase = ModeloDtos.DeletarInput(nameSpace, tipoChave);
+
+            if (!File.Exists(caminhoNovo))
+                using (var file = File.Create(caminhoNovo))
+                {
+                    file.Close();
+                }
+
+            File.WriteAllText(caminhoNovo, dtobase);
+        }
+
+        private static void CriarDeletarOutputDto(string projectNome, string nomeSolucao, string nomePlural, string tipoChave, IEnumerable<CampoEntidade> listaDeCampos, string caminhoDtos)
+        {
+            var pastaRaiz = caminhoDtos + "\\";
+
+            var entityFolder = ModeloDtos.DeletarPastaNome;
+
+            var caminho = pastaRaiz + entityFolder;
+
+            var caminhoNovo = Path.Combine(pastaRaiz, caminho);
+
+            Directory.CreateDirectory(caminhoNovo);
+
+            var nomeDaDto = ModeloDtos.DeletarOutputNome + ".cs";
+
+            caminhoNovo = Path.Combine(caminhoNovo, nomeDaDto);
+
+            var nameSpace = ModeloDtos.Namespace(projectNome, nomeSolucao, nomePlural, ModeloDtos.DeletarPastaNome);
+
+            var dtobase = ModeloDtos.DeletarOutput(nameSpace);
+
+            if (!File.Exists(caminhoNovo))
+                using (var file = File.Create(caminhoNovo))
+                {
+                    file.Close();
+                }
+
+            File.WriteAllText(caminhoNovo, dtobase);
         }
 
     }
