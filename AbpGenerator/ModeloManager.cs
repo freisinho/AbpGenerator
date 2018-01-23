@@ -1,6 +1,4 @@
-﻿using System.Collections.Generic;
-
-namespace AbpGenerator
+﻿namespace AbpGenerator
 {
     public abstract class ModeloManager
     {
@@ -48,7 +46,8 @@ namespace AbpGenerator
         {
             public class " + nomeEntidade + NomePastaManager + @" : I" + nomeEntidade + NomePastaManager + @"
             { 
-                private readonly IRepository<" + nomeEntidade + ", " + tipoChave + @"> _repositorio" + nomeEntidade + @";
+                private readonly IRepository<" + nomeEntidade + ", " + tipoChave + @"> _repositorio" + nomeEntidade +
+                          @";
                
                 public " + nomeEntidade + NomePastaManager + @"(
                 IRepository<" + nomeEntidade + ", " + tipoChave + @"> repositorio" + nomeEntidade + @")
@@ -61,9 +60,11 @@ namespace AbpGenerator
                     return await _repositorio" + nomeEntidade + @".InsertAndGetIdAsync(" + nomeEntidade.ToLower() + @");
                 }
 
-                public async Task<" + nomeEntidade + ">" + @" Atualizar(" + nomeEntidade + " " + nomeEntidade.ToLower() + @")
+                public async Task<" + nomeEntidade + ">" + @" Atualizar(" + nomeEntidade + " " + nomeEntidade.ToLower() +
+                          @")
                 {
-                    " + nomeEntidade.ToLower() + @".CreationTime = (await _repositorio" + nomeEntidade + @".FirstOrDefaultAsync(" + nomeEntidade.ToLower() + @".Id)).CreationTime;
+                    " + nomeEntidade.ToLower() + @".CreationTime = (await _repositorio" + nomeEntidade +
+                          @".FirstOrDefaultAsync(" + nomeEntidade.ToLower() + @".Id)).CreationTime;
                     return await _repositorio" + nomeEntidade + @".UpdateAsync(" + nomeEntidade.ToLower() + @");
                 }
 

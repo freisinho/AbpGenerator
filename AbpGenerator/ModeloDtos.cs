@@ -34,16 +34,15 @@ namespace AbpGenerator
 
         private static string MontaCamposDto(IEnumerable<CampoEntidade> listaDeCampos)
         {
-            return listaDeCampos.Aggregate("\n              ", (current, campo) => current + RetornaDeclaracaoDoTipo(campo) + "\n              ");
+            return listaDeCampos.Aggregate("\n              ",
+                (current, campo) => current + RetornaDeclaracaoDoTipo(campo) + "\n              ");
         }
 
         private static string RetornaDeclaracaoDoTipo(CampoEntidade campo)
         {
-
             var nomeTipo = campo.Tipo + " " + char.ToUpper(campo.Nome[0]) + campo.Nome.Substring(1);
 
             return Utils.DeclaracaoCampo.Replace("insereAqui", nomeTipo);
-
         }
 
         public static string CriarInput(string nameSpace, IEnumerable<CampoEntidade> listaDeCampos)
@@ -60,7 +59,7 @@ namespace AbpGenerator
         {
             public class CriarInput : ICustomValidate
             {" +
-            MontaCamposDto(listaDeCampos).TrimEnd() + @"
+                          MontaCamposDto(listaDeCampos).TrimEnd() + @"
          
               public void AddValidationErrors(CustomValidationContext context)
               {
@@ -84,13 +83,14 @@ namespace AbpGenerator
         {
             public class AtualizarInput
             {" +
-            MontaCamposDto(listaDeCampos).TrimEnd() + @"
+                          MontaCamposDto(listaDeCampos).TrimEnd() + @"
             }
         }";
             return dtoBase;
         }
 
-        public static string AtualizarOutput(string nameSpace, IEnumerable<CampoEntidade> listaDeCampos, string tipoChave)
+        public static string AtualizarOutput(string nameSpace, IEnumerable<CampoEntidade> listaDeCampos,
+            string tipoChave)
         {
             var dtoBase = @"
         using System;
@@ -104,13 +104,14 @@ namespace AbpGenerator
         {
             public class AtualizarOutput : EntityDto<" + tipoChave + @">
             {" +
-            MontaCamposDto(listaDeCampos).TrimEnd() + @"
+                          MontaCamposDto(listaDeCampos).TrimEnd() + @"
             }
         }";
             return dtoBase;
         }
 
-        public static string ItemOutput(string nameSpace, IEnumerable<CampoEntidade> listaDeCampos, string nome, string tipoChave)
+        public static string ItemOutput(string nameSpace, IEnumerable<CampoEntidade> listaDeCampos, string nome,
+            string tipoChave)
         {
             var dtoBase = @"
         using System;
@@ -125,7 +126,7 @@ namespace AbpGenerator
         {
             public class ItemOutput : EntityDto<" + tipoChave + @">
             {" +
-            MontaCamposDto(listaDeCampos).TrimEnd() + @"
+                          MontaCamposDto(listaDeCampos).TrimEnd() + @"
             }
         }";
             return dtoBase;
@@ -172,7 +173,8 @@ namespace AbpGenerator
             return dtoBase;
         }
 
-        public static string ObterPorIdOutput(string nameSpace, IEnumerable<CampoEntidade> listaDeCampos, string tipoChave)
+        public static string ObterPorIdOutput(string nameSpace, IEnumerable<CampoEntidade> listaDeCampos,
+            string tipoChave)
         {
             var dtoBase = @"
         using System;
@@ -186,7 +188,7 @@ namespace AbpGenerator
         {
             public class ObterPorIdOutput : EntityDto<" + tipoChave + @">
             {" +
-            MontaCamposDto(listaDeCampos).TrimEnd() + @"
+                          MontaCamposDto(listaDeCampos).TrimEnd() + @"
             }
         }";
             return dtoBase;

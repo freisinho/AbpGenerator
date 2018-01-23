@@ -13,7 +13,5 @@
         public static string TenantObrigatoria { get; } = @"IMustHaveTenant";
 
         public static string DeclaracaoCampo { get; } = @"public insereAqui { get; set; }";
-
-
     }
 }
