@@ -43,6 +43,44 @@ namespace AbpGenerator
 
         }
 
+        public static void CriaBuilder(string projectNome, string nomeSolucao, string nome, string nomePlural, string sigla, string gravacaoBanco, string tipoDaChave, string interfacesComplementares, string tenant, List<CampoEntidade> listaDeCampos)
+        {
+            nome = char.ToUpper(nome[0]) + nome.Substring(1);
+
+            nomePlural = char.ToUpper(nomePlural[0]) + nomePlural.Substring(1);
+
+            sigla = char.ToUpper(sigla[0]) + sigla.Substring(1);
+
+            nomeSolucao = char.ToUpper(nomeSolucao[0]) + nomeSolucao.Substring(1);
+
+            var pastaRaiz = Utils.PastaRaizArquivos;
+
+            var entityFolder = ModeloBuilder.NomePastaBuilder;
+
+            var caminho = pastaRaiz + entityFolder;
+
+            var caminhoBuilders = Path.Combine(pastaRaiz, caminho);
+
+            Directory.CreateDirectory(caminhoBuilders);
+
+            var nomeDaBuilder = nome + "Builder.cs";
+
+            caminhoBuilders = Path.Combine(caminhoBuilders, nomeDaBuilder);
+
+            var nameSpace = ModeloBuilder.Namespace(projectNome, nomeSolucao, nomePlural);
+
+            var builderbase = ModeloBuilder.Builder(nameSpace, nome, tipoDaChave, sigla, gravacaoBanco, interfacesComplementares, tenant, listaDeCampos);
+
+            if (!File.Exists(caminhoBuilders))
+                using (var file = File.Create(caminhoBuilders))
+                {
+                    file.Close();
+                }
+
+            File.WriteAllText(caminhoBuilders, builderbase);
+
+        }
+
         private static void CriaManager(string projectNome, string nomeSolucao, string nome, string nomePlural, string tipoDaChave)
         {
             nome = char.ToUpper(nome[0]) + nome.Substring(1);

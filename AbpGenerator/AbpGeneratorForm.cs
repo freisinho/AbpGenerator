@@ -42,6 +42,19 @@ namespace AbpGenerator
                 lista
                 );
 
+            GerenciarPastas.CriaBuilder(
+               NomeProjeto.Text,
+               NomeSolucao.Text,
+               NomeEntidade.Text,
+               NomeClassePlural.Text,
+               SiglaAplicacao.Text,
+               siglaGravacao,
+               TipoChavePrimaria.Text,
+               InterfacesComplementares.Text,
+               tenant,
+               lista
+               );
+
             GerenciarPastas.CriaDtos(
                 NomeProjeto.Text,
                 NomeSolucao.Text,
