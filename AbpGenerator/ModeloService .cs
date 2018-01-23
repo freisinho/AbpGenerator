@@ -1,5 +1,4 @@
-﻿
-namespace AbpGenerator
+﻿namespace AbpGenerator
 {
     public abstract class ModeloService
     {
@@ -62,7 +61,8 @@ namespace AbpGenerator
 
         namespace " + nameSpace + @"
         {
-            public class " + nomeEntidade + NomeService + @" : SolutionAppServiceBase, I" + nomeEntidade + NomeService + @"
+            public class " + nomeEntidade + NomeService + @" : SolutionAppServiceBase, I" + nomeEntidade + NomeService +
+                          @"
             {
                 private readonly I" + nomeEntidade + "Manager _" + nomeEntidade.ToLower() + @"Manager;
 
@@ -98,7 +98,8 @@ namespace AbpGenerator
                 {
                     var " + nomeEntidade.ToLower() + @" = input.MapTo<" + nomeEntidade + @">();
                     " + stringTenant + @"
-                    var " + nomeEntidade.ToLower() + @"Retornada = await _" + nomeEntidade.ToLower() + @"Manager.Atualizar(" + nomeEntidade.ToLower() + @");
+                    var " + nomeEntidade.ToLower() + @"Retornada = await _" + nomeEntidade.ToLower() +
+                          @"Manager.Atualizar(" + nomeEntidade.ToLower() + @");
 
                     return " + nomeEntidade.ToLower() + @"Retornada.MapTo<AtualizarOutput>();
                 }
@@ -112,7 +113,8 @@ namespace AbpGenerator
                 /// </returns>
                 public async Task<ObterPorIdOutput> ObterPorId(ObterPorIdInput input)
                 {
-                    var " + nomeEntidade.ToLower() + @" = await _" + nomeEntidade.ToLower() + @"Manager.ObterPorId(input.Id);
+                    var " + nomeEntidade.ToLower() + @" = await _" + nomeEntidade.ToLower() +
+                          @"Manager.ObterPorId(input.Id);
                     return " + nomeEntidade.ToLower() + @".MapTo<ObterPorIdOutput>();
                 }
 

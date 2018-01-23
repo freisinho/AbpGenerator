@@ -7,7 +7,9 @@ namespace AbpGenerator
     {
         public static string NomePastaEntidade { get; } = @"Entidade";
 
-        public static string Entidade(string nameSpace, string nomeEntidade, string tipoChave, string sigla, string gravacaoBanco, string interfacesComplementares, string filtroTenant, List<CampoEntidade> listaDeCampos)
+        public static string Entidade(string nameSpace, string nomeEntidade, string tipoChave, string sigla,
+            string gravacaoBanco, string interfacesComplementares, string filtroTenant,
+            List<CampoEntidade> listaDeCampos)
         {
             var entidadeBase = @"
         using System.ComponentModel.DataAnnotations;
@@ -18,9 +20,10 @@ namespace AbpGenerator
         namespace " + nameSpace + @"
         {
             [Table(""" + MontaNomeTabelaBanco(sigla, gravacaoBanco, nomeEntidade) + @""")]
-            public class " + nomeEntidade + @" : FullAuditedEntity<" + tipoChave + @">" + MontaInterfaces(interfacesComplementares) + MontaTenant(filtroTenant) + @"
+            public class " + nomeEntidade + @" : FullAuditedEntity<" + tipoChave + @">" +
+                               MontaInterfaces(interfacesComplementares) + MontaTenant(filtroTenant) + @"
             {" +
-            MontaCamposDaEntidade(listaDeCampos, filtroTenant).TrimEnd() + @"
+                               MontaCamposDaEntidade(listaDeCampos, filtroTenant).TrimEnd() + @"
             }
         }";
 
@@ -58,7 +61,8 @@ namespace AbpGenerator
 
         private static string MontaCamposDaEntidade(IEnumerable<CampoEntidade> listaDeCampos, string tenant)
         {
-            var campos = listaDeCampos.Aggregate("\n              ", (current, campo) => current + RetornaDeclaracaoDoTipo(campo) + "\n              ");
+            var campos = listaDeCampos.Aggregate("\n              ",
+                (current, campo) => current + RetornaDeclaracaoDoTipo(campo) + "\n              ");
 
             if (tenant == "IMustHaveTenant")
                 campos = campos + Utils.DeclaracaoCampo.Replace("insereAqui", "int TenantId") + "\n              ";
@@ -68,6 +72,7 @@ namespace AbpGenerator
 
             return campos;
         }
+
         private static string RetornaDeclaracaoDoTipo(CampoEntidade campo)
         {
             var nomeTipo = campo.Tipo + " " + char.ToUpper(campo.Nome[0]) + campo.Nome.Substring(1);

@@ -10,6 +10,7 @@ namespace AbpGenerator
         public static string Builder(string nameSpace, string nome, string tipoChave, string sigla, string gravacaoBanco,
             string interfacesComplementares, string filtroTenant, IEnumerable<CampoEntidade> listaDeCampos)
         {
+            var campoEntidades = listaDeCampos as CampoEntidade[] ?? listaDeCampos.ToArray();
             var builderBase = @"
         using System;
         using System.Threading.Tasks;
@@ -30,8 +31,9 @@ namespace AbpGenerator
                 public " + nome + @"Dto " + nome + @"Dto { get; set; };
 
                 public class " + nome + NomePastaBuilder + @" DataBuilder(
-                " + MontaCamposDaBuilder(listaDeCampos, filtroTenant).TrimEnd() + @")
+                " + MontaCamposDaBuilder(campoEntidades).TrimEnd() + @")
                 {
+                    " + MontaDtoBuilder(campoEntidades, nome) + @"
                     return this;
                 }
 
@@ -43,7 +45,8 @@ namespace AbpGenerator
 
             public static class " + nome + @"Persist
             {
-                public static async Task<" + tipoChave + @"> Persist (this " + nome + @"Dto " + nome.ToLower() + @"Dto, IRepository< " + nome + @"," + tipoChave + @"> repository)
+                public static async Task<" + tipoChave + @"> Persist (this " + nome + @"Dto " + nome.ToLower() +
+                              @"Dto, IRepository< " + nome + @"," + tipoChave + @"> repository)
                 {
                     var " + nome.ToLower() + @" = ObjectMapper.Map<" + nome + @">(" + nome.ToLower() + @"Dto);
                     var " + nome.ToLower() + @"Id = await repository.InsertAndGetIdAsync(" + nome.ToLower() + @");
@@ -62,35 +65,28 @@ namespace AbpGenerator
             return name;
         }
 
-        private static string MontaInterfaces(string interfacesComplementares)
+        private static string MontaDtoBuilder(IEnumerable<CampoEntidade> listaDeCampos, string nome)
         {
-            if (interfacesComplementares != "")
-                return "," + interfacesComplementares;
-
-            return interfacesComplementares;
-        }
-
-        private static string MontaTenant(string tenant)
-        {
-            if (tenant != "")
-                return "," + tenant;
-
-            return tenant;
-        }
-
-        private static string MontaNomeTabelaBanco(string sigla, string gravacaoBanco, string nome)
-        {
-            var nomeTabela = sigla + gravacaoBanco + nome;
-
-            return nomeTabela;
-        }
-
-        private static string MontaCamposDaBuilder(IEnumerable<CampoEntidade> listaDeCampos, string tenant)
-        {
-            var campos = listaDeCampos.Aggregate("", (current, campo) => current + RetornaDeclaracaoDoTipo(campo) + "\n                ");
+            var campos = listaDeCampos.Aggregate("",
+                (current, campo) => current + RetornaAtribuicaoDto(campo, nome) + "\n                    ");
 
             return campos;
         }
+
+        private static string RetornaAtribuicaoDto(CampoEntidade campo, string nome)
+        {
+            return nome + "Dto." + char.ToUpper(campo.Nome[0]) + campo.Nome.Substring(1) + @" = " +
+                   char.ToLower(campo.Nome[0]) + campo.Nome.Substring(1) + ";";
+        }
+
+        private static string MontaCamposDaBuilder(IEnumerable<CampoEntidade> listaDeCampos)
+        {
+            var campos = listaDeCampos.Aggregate("",
+                (current, campo) => current + RetornaDeclaracaoDoTipo(campo) + "\n                ");
+
+            return campos;
+        }
+
         private static string RetornaDeclaracaoDoTipo(CampoEntidade campo)
         {
             switch (campo.Tipo)
@@ -104,7 +100,8 @@ namespace AbpGenerator
                 case "decimal":
                     return campo.Tipo + " " + char.ToLower(campo.Nome[0]) + campo.Nome.Substring(1) + " = 1 ,";
                 case "DateTime":
-                    return campo.Tipo + " " + char.ToLower(campo.Nome[0]) + campo.Nome.Substring(1) + " = DateTime.Now ,";
+                    return campo.Tipo + " " + char.ToLower(campo.Nome[0]) + campo.Nome.Substring(1) +
+                           " = DateTime.Now ,";
                 default:
                     return campo.Tipo + " " + char.ToLower(campo.Nome[0]) + campo.Nome.Substring(1) + " = 1 ,";
             }
