@@ -55,6 +55,20 @@ namespace AbpGenerator
                lista
                );
 
+
+            GerenciarPastas.CriaConstantsBuilder(
+               NomeProjeto.Text,
+               NomeSolucao.Text,
+               NomeEntidade.Text,
+               NomeClassePlural.Text,
+               SiglaAplicacao.Text,
+               siglaGravacao,
+               TipoChavePrimaria.Text,
+               InterfacesComplementares.Text,
+               tenant,
+               lista
+               );
+
             GerenciarPastas.CriaDtos(
                 NomeProjeto.Text,
                 NomeSolucao.Text,
@@ -77,6 +91,14 @@ namespace AbpGenerator
                 NomeEntidade.Text,
                 NomeClassePlural.Text,
                 tenant);
+
+            GerenciarPastas.CriaTestes(
+              NomeProjeto.Text,
+              NomeSolucao.Text,
+              NomeEntidade.Text,
+              NomeClassePlural.Text,
+              lista
+              );
 
             MessageBox.Show(Resources.ArquivoCriadoComSucesso_);
         }
