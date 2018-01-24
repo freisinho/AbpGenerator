@@ -1,4 +1,5 @@
-﻿using System.Collections.Generic;
+﻿using System.Collections;
+using System.Collections.Generic;
 using System.IO;
 
 namespace AbpGenerator
@@ -69,6 +70,7 @@ namespace AbpGenerator
 
             var nomeDaBuilder = nome + "Builder.cs";
 
+
             caminhoBuilders = Path.Combine(caminhoBuilders, nomeDaBuilder);
 
             var nameSpace = ModeloBuilder.Namespace(projectNome, nomeSolucao, nomePlural);
@@ -84,6 +86,48 @@ namespace AbpGenerator
 
             File.WriteAllText(caminhoBuilders, builderbase);
         }
+
+        public static void CriaConstantsBuilder(string projectNome, string nomeSolucao, string nome, string nomePlural,
+          string sigla, string gravacaoBanco, string tipoDaChave, string interfacesComplementares, string tenant,
+          List<CampoEntidade> listaDeCampos)
+        {
+            nome = char.ToUpper(nome[0]) + nome.Substring(1);
+
+            nomePlural = char.ToUpper(nomePlural[0]) + nomePlural.Substring(1);
+
+            sigla = char.ToUpper(sigla[0]) + sigla.Substring(1);
+
+            nomeSolucao = char.ToUpper(nomeSolucao[0]) + nomeSolucao.Substring(1);
+
+            var pastaRaiz = Utils.PastaRaizArquivos;
+
+            var entityFolder = ModeloBuilder.NomePastaBuilder;
+
+            var caminho = pastaRaiz + entityFolder;
+
+            var caminhoBuilders = Path.Combine(pastaRaiz, caminho);
+
+            Directory.CreateDirectory(caminhoBuilders);
+
+            var nomeDaBuilder = nome + "ConstantsBuilder.cs";
+
+
+            caminhoBuilders = Path.Combine(caminhoBuilders, nomeDaBuilder);
+
+            var nameSpace = ModeloBuilder.Namespace(projectNome, nomeSolucao, nomePlural);
+
+            var builderbase = ModeloBuilder.BuilderConst(nameSpace, nome, tipoDaChave, sigla, gravacaoBanco,
+                interfacesComplementares, tenant, listaDeCampos);
+
+            if (!File.Exists(caminhoBuilders))
+                using (var file = File.Create(caminhoBuilders))
+                {
+                    file.Close();
+                }
+
+            File.WriteAllText(caminhoBuilders, builderbase);
+        }
+
 
         private static void CriaManager(string projectNome, string nomeSolucao, string nome, string nomePlural,
             string tipoDaChave)
@@ -273,6 +317,9 @@ namespace AbpGenerator
             CriarDeletarInputDto(projectNome, nomeSolucao, nomePlural, tipoDaChave, caminhoDtos);
 
             CriarDeletarOutputDto(projectNome, nomeSolucao, nomePlural, caminhoDtos);
+
+            CriarEntidadeDto(projectNome, nomeSolucao, nomePlural, nome, tipoDaChave, listaDeCampos, caminhoDtos);
+
         }
 
         private static void CriarAtualizarInputDto(string projectNome, string nomeSolucao, string nomePlural,
@@ -582,7 +629,7 @@ namespace AbpGenerator
             File.WriteAllText(caminhoNovo, dtobase);
         }
 
-        public static void CriaTestes(string projectNome, string nomeSolucao, string nome, string nomePlural)
+        public static void CriaTestes(string projectNome, string nomeSolucao, string nome, string nomePlural, IEnumerable<CampoEntidade> listaDeCampos)
         {
             nome = char.ToUpper(nome[0]) + nome.Substring(1);
 
@@ -592,31 +639,60 @@ namespace AbpGenerator
 
             var pastaRaiz = Utils.PastaRaizArquivos;
 
-            var entityFolder = ModeloService.NomePastaService;
+            var entityFolder = ModeloTeste.NomePastaTeste;
 
             var caminho = pastaRaiz + entityFolder;
 
-            var caminhoServices = Path.Combine(pastaRaiz, caminho);
+            var caminhoTestes = Path.Combine(pastaRaiz, caminho);
 
-            Directory.CreateDirectory(caminhoServices);
+            Directory.CreateDirectory(caminhoTestes);
 
-            var nomeDaInterfaceService = "I" + nome + ModeloService.NomeService + ".cs";
+            var nomeDaInterfaceTeste = nome + ModeloTeste.NomeTeste + ".cs";
 
-            caminhoServices = Path.Combine(caminhoServices, nomeDaInterfaceService);
+            caminhoTestes = Path.Combine(caminhoTestes, nomeDaInterfaceTeste);
 
-            var nameSpace = ModeloService.Namespace(projectNome, nomeSolucao, nomePlural);
+            var nameSpace = ModeloTeste.Namespace(projectNome, nomeSolucao, nomePlural);
 
-            var servicebase = ModeloService.IService(nameSpace, nome);
+            var testebase = ModeloTeste.Teste(nameSpace, nome, nomePlural, listaDeCampos);
 
-            if (!File.Exists(caminhoServices))
-                using (var file = File.Create(caminhoServices))
+            if (!File.Exists(caminhoTestes))
+                using (var file = File.Create(caminhoTestes))
                 {
                     file.Close();
                 }
 
-            File.WriteAllText(caminhoServices, servicebase);
+            File.WriteAllText(caminhoTestes, testebase);
         }
 
+        private static void CriarEntidadeDto(string projectNome, string nomeSolucao, string nomePlural, string nome,
+          string tipoChave, IEnumerable<CampoEntidade> listaDeCampos, string caminhoDtos)
+        {
+            var pastaRaiz = caminhoDtos + "\\";
+
+            var entityFolder = ModeloEntidade.NomePastaEntidade;
+
+            var caminho = pastaRaiz + entityFolder;
+
+            var caminhoNovo = Path.Combine(pastaRaiz, caminho);
+
+            Directory.CreateDirectory(caminhoNovo);
+
+            var nomeDaDto = ModeloEntidade.NomePastaEntidade + "Dto" + ".cs";
+
+            caminhoNovo = Path.Combine(caminhoNovo, nomeDaDto);
+
+            var nameSpace = ModeloDtos.Namespace(projectNome, nomeSolucao, nomePlural, ModeloEntidade.NomePastaEntidade);
+
+            var dtobase = ModeloDtos.Entidade(nameSpace, listaDeCampos, nome, tipoChave);
+
+            if (!File.Exists(caminhoNovo))
+                using (var file = File.Create(caminhoNovo))
+                {
+                    file.Close();
+                }
+
+            File.WriteAllText(caminhoNovo, dtobase);
+        }
 
     }
 }

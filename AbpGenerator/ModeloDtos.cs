@@ -245,5 +245,28 @@ namespace AbpGenerator
         }";
             return dtoBase;
         }
+
+        public static string Entidade(string nameSpace, IEnumerable<CampoEntidade> listaDeCampos, string nome,
+           string tipoChave)
+        {
+            var dtoBase = @"
+        using System;
+        using System.Collections.Generic;
+        using System.ComponentModel;
+        using System.ComponentModel.DataAnnotations;
+        using System.Text.RegularExpressions;
+        using Abp.Runtime.Validation;
+        using Abp.UI;
+
+        namespace " + nameSpace + @"
+        {
+            public class " + nome + @"Dto : EntityDto<" + tipoChave + @">
+            {" +
+                          MontaCamposDto(listaDeCampos).TrimEnd() + @"
+            }
+        }";
+            return dtoBase;
+        }
+
     }
 }
