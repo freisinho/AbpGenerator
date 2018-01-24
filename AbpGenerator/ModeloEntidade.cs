@@ -12,20 +12,20 @@ namespace AbpGenerator
             List<CampoEntidade> listaDeCampos)
         {
             var entidadeBase = @"
-        using System.ComponentModel.DataAnnotations;
-        using System.ComponentModel.DataAnnotations.Schema;
-        using Abp.Domain.Entities;
-        using Abp.Domain.Entities.Auditing;
+using System.ComponentModel.DataAnnotations;
+using System.ComponentModel.DataAnnotations.Schema;
+using Abp.Domain.Entities;
+using Abp.Domain.Entities.Auditing;
 
-        namespace " + nameSpace + @"
-        {
-            [Table(""" + MontaNomeTabelaBanco(sigla, gravacaoBanco, nomeEntidade) + @""")]
-            public class " + nomeEntidade + @" : FullAuditedEntity<" + tipoChave + @">" +
-                               MontaInterfaces(interfacesComplementares) + MontaTenant(filtroTenant) + @"
-            {" +
-                               MontaCamposDaEntidade(listaDeCampos, filtroTenant).TrimEnd() + @"
-            }
-        }";
+namespace " + nameSpace + @"
+{
+    [Table(""" + MontaNomeTabelaBanco(sigla, gravacaoBanco, nomeEntidade) + @""")]
+    public class " + nomeEntidade + @" : FullAuditedEntity<" + tipoChave + @">" +
+                       MontaInterfaces(interfacesComplementares) + MontaTenant(filtroTenant) + @"
+    {" +
+                       MontaCamposDaEntidade(listaDeCampos, filtroTenant).TrimEnd() + @"
+    }
+}";
 
             return entidadeBase;
         }

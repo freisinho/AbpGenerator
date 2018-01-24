@@ -90,7 +90,8 @@ namespace AbpGenerator
                 NomeSolucao.Text,
                 NomeEntidade.Text,
                 NomeClassePlural.Text,
-                tenant);
+                tenant,
+                NomeSolucao.Text);
 
             GerenciarPastas.CriaTestes(
               NomeProjeto.Text,

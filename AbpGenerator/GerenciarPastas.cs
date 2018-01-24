@@ -202,7 +202,7 @@ namespace AbpGenerator
         }
 
         private static void CriaService(string projectNome, string nomeSolucao, string nome, string nomePlural,
-            string tenant)
+            string tenant, string nomeAplicacao)
         {
             nome = char.ToUpper(nome[0]) + nome.Substring(1);
 
@@ -226,7 +226,7 @@ namespace AbpGenerator
 
             var nameSpace = ModeloService.Namespace(projectNome, nomeSolucao, nomePlural);
 
-            var servicebase = ModeloService.Service(nameSpace, nome, nomePlural, tenant);
+            var servicebase = ModeloService.Service(nameSpace, nome, nomePlural, tenant, nome);
 
             if (!File.Exists(caminhoServices))
                 using (var file = File.Create(caminhoServices))
@@ -503,10 +503,10 @@ namespace AbpGenerator
         }
 
         public static void CriaInterfaceImplementacaoService(string projectNome, string nomeSolucao, string nome,
-            string nomePlural, string tenant)
+            string nomePlural, string tenant, string nomeAplicacao)
         {
             CriaInterfaceService(projectNome, nomeSolucao, nome, nomePlural);
-            CriaService(projectNome, nomeSolucao, nome, nomePlural, tenant);
+            CriaService(projectNome, nomeSolucao, nome, nomePlural, tenant, nomeAplicacao);
         }
 
         private static void CriarObterPorIdOutputDto(string projectNome, string nomeSolucao, string nomePlural,
