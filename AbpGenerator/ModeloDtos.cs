@@ -48,44 +48,41 @@ namespace AbpGenerator
         public static string CriarInput(string nameSpace, IEnumerable<CampoEntidade> listaDeCampos)
         {
             var dtoBase = @"
-        using System;
-        using System.ComponentModel.DataAnnotations;
-        using System.Text.RegularExpressions;
-        using Abp.Application.Services.Dto;
-        using Abp.Runtime.Validation;
-        using Abp.UI;
+using System;
+using Abp.Application.Services.Dto;
+using Abp.Runtime.Validation;
 
-        namespace " + nameSpace + @"
-        {
-            public class CriarInput : ICustomValidate
-            {" +
-                          MontaCamposDto(listaDeCampos).TrimEnd() + @"
-         
-              public void AddValidationErrors(CustomValidationContext context)
-              {
-              }
-            }
-        }";
+namespace " + nameSpace + @"
+{
+    public class CriarInput : ICustomValidate
+    {" +
+                  MontaCamposDto(listaDeCampos).TrimEnd() + @"
+ 
+      public void AddValidationErrors(CustomValidationContext context)
+      {
+      }
+    }
+}";
             return dtoBase;
         }
 
-        public static string AtualizarInput(string nameSpace, IEnumerable<CampoEntidade> listaDeCampos)
+        public static string AtualizarInput(string nameSpace, IEnumerable<CampoEntidade> listaDeCampos, string tipoChave)
         {
             var dtoBase = @"
-        using System;
-        using System.ComponentModel.DataAnnotations;
-        using System.Text.RegularExpressions;
-        using Abp.Application.Services.Dto;
-        using Abp.Runtime.Validation;
-        using Abp.UI;
+using System;
+using Abp.Runtime.Validation;
+using Abp.Application.Services.Dto;
 
-        namespace " + nameSpace + @"
+namespace " + nameSpace + @"
+{
+    public class AtualizarInput : EntityDto<" + tipoChave + @">,ICustomValidate
+    {" +
+                  MontaCamposDto(listaDeCampos).TrimEnd() + @"
+        public void AddValidationErrors(CustomValidationContext context)
         {
-            public class AtualizarInput
-            {" +
-                          MontaCamposDto(listaDeCampos).TrimEnd() + @"
-            }
-        }";
+        }
+    }
+}";
             return dtoBase;
         }
 
@@ -93,20 +90,16 @@ namespace AbpGenerator
             string tipoChave)
         {
             var dtoBase = @"
-        using System;
-        using System.ComponentModel.DataAnnotations;
-        using System.Text.RegularExpressions;
-        using Abp.Application.Services.Dto;
-        using Abp.Runtime.Validation;
-        using Abp.UI;
+using System;
+using Abp.Application.Services.Dto;
 
-        namespace " + nameSpace + @"
-        {
-            public class AtualizarOutput : EntityDto<" + tipoChave + @">
-            {" +
-                          MontaCamposDto(listaDeCampos).TrimEnd() + @"
-            }
-        }";
+namespace " + nameSpace + @"
+{
+    public class AtualizarOutput : EntityDto<" + tipoChave + @">
+    {" +
+                  MontaCamposDto(listaDeCampos).TrimEnd() + @"
+    }
+}";
             return dtoBase;
         }
 

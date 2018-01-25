@@ -10,6 +10,11 @@ namespace AbpGenerator
 
         public static string Teste(string nameSpace, string nome, string nomePlural, IEnumerable<CampoEntidade> listaDeCampos)
         {
+            var namespaceDtos = nameSpace.Replace(".Tests", "");
+            namespaceDtos = namespaceDtos.Replace(NomePastaTeste, "Dtos");
+
+
+
             var campoEntidades = listaDeCampos as CampoEntidade[] ?? listaDeCampos.ToArray();
             var service = @"
 using System.Data.Entity;
@@ -19,11 +24,13 @@ using Abp.AutoMapper;
 using Abp.Domain.Repositories;
 using Shouldly;
 using Xunit;
-using " + nameSpace.Replace(NomePastaTeste, "Dtos") + @".Criar;
-using " + nameSpace.Replace(NomePastaTeste, "Dtos") + @".Deletar;
-using " + nameSpace.Replace(NomePastaTeste, "Dtos") + @".Entidade;
-using " + nameSpace.Replace(NomePastaTeste, "Dtos") + @".Obter;
-using " + nameSpace.Replace(NomePastaTeste, "Dtos") + @".Atualizar;
+using " + namespaceDtos.Replace(".Dtos", "") + @".Application;
+using " + namespaceDtos + @".Criar;
+using " + namespaceDtos + @".Atualizar;
+using " + namespaceDtos + @".Deletar;
+using " + namespaceDtos + @".Obter;
+using " + namespaceDtos.Replace(".Dtos", "") + @".Entidade;
+using " + nameSpace.Replace(NomePastaTeste, "Builder") + @";
 
 namespace " + nameSpace + @"
 {
@@ -36,6 +43,8 @@ namespace " + nameSpace + @"
         public " + nome + @"AppServiceTests()
         {
             _servico" + nome + @" = Resolve<I" + nome + @"AppService>();
+            _repositorio" + nome + @" = Resolve<IRepository<" + nome + @", long>>();
+
         }
 
         [Fact]
@@ -45,16 +54,16 @@ namespace " + nameSpace + @"
                                         .DataBuilder()
                                         .Build();
 
-            var " + nome.ToLower() + @"Input = ObjectMapper.Map<CreateInput>(" + nome.ToLower() + @"Dto);
+            var " + nome.ToLower() + @"Input = " + nome.ToLower() + @"Dto.MapTo<CriarInput>();
 
             await _servico" + nome + @".Criar(" + nome.ToLower() + @"Input);
 
             UsingDbContext(context =>
             {
-            var " + nomePlural + @" = context." + nomePlural + @";
-            var " + nome.ToLower() + " = " + nomePlural + @".FirstOrDefaultAsync().Result;
+            var " + nomePlural.ToLower() + @" = context." + nomePlural + @";
+            var " + nome.ToLower() + " = " + nomePlural.ToLower() + @".FirstOrDefaultAsync().Result;
 
-            " + nome.ToLower() + @"s.Count().ShouldBe(NumeroDe" + nome + @");
+            " + nomePlural.ToLower() + @".Count().ShouldBe(" + nome + "Constants.NumeroDe" + nome + @");
             " + nome.ToLower() + @".ShouldNotBeNull();" +
             MontaCamposTeste(campoEntidades, nome, "", nome + "Constants.") + @"
             });
@@ -70,7 +79,6 @@ namespace " + nameSpace + @"
 
             var " + nome.ToLower() + @"Output = await _servico" + nome + @"
                                         .ObterPorId(new ObterPorIdInput { Id = " + nome.ToLower() + @"Id });
-
 
             " + nome.ToLower() + @"Output.ShouldNotBeNull();" +
             MontaCamposTeste(campoEntidades, nome, "Output", nome + "Constants.").TrimEnd() + @"
@@ -111,16 +119,16 @@ namespace " + nameSpace + @"
 
             " + MontaNomeAtualizacao(campoEntidades, nome, "Dto") + @"
 
-            var " + nome.ToLower() + @"Input = ObjectMapper.Map<AtualizarInput>(" + nome.ToLower() + @"Dto);
+            var " + nome.ToLower() + @"Input = " + nome.ToLower() + @"Dto.MapTo<AtualizarInput>();
 
             await _servico" + nome + @".Atualizar(" + nome.ToLower() + @"Input);
 
             UsingDbContext(context =>
             {
-            var " + nomePlural + @" = context." + nomePlural + @";
-            var " + nome.ToLower() + " = " + nomePlural + @".FirstOrDefaultAsync().Result;
+            var " + nomePlural.ToLower() + @" = context." + nomePlural + @";
+            var " + nome.ToLower() + " = " + nomePlural.ToLower() + @".FirstOrDefaultAsync().Result;
 
-            " + nome.ToLower() + @"s.Count().ShouldBe(NumeroDe" + nome + @");
+            " + nomePlural.ToLower() + @".Count().ShouldBe(" + nome + "Constants.NumeroDe" + nome + @");
             " + nome.ToLower() + @".ShouldNotBeNull();" +
             MontaCamposTeste(campoEntidades, nome, "", nome + "Constants." + "Novo") + @"
             });
@@ -143,9 +151,9 @@ namespace " + nameSpace + @"
             var " + nomePlural.ToLower() + @" = (await _servico" + nome + @".ObterTodos())." + nomePlural + @";
 
             " + nomePlural.ToLower() + @".ShouldNotBeNull();
-            " + nomePlural.ToLower() + @".Count().ShouldBe(2);
-            " + nomePlural.ToLower() + @"[0].Id.ShouldBe(1);
-            " + nomePlural.ToLower() + @"[1].Id.ShouldBe(2);
+            " + nomePlural.ToLower() + @".Count.ShouldBe(2);
+            " + nomePlural.ToLower() + @"[0].Id.ShouldBe(idUm);
+            " + nomePlural.ToLower() + @"[1].Id.ShouldBe(idDois);
 
             " + MontaCamposTeste(campoEntidades, nomePlural.ToLower(), "[0]", nome + "Constants.").TrimEnd() + @"
             " + MontaCamposTeste(campoEntidades, nomePlural.ToLower(), "[1]", nome + "Constants.").TrimEnd() + @"
@@ -207,7 +215,7 @@ namespace " + nameSpace + @"
 
         public static string Namespace(string projectNome, string nomeSolucao, string nomePlural)
         {
-            var name = projectNome + "." + nomeSolucao + "." + nomePlural + "." + NomePastaTeste;
+            var name = projectNome + "." + nomeSolucao + ".Tests." + nomePlural + "." + NomePastaTeste;
             return name;
         }
     }

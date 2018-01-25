@@ -154,7 +154,7 @@ namespace AbpGenerator
 
             var nameSpace = ModeloManager.Namespace(projectNome, nomeSolucao, nomePlural);
 
-            var managerbase = ModeloManager.Manager(nameSpace, nome, tipoDaChave);
+            var managerbase = ModeloManager.Manager(nameSpace, nome, tipoDaChave, nomeSolucao);
 
             if (!File.Exists(caminhoManagers))
                 using (var file = File.Create(caminhoManagers))
@@ -190,7 +190,7 @@ namespace AbpGenerator
 
             var nameSpace = ModeloManager.Namespace(projectNome, nomeSolucao, nomePlural);
 
-            var managerbase = ModeloManager.IManager(nameSpace, nome, tipoDaChave);
+            var managerbase = ModeloManager.IManager(nameSpace, nome, tipoDaChave, nomeSolucao);
 
             if (!File.Exists(caminhoManagers))
                 using (var file = File.Create(caminhoManagers))
@@ -226,7 +226,7 @@ namespace AbpGenerator
 
             var nameSpace = ModeloService.Namespace(projectNome, nomeSolucao, nomePlural);
 
-            var servicebase = ModeloService.Service(nameSpace, nome, nomePlural, tenant, nome);
+            var servicebase = ModeloService.Service(nameSpace, nome, nomePlural, tenant, nomeAplicacao);
 
             if (!File.Exists(caminhoServices))
                 using (var file = File.Create(caminhoServices))
@@ -306,7 +306,7 @@ namespace AbpGenerator
 
             CriarItemOutputDto(projectNome, nomeSolucao, nomePlural, nome, tipoDaChave, listaDeCampos, caminhoDtos);
 
-            CriarAtualizarInputDto(projectNome, nomeSolucao, nomePlural, listaDeCampos, caminhoDtos);
+            CriarAtualizarInputDto(projectNome, nomeSolucao, nomePlural, listaDeCampos, caminhoDtos, tipoDaChave);
 
             CriarAtualizarOutputDto(projectNome, nomeSolucao, nomePlural, tipoDaChave, listaDeCampos, caminhoDtos);
 
@@ -323,7 +323,7 @@ namespace AbpGenerator
         }
 
         private static void CriarAtualizarInputDto(string projectNome, string nomeSolucao, string nomePlural,
-            IEnumerable<CampoEntidade> listaDeCampos, string caminhoDtos)
+            IEnumerable<CampoEntidade> listaDeCampos, string caminhoDtos, string tipoChave)
         {
             var pastaRaiz = caminhoDtos + "\\";
 
@@ -341,7 +341,7 @@ namespace AbpGenerator
 
             var nameSpace = ModeloDtos.Namespace(projectNome, nomeSolucao, nomePlural, ModeloDtos.AtualizarPastaNome);
 
-            var dtobase = ModeloDtos.AtualizarInput(nameSpace, listaDeCampos);
+            var dtobase = ModeloDtos.AtualizarInput(nameSpace, listaDeCampos, tipoChave);
 
             if (!File.Exists(caminhoNovo))
                 using (var file = File.Create(caminhoNovo))

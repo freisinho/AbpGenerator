@@ -38,6 +38,9 @@ namespace " + nameSpace + @"
         {
             var stringTenant = "";
 
+            var namespaceEntidade = nameSpace.Replace("." + nomeAplicacao, "") + ";";
+            namespaceEntidade = nameSpace.Replace(NomePastaService, "Entidade") + ";";
+
 
             if (tenant != "")
                 stringTenant = nomeEntidade.ToLower() + @".TenantId = AbpSession.GetTenantId();";
@@ -53,8 +56,8 @@ using " + nameSpace.Replace(NomePastaService, "Dtos") + @".Deletar;
 using " + nameSpace.Replace(NomePastaService, "Dtos") + @".Entidade;
 using " + nameSpace.Replace(NomePastaService, "Dtos") + @".Obter;
 using " + nameSpace.Replace(NomePastaService, "Dtos") + @".Atualizar;
-using " + nameSpace.Replace(NomePastaService, "") + @".Entidade;
-using " + nameSpace.Replace(NomePastaService, "") + @".Manager;
+using " + namespaceEntidade + @"
+using " + nameSpace.Replace(NomePastaService, "") + @"Manager;
 
 namespace " + nameSpace + @"
 {

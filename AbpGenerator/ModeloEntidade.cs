@@ -12,6 +12,7 @@ namespace AbpGenerator
             List<CampoEntidade> listaDeCampos)
         {
             var entidadeBase = @"
+using System;
 using System.ComponentModel.DataAnnotations;
 using System.ComponentModel.DataAnnotations.Schema;
 using Abp.Domain.Entities;
@@ -61,14 +62,14 @@ namespace " + nameSpace + @"
 
         private static string MontaCamposDaEntidade(IEnumerable<CampoEntidade> listaDeCampos, string tenant)
         {
-            var campos = listaDeCampos.Aggregate("\n              ",
-                (current, campo) => current + RetornaDeclaracaoDoTipo(campo) + "\n              ");
+            var campos = listaDeCampos.Aggregate("\n        ",
+                (current, campo) => current + RetornaDeclaracaoDoTipo(campo) + "\n        ");
 
             if (tenant == "IMustHaveTenant")
-                campos = campos + Utils.DeclaracaoCampo.Replace("insereAqui", "int TenantId") + "\n              ";
+                campos = campos + Utils.DeclaracaoCampo.Replace("insereAqui", "int TenantId") + "\n        ";
 
             if (tenant == "IMayHaveTenant")
-                campos = campos + Utils.DeclaracaoCampo.Replace("insereAqui", "int? TenantId") + "\n              ";
+                campos = campos + Utils.DeclaracaoCampo.Replace("insereAqui", "int? TenantId") + "\n        ";
 
             return campos;
         }

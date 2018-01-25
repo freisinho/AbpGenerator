@@ -4,13 +4,16 @@
     {
         public static string NomePastaManager { get; } = @"Manager";
 
-        public static string IManager(string nameSpace, string nomeEntidade, string tipoChave)
+        public static string IManager(string nameSpace, string nomeEntidade, string tipoChave, string nomeAplicacao)
         {
+            var nameSpaceEntidade = nameSpace.Replace("Manager", "Entidade");
+
+
             var iManager = @"
 using System.Collections.Generic;
 using System.Threading.Tasks;
 using Abp.Domain.Services;
-using " + nameSpace.Replace("Manager", "Entidade") + @";
+using " + nameSpaceEntidade + @";
 
 namespace " + nameSpace + @"
 {
@@ -31,13 +34,16 @@ namespace " + nameSpace + @"
             return iManager;
         }
 
-        public static string Manager(string nameSpace, string nomeEntidade, string tipoChave)
+        public static string Manager(string nameSpace, string nomeEntidade, string tipoChave, string nomeAplicacao)
         {
+            var nameSpaceEntidade = nameSpace.Replace("Manager", "Entidade");
             var manager = @"
 using System.Collections.Generic;
+using System.Data.Entity;
+using System.Linq;
 using System.Threading.Tasks;
 using Abp.Domain.Repositories;
-using " + nameSpace.Replace("Manager", "Entidade") + @";
+using " + nameSpaceEntidade + @";
 
 namespace " + nameSpace + @"
 {
@@ -60,8 +66,14 @@ namespace " + nameSpace + @"
         public async Task<" + nomeEntidade + ">" + @" Atualizar(" + nomeEntidade + " " + nomeEntidade.ToLower() +
                           @")
         {
-            " + nomeEntidade.ToLower() + @".CreationTime = (await _repositorio" + nomeEntidade +
-                          @".FirstOrDefaultAsync(" + nomeEntidade.ToLower() + @".Id)).CreationTime;
+  var creationTime = await _repositorio" + nomeEntidade + @"
+                .GetAll().Where(" + nomeEntidade.ToLower() + @"Item => " + nomeEntidade.ToLower() + @"Item.Id == " + nomeEntidade.ToLower() + @".Id)
+                .AsNoTracking()
+                .Select(entidade => entidade.CreationTime)
+                .SingleAsync();
+
+            " + nomeEntidade.ToLower() + @".CreationTime = creationTime;
+
             return await _repositorio" + nomeEntidade + @".UpdateAsync(" + nomeEntidade.ToLower() + @");
         }
 
