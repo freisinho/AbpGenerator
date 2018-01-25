@@ -29,20 +29,7 @@ namespace AbpGenerator
             var tenant = FiltroTenant();
             var lista = ConverteTabelaDeCamposParaLista();
 
-            GerenciarPastas.CriaEntidade(
-                NomeProjeto.Text,
-                NomeSolucao.Text,
-                NomeEntidade.Text,
-                NomeClassePlural.Text,
-                SiglaAplicacao.Text,
-                siglaGravacao,
-                TipoChavePrimaria.Text,
-                InterfacesComplementares.Text,
-                tenant,
-                lista
-                );
-
-            GerenciarPastas.CriaBuilder(
+            GerenciarPastas.AbpGenerator(
                NomeProjeto.Text,
                NomeSolucao.Text,
                NomeEntidade.Text,
@@ -55,51 +42,77 @@ namespace AbpGenerator
                lista
                );
 
+            //GerenciarPastas.CriaCamadaManager(
+            //    NomeProjeto.Text,
+            //    NomeSolucao.Text,
+            //    NomeEntidade.Text,
+            //    NomeClassePlural.Text,
+            //    SiglaAplicacao.Text,
+            //    siglaGravacao,
+            //    TipoChavePrimaria.Text,
+            //    InterfacesComplementares.Text,
+            //    tenant,
+            //    lista
+            //    );
 
-            GerenciarPastas.CriaConstantsBuilder(
-               NomeProjeto.Text,
-               NomeSolucao.Text,
-               NomeEntidade.Text,
-               NomeClassePlural.Text,
-               SiglaAplicacao.Text,
-               siglaGravacao,
-               TipoChavePrimaria.Text,
-               InterfacesComplementares.Text,
-               tenant,
-               lista
-               );
+            //GerenciarPastas.CriaBuilder(
+            //   NomeProjeto.Text,
+            //   NomeSolucao.Text,
+            //   NomeEntidade.Text,
+            //   NomeClassePlural.Text,
+            //   SiglaAplicacao.Text,
+            //   siglaGravacao,
+            //   TipoChavePrimaria.Text,
+            //   InterfacesComplementares.Text,
+            //   tenant,
+            //   lista
+            //   );
 
-            GerenciarPastas.CriaDtos(
-                NomeProjeto.Text,
-                NomeSolucao.Text,
-                NomeClassePlural.Text,
-                NomeEntidade.Text,
-                TipoChavePrimaria.Text,
-                lista
-            );
 
-            GerenciarPastas.CriaInterfaceImplementacaoManager(
-                NomeProjeto.Text,
-                NomeSolucao.Text,
-                NomeEntidade.Text,
-                NomeClassePlural.Text,
-                TipoChavePrimaria.Text);
+            //GerenciarPastas.CriaConstants(
+            //   NomeProjeto.Text,
+            //   NomeSolucao.Text,
+            //   NomeEntidade.Text,
+            //   NomeClassePlural.Text,
+            //   SiglaAplicacao.Text,
+            //   siglaGravacao,
+            //   TipoChavePrimaria.Text,
+            //   InterfacesComplementares.Text,
+            //   tenant,
+            //   lista
+            //   );
 
-            GerenciarPastas.CriaInterfaceImplementacaoService(
-                NomeProjeto.Text,
-                NomeSolucao.Text,
-                NomeEntidade.Text,
-                NomeClassePlural.Text,
-                tenant,
-                NomeSolucao.Text);
+            //GerenciarPastas.CriaDtos(
+            //    NomeProjeto.Text,
+            //    NomeSolucao.Text,
+            //    NomeClassePlural.Text,
+            //    NomeEntidade.Text,
+            //    TipoChavePrimaria.Text,
+            //    lista
+            //);
 
-            GerenciarPastas.CriaTestes(
-              NomeProjeto.Text,
-              NomeSolucao.Text,
-              NomeEntidade.Text,
-              NomeClassePlural.Text,
-              lista
-              );
+            ////GerenciarPastas.CriaInterfaceImplementacaoManager(
+            ////    NomeProjeto.Text,
+            ////    NomeSolucao.Text,
+            ////    NomeEntidade.Text,
+            ////    NomeClassePlural.Text,
+            ////    TipoChavePrimaria.Text);
+
+            //GerenciarPastas.CriaInterfaceImplementacaoService(
+            //    NomeProjeto.Text,
+            //    NomeSolucao.Text,
+            //    NomeEntidade.Text,
+            //    NomeClassePlural.Text,
+            //    tenant,
+            //    NomeSolucao.Text);
+
+            //GerenciarPastas.CriaTestes(
+            //  NomeProjeto.Text,
+            //  NomeSolucao.Text,
+            //  NomeEntidade.Text,
+            //  NomeClassePlural.Text,
+            //  lista
+            //  );
 
             MessageBox.Show(Resources.ArquivoCriadoComSucesso_);
         }

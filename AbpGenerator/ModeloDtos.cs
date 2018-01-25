@@ -34,8 +34,8 @@ namespace AbpGenerator
 
         private static string MontaCamposDto(IEnumerable<CampoEntidade> listaDeCampos)
         {
-            return listaDeCampos.Aggregate("\n              ",
-                (current, campo) => current + RetornaDeclaracaoDoTipo(campo) + "\n              ");
+            return listaDeCampos.Aggregate("\n        ",
+                (current, campo) => current + RetornaDeclaracaoDoTipo(campo) + "\n        ");
         }
 
         private static string RetornaDeclaracaoDoTipo(CampoEntidade campo)
@@ -47,9 +47,8 @@ namespace AbpGenerator
 
         public static string CriarInput(string nameSpace, IEnumerable<CampoEntidade> listaDeCampos)
         {
-            var dtoBase = @"
-using System;
-using Abp.Application.Services.Dto;
+            var dtoBase =
+@"using System;
 using Abp.Runtime.Validation;
 
 namespace " + nameSpace + @"
@@ -58,9 +57,9 @@ namespace " + nameSpace + @"
     {" +
                   MontaCamposDto(listaDeCampos).TrimEnd() + @"
  
-      public void AddValidationErrors(CustomValidationContext context)
-      {
-      }
+        public void AddValidationErrors(CustomValidationContext context)
+        {
+        }
     }
 }";
             return dtoBase;
@@ -68,8 +67,8 @@ namespace " + nameSpace + @"
 
         public static string AtualizarInput(string nameSpace, IEnumerable<CampoEntidade> listaDeCampos, string tipoChave)
         {
-            var dtoBase = @"
-using System;
+            var dtoBase =
+@"using System;
 using Abp.Runtime.Validation;
 using Abp.Application.Services.Dto;
 
@@ -89,8 +88,8 @@ namespace " + nameSpace + @"
         public static string AtualizarOutput(string nameSpace, IEnumerable<CampoEntidade> listaDeCampos,
             string tipoChave)
         {
-            var dtoBase = @"
-using System;
+            var dtoBase =
+@"using System;
 using Abp.Application.Services.Dto;
 
 namespace " + nameSpace + @"
@@ -106,8 +105,8 @@ namespace " + nameSpace + @"
         public static string ItemOutput(string nameSpace, IEnumerable<CampoEntidade> listaDeCampos, string nome,
             string tipoChave)
         {
-            var dtoBase = @"
-using System;
+            var dtoBase =
+@"using System;
 using Abp.Application.Services.Dto;
 
 namespace " + nameSpace + @"
@@ -122,12 +121,12 @@ namespace " + nameSpace + @"
 
         public static string CriarOutput(string nameSpace, string tipoChave)
         {
-            var dtoBase = @"
-namespace " + nameSpace + @"
+            var dtoBase =
+@"namespace " + nameSpace + @"
 {
     public class CriarOutput
     {
-      public " + tipoChave + @" Id { get; set; }
+        public " + tipoChave + @" Id { get; set; }
     }
 }";
             return dtoBase;
@@ -135,8 +134,8 @@ namespace " + nameSpace + @"
 
         public static string ObterTodosOutput(string nameSpace, string nomePlural)
         {
-            var dtoBase = @"
-using System.Collections.Generic;
+            var dtoBase =
+@"using System.Collections.Generic;
 using " + nameSpace.Replace(ObterPastaNome, ModeloEntidade.NomePastaEntidade) + @";
 
 namespace " + nameSpace + @"
@@ -152,8 +151,8 @@ namespace " + nameSpace + @"
         public static string ObterPorIdOutput(string nameSpace, IEnumerable<CampoEntidade> listaDeCampos,
             string tipoChave)
         {
-            var dtoBase = @"
-using System;
+            var dtoBase =
+@"using System;
 using Abp.Application.Services.Dto;
 
 namespace " + nameSpace + @"
@@ -168,8 +167,8 @@ namespace " + nameSpace + @"
 
         public static string ObterPorIdInput(string nameSpace, string tipoChave)
         {
-            var dtoBase = @"
-namespace " + nameSpace + @"
+            var dtoBase =
+@"namespace " + nameSpace + @"
 {
     public class ObterPorIdInput
     {
@@ -181,8 +180,8 @@ namespace " + nameSpace + @"
 
         public static string DeletarInput(string nameSpace, string tipoChave)
         {
-            var dtoBase = @"
-namespace " + nameSpace + @"
+            var dtoBase =
+@"namespace " + nameSpace + @"
 {
     public class DeletarInput
     {
@@ -194,8 +193,8 @@ namespace " + nameSpace + @"
 
         public static string DeletarOutput(string nameSpace)
         {
-            var dtoBase = @"
-namespace " + nameSpace + @"
+            var dtoBase =
+@"namespace " + nameSpace + @"
 {
     public class DeletarOutput
     {
@@ -207,8 +206,8 @@ namespace " + nameSpace + @"
         public static string Entidade(string nameSpace, IEnumerable<CampoEntidade> listaDeCampos, string nome,
            string tipoChave)
         {
-            var dtoBase = @"
-using System;
+            var dtoBase =
+@"using System;
 using Abp.Application.Services.Dto;
 
 namespace " + nameSpace + @"

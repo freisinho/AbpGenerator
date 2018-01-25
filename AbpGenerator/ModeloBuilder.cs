@@ -17,13 +17,14 @@ namespace AbpGenerator
             namespaceEntidade = namespaceEntidade.Replace("Tests.", "");
 
             var campoEntidades = listaDeCampos as CampoEntidade[] ?? listaDeCampos.ToArray();
-            var builderBase = @"
-using System;
+            var builderBase =
+@"using System;
 using System.Threading.Tasks;
 using Abp.AutoMapper;
 using Abp.Domain.Repositories;
 " + namespaceEntidadeDto + @";
 " + namespaceEntidade + @";
+using " + nameSpace.Replace("Builder", "Utils") + @";
 
 namespace " + nameSpace + @"
 {
@@ -37,21 +38,21 @@ namespace " + nameSpace + @"
         public " + nome + @"Dto " + nome + @"Dto { get; set; }
 
         public " + nome + NomePastaBuilder + @" DataBuilder(
-        " + MontaCamposDaBuilder(campoEntidades, nome).TrimEnd() + @")
+                             " + MontaCamposDaBuilder(campoEntidades).TrimEnd() + @")
         {
-            " + MontaDtoBuilder(campoEntidades, nome) + @"
+    " + MontaDtoBuilder(campoEntidades, nome) + @"
             return this;
         }
 
-        public " + nome + @"Dto Build()
-        {
-            return " + nome + @"Dto;
-        }
+public " + nome + @"Dto Build()
+{
+    return " + nome + @"Dto;
+}
     }
 
     public static class " + nome + @"Persist
     {
-        public static async Task<" + tipoChave + @"> Persist (this " + nome + @"Dto " + nome.ToLower() +
+        public static async Task<" + tipoChave + @"> Persist(this " + nome + @"Dto " + nome.ToLower() +
                       @"Dto, IRepository< " + nome + @"," + tipoChave + @"> repository)
         {
             var " + nome.ToLower() + " = " + nome.ToLower() + @"Dto.MapTo<" + nome + @">();
@@ -66,14 +67,13 @@ namespace " + nameSpace + @"
         }
 
 
-        public static string BuilderConst(string nameSpace, string nome, string tipoChave, string sigla, string gravacaoBanco,
-           string interfacesComplementares, string filtroTenant, IEnumerable<CampoEntidade> listaDeCampos)
+        public static string BuilderConst(string nameSpace, string nome, IEnumerable<CampoEntidade> listaDeCampos)
         {
             var campoEntidades = listaDeCampos as CampoEntidade[] ?? listaDeCampos.ToArray();
             var builderBase = @"
 using System;
 
-namespace " + nameSpace + @"
+namespace " + nameSpace.Replace(NomePastaBuilder, "Utils") + @"
 {
     public class " + nome + @"Constants
     {
@@ -106,15 +106,15 @@ namespace " + nameSpace + @"
                    char.ToUpper(campo.Nome[0]) + campo.Nome.Substring(1) + ";";
         }
 
-        private static string MontaCamposDaBuilder(IEnumerable<CampoEntidade> listaDeCampos, string nome)
+        private static string MontaCamposDaBuilder(IEnumerable<CampoEntidade> listaDeCampos)
         {
             var campos = listaDeCampos.Aggregate("",
-                (current, campo) => current + RetornaDeclaracaoDoTipo(campo, nome) + "\n            ");
+                (current, campo) => current + RetornaDeclaracaoDoTipo(campo) + "\n                             ");
 
             return campos;
         }
 
-        private static string RetornaDeclaracaoDoTipo(CampoEntidade campo, string nome)
+        private static string RetornaDeclaracaoDoTipo(CampoEntidade campo)
         {
             switch (campo.Tipo)
             {

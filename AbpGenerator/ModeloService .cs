@@ -7,8 +7,8 @@
 
         public static string IService(string nameSpace, string nomeEntidade)
         {
-            var iService = @"
-using System.Threading.Tasks;
+            var iService =
+@"using System.Threading.Tasks;
 using " + nameSpace.Replace(NomePastaService, "Dtos") + @".Criar;
 using " + nameSpace.Replace(NomePastaService, "Dtos") + @".Deletar;
 using " + nameSpace.Replace(NomePastaService, "Dtos") + @".Obter;
@@ -46,8 +46,8 @@ namespace " + nameSpace + @"
                 stringTenant = nomeEntidade.ToLower() + @".TenantId = AbpSession.GetTenantId();";
 
 
-            var service = @"
-using System.Collections.Generic;
+            var service =
+@"using System.Collections.Generic;
 using System.Threading.Tasks;
 using Abp.AutoMapper;
 using Abp.Runtime.Session;

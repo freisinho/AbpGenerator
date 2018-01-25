@@ -16,8 +16,8 @@ namespace AbpGenerator
 
 
             var campoEntidades = listaDeCampos as CampoEntidade[] ?? listaDeCampos.ToArray();
-            var service = @"
-using System.Data.Entity;
+            var service =
+@"using System.Data.Entity;
 using System.Linq.Dynamic.Core;
 using System.Threading.Tasks;
 using Abp.AutoMapper;
@@ -31,6 +31,7 @@ using " + namespaceDtos + @".Deletar;
 using " + namespaceDtos + @".Obter;
 using " + namespaceDtos.Replace(".Dtos", "") + @".Entidade;
 using " + nameSpace.Replace(NomePastaTeste, "Builder") + @";
+using " + nameSpace.Replace(NomePastaTeste, "Utils") + @";
 
 namespace " + nameSpace + @"
 {
@@ -60,11 +61,11 @@ namespace " + nameSpace + @"
 
             UsingDbContext(context =>
             {
-            var " + nomePlural.ToLower() + @" = context." + nomePlural + @";
-            var " + nome.ToLower() + " = " + nomePlural.ToLower() + @".FirstOrDefaultAsync().Result;
+                var " + nomePlural.ToLower() + @" = context." + nomePlural + @";
+                var " + nome.ToLower() + " = " + nomePlural.ToLower() + @".FirstOrDefaultAsync().Result;
 
-            " + nomePlural.ToLower() + @".Count().ShouldBe(" + nome + "Constants.NumeroDe" + nome + @");
-            " + nome.ToLower() + @".ShouldNotBeNull();" +
+                " + nomePlural.ToLower() + @".Count().ShouldBe(" + nome + "Constants.NumeroDe" + nome + @");
+                " + nome.ToLower() + @".ShouldNotBeNull();" +
             MontaCamposTeste(campoEntidades, nome, "", nome + "Constants.") + @"
             });
         }
@@ -96,9 +97,9 @@ namespace " + nameSpace + @"
 
             UsingDbContext(context =>
            {
-           var " + nome.ToLower() + @"Output = context." + nomePlural + @".FirstOrDefaultAsync(" + nome.ToLower() + @" => " + nome.ToLower() + @".Id == " + nome.ToLower() + @"Id && " + nome.ToLower() + @".IsDeleted).Result;
+                var " + nome.ToLower() + @"Output = context." + nomePlural + @".FirstOrDefaultAsync(" + nome.ToLower() + @" => " + nome.ToLower() + @".Id == " + nome.ToLower() + @"Id && " + nome.ToLower() + @".IsDeleted).Result;
 
-            " + nome.ToLower() + @"Output.ShouldNotBeNull();" +
+                " + nome.ToLower() + @"Output.ShouldNotBeNull();" +
             MontaCamposTeste(campoEntidades, nome, "Output", nome + "Constants.") + @"
            });
         }
@@ -116,20 +117,18 @@ namespace " + nameSpace + @"
                                         .Build();
 
             " + nome.ToLower() + @"Dto.Id = " + nome.ToLower() + @"Id;
-
             " + MontaNomeAtualizacao(campoEntidades, nome, "Dto") + @"
-
             var " + nome.ToLower() + @"Input = " + nome.ToLower() + @"Dto.MapTo<AtualizarInput>();
 
             await _servico" + nome + @".Atualizar(" + nome.ToLower() + @"Input);
 
             UsingDbContext(context =>
             {
-            var " + nomePlural.ToLower() + @" = context." + nomePlural + @";
-            var " + nome.ToLower() + " = " + nomePlural.ToLower() + @".FirstOrDefaultAsync().Result;
+                var " + nomePlural.ToLower() + @" = context." + nomePlural + @";
+                var " + nome.ToLower() + " = " + nomePlural.ToLower() + @".FirstOrDefaultAsync().Result;
 
-            " + nomePlural.ToLower() + @".Count().ShouldBe(" + nome + "Constants.NumeroDe" + nome + @");
-            " + nome.ToLower() + @".ShouldNotBeNull();" +
+                " + nomePlural.ToLower() + @".Count().ShouldBe(" + nome + "Constants.NumeroDe" + nome + @");
+                " + nome.ToLower() + @".ShouldNotBeNull();" +
             MontaCamposTeste(campoEntidades, nome, "", nome + "Constants." + "Novo") + @"
             });
         }
@@ -166,8 +165,8 @@ namespace " + nameSpace + @"
 
         private static string MontaCamposTeste(IEnumerable<CampoEntidade> listaDeCampos, string nome, string precedente, string finalNomeDoCampo)
         {
-            var campos = listaDeCampos.Aggregate("\n            ",
-                (current, campo) => current + RetornaDeclaracaoDoTipo(campo, nome, precedente, finalNomeDoCampo) + "\n            ");
+            var campos = listaDeCampos.Aggregate("\n                ",
+                (current, campo) => current + RetornaDeclaracaoDoTipo(campo, nome, precedente, finalNomeDoCampo) + "\n                ");
 
             return campos;
         }
@@ -202,8 +201,8 @@ namespace " + nameSpace + @"
 
         private static string MontaNomeAtualizacao(IEnumerable<CampoEntidade> listaDeCampos, string nome, string precedente)
         {
-            var campos = listaDeCampos.Aggregate("\n            ",
-                (current, campo) => current + RetornaAtualizacao(campo, nome, precedente) + "\n            ");
+            var campos = listaDeCampos.Aggregate("\n                ",
+                (current, campo) => current + RetornaAtualizacao(campo, nome, precedente) + "\n                ");
 
             return campos;
         }

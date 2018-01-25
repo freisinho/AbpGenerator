@@ -9,11 +9,10 @@ namespace AbpGenerator
 
         public static string Entidade(string nameSpace, string nomeEntidade, string tipoChave, string sigla,
             string gravacaoBanco, string interfacesComplementares, string filtroTenant,
-            List<CampoEntidade> listaDeCampos)
+            IEnumerable<CampoEntidade> listaDeCampos)
         {
-            var entidadeBase = @"
-using System;
-using System.ComponentModel.DataAnnotations;
+            var entidadeBase =
+@"using System;
 using System.ComponentModel.DataAnnotations.Schema;
 using Abp.Domain.Entities;
 using Abp.Domain.Entities.Auditing;

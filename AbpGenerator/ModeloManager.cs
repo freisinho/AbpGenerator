@@ -9,8 +9,8 @@
             var nameSpaceEntidade = nameSpace.Replace("Manager", "Entidade");
 
 
-            var iManager = @"
-using System.Collections.Generic;
+            var iManager =
+@"using System.Collections.Generic;
 using System.Threading.Tasks;
 using Abp.Domain.Services;
 using " + nameSpaceEntidade + @";
@@ -37,8 +37,8 @@ namespace " + nameSpace + @"
         public static string Manager(string nameSpace, string nomeEntidade, string tipoChave, string nomeAplicacao)
         {
             var nameSpaceEntidade = nameSpace.Replace("Manager", "Entidade");
-            var manager = @"
-using System.Collections.Generic;
+            var manager =
+@"using System.Collections.Generic;
 using System.Data.Entity;
 using System.Linq;
 using System.Threading.Tasks;
@@ -66,7 +66,7 @@ namespace " + nameSpace + @"
         public async Task<" + nomeEntidade + ">" + @" Atualizar(" + nomeEntidade + " " + nomeEntidade.ToLower() +
                           @")
         {
-  var creationTime = await _repositorio" + nomeEntidade + @"
+            var creationTime = await _repositorio" + nomeEntidade + @"
                 .GetAll().Where(" + nomeEntidade.ToLower() + @"Item => " + nomeEntidade.ToLower() + @"Item.Id == " + nomeEntidade.ToLower() + @".Id)
                 .AsNoTracking()
                 .Select(entidade => entidade.CreationTime)
