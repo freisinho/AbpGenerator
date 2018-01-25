@@ -34,8 +34,8 @@ namespace AbpGenerator
 
         private static string MontaCamposDto(IEnumerable<CampoEntidade> listaDeCampos)
         {
-            return listaDeCampos.Aggregate("\n              ",
-                (current, campo) => current + RetornaDeclaracaoDoTipo(campo) + "\n              ");
+            return listaDeCampos.Aggregate("\n        ",
+                (current, campo) => current + RetornaDeclaracaoDoTipo(campo) + "\n        ");
         }
 
         private static string RetornaDeclaracaoDoTipo(CampoEntidade campo)
@@ -47,224 +47,176 @@ namespace AbpGenerator
 
         public static string CriarInput(string nameSpace, IEnumerable<CampoEntidade> listaDeCampos)
         {
-            var dtoBase = @"
-        using System;
-        using System.ComponentModel.DataAnnotations;
-        using System.Text.RegularExpressions;
-        using Abp.Application.Services.Dto;
-        using Abp.Runtime.Validation;
-        using Abp.UI;
+            var dtoBase =
+@"using System;
+using Abp.Runtime.Validation;
 
-        namespace " + nameSpace + @"
+namespace " + nameSpace + @"
+{
+    public class CriarInput : ICustomValidate
+    {" +
+                  MontaCamposDto(listaDeCampos).TrimEnd() + @"
+ 
+        public void AddValidationErrors(CustomValidationContext context)
         {
-            public class CriarInput : ICustomValidate
-            {" +
-                          MontaCamposDto(listaDeCampos).TrimEnd() + @"
-         
-              public void AddValidationErrors(CustomValidationContext context)
-              {
-              }
-            }
-        }";
+        }
+    }
+}";
             return dtoBase;
         }
 
-        public static string AtualizarInput(string nameSpace, IEnumerable<CampoEntidade> listaDeCampos)
+        public static string AtualizarInput(string nameSpace, IEnumerable<CampoEntidade> listaDeCampos, string tipoChave)
         {
-            var dtoBase = @"
-        using System;
-        using System.ComponentModel.DataAnnotations;
-        using System.Text.RegularExpressions;
-        using Abp.Application.Services.Dto;
-        using Abp.Runtime.Validation;
-        using Abp.UI;
+            var dtoBase =
+@"using System;
+using Abp.Runtime.Validation;
+using Abp.Application.Services.Dto;
 
-        namespace " + nameSpace + @"
+namespace " + nameSpace + @"
+{
+    public class AtualizarInput : EntityDto<" + tipoChave + @">,ICustomValidate
+    {" +
+                  MontaCamposDto(listaDeCampos).TrimEnd() + @"
+        public void AddValidationErrors(CustomValidationContext context)
         {
-            public class AtualizarInput
-            {" +
-                          MontaCamposDto(listaDeCampos).TrimEnd() + @"
-            }
-        }";
+        }
+    }
+}";
             return dtoBase;
         }
 
         public static string AtualizarOutput(string nameSpace, IEnumerable<CampoEntidade> listaDeCampos,
             string tipoChave)
         {
-            var dtoBase = @"
-        using System;
-        using System.ComponentModel.DataAnnotations;
-        using System.Text.RegularExpressions;
-        using Abp.Application.Services.Dto;
-        using Abp.Runtime.Validation;
-        using Abp.UI;
+            var dtoBase =
+@"using System;
+using Abp.Application.Services.Dto;
 
-        namespace " + nameSpace + @"
-        {
-            public class AtualizarOutput : EntityDto<" + tipoChave + @">
-            {" +
-                          MontaCamposDto(listaDeCampos).TrimEnd() + @"
-            }
-        }";
+namespace " + nameSpace + @"
+{
+    public class AtualizarOutput : EntityDto<" + tipoChave + @">
+    {" +
+                  MontaCamposDto(listaDeCampos).TrimEnd() + @"
+    }
+}";
             return dtoBase;
         }
 
         public static string ItemOutput(string nameSpace, IEnumerable<CampoEntidade> listaDeCampos, string nome,
             string tipoChave)
         {
-            var dtoBase = @"
-        using System;
-        using System.Collections.Generic;
-        using System.ComponentModel;
-        using System.ComponentModel.DataAnnotations;
-        using System.Text.RegularExpressions;
-        using Abp.Runtime.Validation;
-        using Abp.UI;
+            var dtoBase =
+@"using System;
+using Abp.Application.Services.Dto;
 
-        namespace " + nameSpace + @"
-        {
-            public class ItemOutput : EntityDto<" + tipoChave + @">
-            {" +
-                          MontaCamposDto(listaDeCampos).TrimEnd() + @"
-            }
-        }";
+namespace " + nameSpace + @"
+{
+    public class ItemOutput : EntityDto<" + tipoChave + @">
+    {" +
+                  MontaCamposDto(listaDeCampos).TrimEnd() + @"
+    }
+}";
             return dtoBase;
         }
 
         public static string CriarOutput(string nameSpace, string tipoChave)
         {
-            var dtoBase = @"
-        using System;
-        using System.ComponentModel.DataAnnotations;
-        using System.Text.RegularExpressions;
-        using Abp.Application.Services.Dto;
-        using Abp.Runtime.Validation;
-        using Abp.UI;
-
-        namespace " + nameSpace + @"
-        {
-            public class CriarOutput
-            {
-              public " + tipoChave + @" Id { get; set; }
-            }
-        }";
+            var dtoBase =
+@"namespace " + nameSpace + @"
+{
+    public class CriarOutput
+    {
+        public " + tipoChave + @" Id { get; set; }
+    }
+}";
             return dtoBase;
         }
 
         public static string ObterTodosOutput(string nameSpace, string nomePlural)
         {
-            var dtoBase = @"
-        using System;
-        using System.ComponentModel.DataAnnotations;
-        using System.Text.RegularExpressions;
-        using Abp.Application.Services.Dto;
-        using Abp.Runtime.Validation;
-        using Abp.UI;
-        using " + nameSpace.Replace(ObterPastaNome, ModeloEntidade.NomePastaEntidade) + @";
+            var dtoBase =
+@"using System.Collections.Generic;
+using " + nameSpace.Replace(ObterPastaNome, ModeloEntidade.NomePastaEntidade) + @";
 
-        namespace " + nameSpace + @"
-        {
-            public class ObterTodosOutput
-            {
-                public IList<ItemOutput> " + nomePlural + @" { get; set; }
-            }
-        }";
+namespace " + nameSpace + @"
+{
+    public class ObterTodosOutput
+    {
+        public IList<ItemOutput> " + nomePlural + @" { get; set; }
+    }
+}";
             return dtoBase;
         }
 
         public static string ObterPorIdOutput(string nameSpace, IEnumerable<CampoEntidade> listaDeCampos,
             string tipoChave)
         {
-            var dtoBase = @"
-        using System;
-        using System.ComponentModel.DataAnnotations;
-        using System.Text.RegularExpressions;
-        using Abp.Application.Services.Dto;
-        using Abp.Runtime.Validation;
-        using Abp.UI;
+            var dtoBase =
+@"using System;
+using Abp.Application.Services.Dto;
 
-        namespace " + nameSpace + @"
-        {
-            public class ObterPorIdOutput : EntityDto<" + tipoChave + @">
-            {" +
-                          MontaCamposDto(listaDeCampos).TrimEnd() + @"
-            }
-        }";
+namespace " + nameSpace + @"
+{
+    public class ObterPorIdOutput : EntityDto<" + tipoChave + @">
+    {" +
+                  MontaCamposDto(listaDeCampos).TrimEnd() + @"
+    }
+}";
             return dtoBase;
         }
 
         public static string ObterPorIdInput(string nameSpace, string tipoChave)
         {
-            var dtoBase = @"
-        using System;
-        using System.ComponentModel.DataAnnotations;
-        using System.Text.RegularExpressions;
-        using Abp.Application.Services.Dto;
-        using Abp.Runtime.Validation;
-        using Abp.UI;
-
-        namespace " + nameSpace + @"
-        {
-            public class ObterPorIdInput
-            {
-                public " + tipoChave + @" Id { get; set; }
-            }
-        }";
+            var dtoBase =
+@"namespace " + nameSpace + @"
+{
+    public class ObterPorIdInput
+    {
+        public " + tipoChave + @" Id { get; set; }
+    }
+}";
             return dtoBase;
         }
 
         public static string DeletarInput(string nameSpace, string tipoChave)
         {
-            var dtoBase = @"
-        using System;
-        using System.ComponentModel.DataAnnotations;
-        using System.Text.RegularExpressions;
-        using Abp.Application.Services.Dto;
-        using Abp.Runtime.Validation;
-        using Abp.UI;
-
-        namespace " + nameSpace + @"
-        {
-            public class DeletarInput
-            {
-                public " + tipoChave + @" Id { get; set; }
-            }
-        }";
+            var dtoBase =
+@"namespace " + nameSpace + @"
+{
+    public class DeletarInput
+    {
+        public " + tipoChave + @" Id { get; set; }
+    }
+}";
             return dtoBase;
         }
 
         public static string DeletarOutput(string nameSpace)
         {
-            var dtoBase = @"
-        namespace " + nameSpace + @"
-        {
-            public class DeletarOutput
-            {
-            }
-        }";
+            var dtoBase =
+@"namespace " + nameSpace + @"
+{
+    public class DeletarOutput
+    {
+    }
+}";
             return dtoBase;
         }
 
         public static string Entidade(string nameSpace, IEnumerable<CampoEntidade> listaDeCampos, string nome,
            string tipoChave)
         {
-            var dtoBase = @"
-        using System;
-        using System.Collections.Generic;
-        using System.ComponentModel;
-        using System.ComponentModel.DataAnnotations;
-        using System.Text.RegularExpressions;
-        using Abp.Runtime.Validation;
-        using Abp.UI;
+            var dtoBase =
+@"using System;
+using Abp.Application.Services.Dto;
 
-        namespace " + nameSpace + @"
-        {
-            public class " + nome + @"Dto : EntityDto<" + tipoChave + @">
-            {" +
-                          MontaCamposDto(listaDeCampos).TrimEnd() + @"
-            }
-        }";
+namespace " + nameSpace + @"
+{
+    public class " + nome + @"Dto : EntityDto<" + tipoChave + @">
+    {" +
+                  MontaCamposDto(listaDeCampos).TrimEnd() + @"
+    }
+}";
             return dtoBase;
         }
 

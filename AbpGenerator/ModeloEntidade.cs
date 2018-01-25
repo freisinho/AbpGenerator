@@ -9,23 +9,23 @@ namespace AbpGenerator
 
         public static string Entidade(string nameSpace, string nomeEntidade, string tipoChave, string sigla,
             string gravacaoBanco, string interfacesComplementares, string filtroTenant,
-            List<CampoEntidade> listaDeCampos)
+            IEnumerable<CampoEntidade> listaDeCampos)
         {
-            var entidadeBase = @"
-        using System.ComponentModel.DataAnnotations;
-        using System.ComponentModel.DataAnnotations.Schema;
-        using Abp.Domain.Entities;
-        using Abp.Domain.Entities.Auditing;
+            var entidadeBase =
+@"using System;
+using System.ComponentModel.DataAnnotations.Schema;
+using Abp.Domain.Entities;
+using Abp.Domain.Entities.Auditing;
 
-        namespace " + nameSpace + @"
-        {
-            [Table(""" + MontaNomeTabelaBanco(sigla, gravacaoBanco, nomeEntidade) + @""")]
-            public class " + nomeEntidade + @" : FullAuditedEntity<" + tipoChave + @">" +
-                               MontaInterfaces(interfacesComplementares) + MontaTenant(filtroTenant) + @"
-            {" +
-                               MontaCamposDaEntidade(listaDeCampos, filtroTenant).TrimEnd() + @"
-            }
-        }";
+namespace " + nameSpace + @"
+{
+    [Table(""" + MontaNomeTabelaBanco(sigla, gravacaoBanco, nomeEntidade) + @""")]
+    public class " + nomeEntidade + @" : FullAuditedEntity<" + tipoChave + @">" +
+                       MontaInterfaces(interfacesComplementares) + MontaTenant(filtroTenant) + @"
+    {" +
+                       MontaCamposDaEntidade(listaDeCampos, filtroTenant).TrimEnd() + @"
+    }
+}";
 
             return entidadeBase;
         }
@@ -61,14 +61,14 @@ namespace AbpGenerator
 
         private static string MontaCamposDaEntidade(IEnumerable<CampoEntidade> listaDeCampos, string tenant)
         {
-            var campos = listaDeCampos.Aggregate("\n              ",
-                (current, campo) => current + RetornaDeclaracaoDoTipo(campo) + "\n              ");
+            var campos = listaDeCampos.Aggregate("\n        ",
+                (current, campo) => current + RetornaDeclaracaoDoTipo(campo) + "\n        ");
 
             if (tenant == "IMustHaveTenant")
-                campos = campos + Utils.DeclaracaoCampo.Replace("insereAqui", "int TenantId") + "\n              ";
+                campos = campos + Utils.DeclaracaoCampo.Replace("insereAqui", "int TenantId") + "\n        ";
 
             if (tenant == "IMayHaveTenant")
-                campos = campos + Utils.DeclaracaoCampo.Replace("insereAqui", "int? TenantId") + "\n              ";
+                campos = campos + Utils.DeclaracaoCampo.Replace("insereAqui", "int? TenantId") + "\n        ";
 
             return campos;
         }
