@@ -34,12 +34,12 @@ namespace " + nameSpace + @"
             return iManager;
         }
 
-        public static string Manager(string nameSpace, string nomeEntidade, string tipoChave, string nomeAplicacao)
+        public static string Manager(string nameSpace, string nomeEntidade, string tipoChave, string nomeAplicacao, bool isCore)
         {
             var nameSpaceEntidade = nameSpace.Replace("Manager", "Entidade");
             var manager =
 @"using System.Collections.Generic;
-using System.Data.Entity;
+"+ (!isCore ? @"using System.Data.Entity;" : "using Microsoft.EntityFrameworkCore;") + @"
 using System.Linq;
 using System.Threading.Tasks;
 using Abp.Domain.Repositories;

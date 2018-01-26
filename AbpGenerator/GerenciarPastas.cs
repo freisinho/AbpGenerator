@@ -7,34 +7,35 @@ namespace AbpGenerator
     {
         public static void AbpGenerator(string projectNome, string nomeSolucao, string nome, string nomePlural,
      string sigla, string gravacaoBanco, string tipoDaChave, string interfacesComplementares, string tenant,
-     List<CampoEntidade> listaDeCampos)
+     List<CampoEntidade> listaDeCampos, bool isCore)
         {
+            var version = isCore ? "Core" : "MVC";
             nome = char.ToUpper(nome[0]) + nome.Substring(1);
 
-            nomePlural = char.ToUpper(nomePlural[0]) + nomePlural.Substring(1);
+            nomePlural = (char.ToUpper(nomePlural[0]) + nomePlural.Substring(1));
 
-            sigla = char.ToUpper(sigla[0]) + sigla.Substring(1);
+            sigla = (char.ToUpper(sigla[0]) + sigla.Substring(1));
 
             nomeSolucao = char.ToUpper(nomeSolucao[0]) + nomeSolucao.Substring(1);
 
             var pastaRaiz = Utils.PastaRaizArquivos;
 
-            var pastaCamada = pastaRaiz + nomePlural;
+            var pastaCamada = pastaRaiz + nomePlural + version;
 
             var caminho = Path.Combine(pastaRaiz, pastaCamada);
 
             Directory.CreateDirectory(caminho);
 
-            CriaCamadaManager(projectNome, nomeSolucao, nome, nomePlural, sigla, gravacaoBanco, tipoDaChave, interfacesComplementares, tenant, listaDeCampos, caminho);
+            CriaCamadaManager(projectNome, nomeSolucao, nome, nomePlural, sigla, gravacaoBanco, tipoDaChave, interfacesComplementares, tenant, listaDeCampos, caminho, isCore);
 
-            CriaCamadaApplication(projectNome, nomeSolucao, nome, nomePlural, tenant, caminho, tipoDaChave, listaDeCampos);
+            CriaCamadaApplication(projectNome, nomeSolucao, nome, nomePlural, tenant, caminho, tipoDaChave, listaDeCampos, isCore);
 
-            CriaTeste(projectNome, nomeSolucao, nome, nomePlural, sigla, gravacaoBanco, tipoDaChave, interfacesComplementares, tenant, listaDeCampos, caminho);
+            CriaTeste(projectNome, nomeSolucao, nome, nomePlural, sigla, gravacaoBanco, tipoDaChave, interfacesComplementares, tenant, listaDeCampos, caminho, isCore);
         }
 
         private static void CriaCamadaManager(string projectNome, string nomeSolucao, string nome, string nomePlural,
           string sigla, string gravacaoBanco, string tipoDaChave, string interfacesComplementares, string tenant,
-          List<CampoEntidade> listaDeCampos, string pastaRaiz)
+          List<CampoEntidade> listaDeCampos, string pastaRaiz, bool isCore)
         {
 
             var pasta = pastaRaiz + @"\" + ModeloManager.NomePastaManager;
@@ -45,11 +46,11 @@ namespace AbpGenerator
 
 
             CriaEntidade(projectNome, nomeSolucao, nome, nomePlural, sigla, gravacaoBanco, tipoDaChave, interfacesComplementares, tenant, listaDeCampos, caminho);
-            CriaManager(projectNome, nomeSolucao, nome, nomePlural, tipoDaChave, caminho);
+            CriaManager(projectNome, nomeSolucao, nome, nomePlural, tipoDaChave, caminho, isCore);
             CriaInterfaceManager(projectNome, nomeSolucao, nome, nomePlural, tipoDaChave, caminho);
         }
 
-        private static void CriaCamadaApplication(string projectNome, string nomeSolucao, string nome, string nomePlural, string tenant, string pastaRaiz, string tipoDaChave, List<CampoEntidade> listaDeCampos)
+        private static void CriaCamadaApplication(string projectNome, string nomeSolucao, string nome, string nomePlural, string tenant, string pastaRaiz, string tipoDaChave, List<CampoEntidade> listaDeCampos, bool isCore)
         {
             var pasta = pastaRaiz + @"\" + ModeloService.NomePastaService;
 
@@ -57,14 +58,14 @@ namespace AbpGenerator
 
             Directory.CreateDirectory(caminho);
 
-            CriaService(projectNome, nomeSolucao, nome, nomePlural, tenant, nomeSolucao, caminho);
+            CriaService(projectNome, nomeSolucao, nome, nomePlural, tenant, nomeSolucao, caminho, isCore);
             CriaInterfaceService(projectNome, nomeSolucao, nome, nomePlural, caminho);
             CriaDtos(projectNome, nomeSolucao, nomePlural, nome, tipoDaChave, listaDeCampos, caminho);
         }
 
         private static void CriaTeste(string projectNome, string nomeSolucao, string nome, string nomePlural,
           string sigla, string gravacaoBanco, string tipoDaChave, string interfacesComplementares, string tenant,
-          List<CampoEntidade> listaDeCampos, string pastaRaiz)
+          List<CampoEntidade> listaDeCampos, string pastaRaiz, bool isCore)
         {
             var pasta = pastaRaiz + @"\" + ModeloTeste.NomePastaTeste;
 
@@ -72,7 +73,7 @@ namespace AbpGenerator
 
             Directory.CreateDirectory(caminho);
 
-            CriaTestes(projectNome, nomeSolucao, nome, nomePlural, listaDeCampos, caminho);
+            CriaTestes(projectNome, nomeSolucao, nome, nomePlural, listaDeCampos, caminho, isCore);
             ConstroiBuilder(projectNome, nomeSolucao, nome, nomePlural, sigla, gravacaoBanco, tipoDaChave, interfacesComplementares, tenant, listaDeCampos, caminho);
             CriaUtils(projectNome, nomeSolucao, nome, nomePlural, listaDeCampos, caminho);
 
@@ -113,7 +114,7 @@ namespace AbpGenerator
         }
 
         private static void CriaManager(string projectNome, string nomeSolucao, string nome, string nomePlural,
-          string tipoDaChave, string caminho)
+          string tipoDaChave, string caminho, bool isCore)
         {
             var caminhoEntidades = caminho + @"\" + nomePlural;
 
@@ -131,7 +132,7 @@ namespace AbpGenerator
 
             var nameSpace = ModeloManager.Namespace(projectNome, nomeSolucao, nomePlural);
 
-            var managerbase = ModeloManager.Manager(nameSpace, nome, tipoDaChave, nomeSolucao);
+            var managerbase = ModeloManager.Manager(nameSpace, nome, tipoDaChave, nomeSolucao, isCore);
 
             if (!File.Exists(caminhoArquivo))
                 using (var file = File.Create(caminhoArquivo))
@@ -238,7 +239,7 @@ namespace AbpGenerator
 
 
         private static void CriaService(string projectNome, string nomeSolucao, string nome, string nomePlural,
-            string tenant, string nomeAplicacao, string caminho)
+            string tenant, string nomeAplicacao, string caminho, bool isCore)
         {
             var caminhoEntidades = caminho + @"\" + nomePlural;
 
@@ -256,7 +257,7 @@ namespace AbpGenerator
 
             var nameSpace = ModeloService.Namespace(projectNome, nomeSolucao, nomePlural);
 
-            var servicebase = ModeloService.Service(nameSpace, nome, nomePlural, tenant, nomeAplicacao);
+            var servicebase = ModeloService.Service(nameSpace, nome, nomePlural, tenant, nomeAplicacao, projectNome, isCore);
 
             if (!File.Exists(caminhoArquivo))
                 using (var file = File.Create(caminhoArquivo))
@@ -309,7 +310,7 @@ namespace AbpGenerator
 
             Directory.CreateDirectory(caminhoArquivo);
 
-            CriarInputDto(projectNome, nomeSolucao, nomePlural, listaDeCampos, caminhoArquivo);
+            CriarInputDto(projectNome, nomeSolucao, nomePlural, listaDeCampos, caminhoArquivo, nome);
 
             CriarOutputDto(projectNome, nomeSolucao, nomePlural, caminhoArquivo, tipoDaChave);
 
@@ -317,13 +318,13 @@ namespace AbpGenerator
 
             CriarItemOutputDto(projectNome, nomeSolucao, nomePlural, nome, tipoDaChave, listaDeCampos, caminhoArquivo);
 
-            CriarAtualizarInputDto(projectNome, nomeSolucao, nomePlural, listaDeCampos, caminhoArquivo, tipoDaChave);
+            CriarAtualizarInputDto(projectNome, nomeSolucao, nomePlural, listaDeCampos, caminhoArquivo, tipoDaChave, nome);
 
-            CriarAtualizarOutputDto(projectNome, nomeSolucao, nomePlural, tipoDaChave, listaDeCampos, caminhoArquivo);
+            CriarAtualizarOutputDto(projectNome, nomeSolucao, nomePlural, tipoDaChave, listaDeCampos, caminhoArquivo, nome);
 
             CriarObterPorIdOutputDto(projectNome, nomeSolucao, nomePlural, tipoDaChave, listaDeCampos, caminhoArquivo);
 
-            CriarObterPorIdInputDto(projectNome, nomeSolucao, nomePlural, tipoDaChave, caminhoArquivo);
+            CriarObterPorIdInputDto(projectNome, nomeSolucao, nomePlural, tipoDaChave, caminhoArquivo, nome);
 
             CriarDeletarInputDto(projectNome, nomeSolucao, nomePlural, tipoDaChave, caminhoArquivo);
 
@@ -334,7 +335,7 @@ namespace AbpGenerator
         }
 
         private static void CriarAtualizarInputDto(string projectNome, string nomeSolucao, string nomePlural,
-            IEnumerable<CampoEntidade> listaDeCampos, string caminhoDtos, string tipoChave)
+            IEnumerable<CampoEntidade> listaDeCampos, string caminhoDtos, string tipoChave, string nome)
         {
             var pastaRaiz = caminhoDtos + "\\";
 
@@ -352,7 +353,7 @@ namespace AbpGenerator
 
             var nameSpace = ModeloDtos.Namespace(projectNome, nomeSolucao, nomePlural, ModeloDtos.AtualizarPastaNome);
 
-            var dtobase = ModeloDtos.AtualizarInput(nameSpace, listaDeCampos, tipoChave);
+            var dtobase = ModeloDtos.AtualizarInput(nameSpace, listaDeCampos, tipoChave, nome);
 
             if (!File.Exists(caminhoNovo))
                 using (var file = File.Create(caminhoNovo))
@@ -364,7 +365,7 @@ namespace AbpGenerator
         }
 
         private static void CriarAtualizarOutputDto(string projectNome, string nomeSolucao, string nomePlural,
-            string tipoChave, IEnumerable<CampoEntidade> listaDeCampos, string caminhoDtos)
+            string tipoChave, IEnumerable<CampoEntidade> listaDeCampos, string caminhoDtos, string nome)
         {
             var pastaRaiz = caminhoDtos + "\\";
 
@@ -382,7 +383,7 @@ namespace AbpGenerator
 
             var nameSpace = ModeloDtos.Namespace(projectNome, nomeSolucao, nomePlural, ModeloDtos.AtualizarPastaNome);
 
-            var dtobase = ModeloDtos.AtualizarOutput(nameSpace, listaDeCampos, tipoChave);
+            var dtobase = ModeloDtos.AtualizarOutput(nameSpace, listaDeCampos, tipoChave, nome);
 
             if (!File.Exists(caminhoNovo))
                 using (var file = File.Create(caminhoNovo))
@@ -424,7 +425,7 @@ namespace AbpGenerator
         }
 
         private static void CriarInputDto(string projectNome, string nomeSolucao, string nomePlural,
-            IEnumerable<CampoEntidade> listaDeCampos, string caminhoDtos)
+            IEnumerable<CampoEntidade> listaDeCampos, string caminhoDtos, string nome)
         {
             var pastaRaiz = caminhoDtos + "\\";
 
@@ -442,7 +443,7 @@ namespace AbpGenerator
 
             var nameSpace = ModeloDtos.Namespace(projectNome, nomeSolucao, nomePlural, ModeloDtos.CriarPastaNome);
 
-            var dtobase = ModeloDtos.CriarInput(nameSpace, listaDeCampos);
+            var dtobase = ModeloDtos.CriarInput(nameSpace, listaDeCampos, nome);
 
             if (!File.Exists(caminhoNovo))
                 using (var file = File.Create(caminhoNovo))
@@ -545,7 +546,7 @@ namespace AbpGenerator
         }
 
         private static void CriarObterPorIdInputDto(string projectNome, string nomeSolucao, string nomePlural,
-            string tipoChave, string caminhoDtos)
+            string tipoChave, string caminhoDtos, string nome)
         {
             var pastaRaiz = caminhoDtos + "\\";
 
@@ -563,7 +564,7 @@ namespace AbpGenerator
 
             var nameSpace = ModeloDtos.Namespace(projectNome, nomeSolucao, nomePlural, ModeloDtos.ObterPastaNome);
 
-            var dtobase = ModeloDtos.ObterPorIdInput(nameSpace, tipoChave);
+            var dtobase = ModeloDtos.ObterPorIdInput(nameSpace, tipoChave, nome);
 
             if (!File.Exists(caminhoNovo))
                 using (var file = File.Create(caminhoNovo))
@@ -634,7 +635,7 @@ namespace AbpGenerator
             File.WriteAllText(caminhoNovo, dtobase);
         }
 
-        private static void CriaTestes(string projectNome, string nomeSolucao, string nome, string nomePlural, IEnumerable<CampoEntidade> listaDeCampos, string caminho)
+        private static void CriaTestes(string projectNome, string nomeSolucao, string nome, string nomePlural, IEnumerable<CampoEntidade> listaDeCampos, string caminho, bool isCore)
         {
             var caminhoEntidades = caminho + @"\" + nomePlural;
 
@@ -652,7 +653,7 @@ namespace AbpGenerator
 
             var nameSpace = ModeloTeste.Namespace(projectNome, nomeSolucao, nomePlural);
 
-            var testebase = ModeloTeste.Teste(nameSpace, nome, nomePlural, listaDeCampos);
+            var testebase = ModeloTeste.Teste(nameSpace, nome, nomePlural, listaDeCampos, projectNome, isCore);
 
             if (!File.Exists(caminhoArquivo))
                 using (var file = File.Create(caminhoArquivo))

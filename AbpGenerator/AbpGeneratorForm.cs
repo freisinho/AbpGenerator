@@ -27,6 +27,9 @@ namespace AbpGenerator
             var siglaGravacao = SiglaBancoGravacao();
 
             var tenant = FiltroTenant();
+
+            var isCoreChecked = FrameworkSelecionado();
+
             var lista = ConverteTabelaDeCamposParaLista();
 
             GerenciarPastas.AbpGenerator(
@@ -39,80 +42,9 @@ namespace AbpGenerator
                TipoChavePrimaria.Text,
                InterfacesComplementares.Text,
                tenant,
-               lista
+               lista,
+               isCoreChecked
                );
-
-            //GerenciarPastas.CriaCamadaManager(
-            //    NomeProjeto.Text,
-            //    NomeSolucao.Text,
-            //    NomeEntidade.Text,
-            //    NomeClassePlural.Text,
-            //    SiglaAplicacao.Text,
-            //    siglaGravacao,
-            //    TipoChavePrimaria.Text,
-            //    InterfacesComplementares.Text,
-            //    tenant,
-            //    lista
-            //    );
-
-            //GerenciarPastas.CriaBuilder(
-            //   NomeProjeto.Text,
-            //   NomeSolucao.Text,
-            //   NomeEntidade.Text,
-            //   NomeClassePlural.Text,
-            //   SiglaAplicacao.Text,
-            //   siglaGravacao,
-            //   TipoChavePrimaria.Text,
-            //   InterfacesComplementares.Text,
-            //   tenant,
-            //   lista
-            //   );
-
-
-            //GerenciarPastas.CriaConstants(
-            //   NomeProjeto.Text,
-            //   NomeSolucao.Text,
-            //   NomeEntidade.Text,
-            //   NomeClassePlural.Text,
-            //   SiglaAplicacao.Text,
-            //   siglaGravacao,
-            //   TipoChavePrimaria.Text,
-            //   InterfacesComplementares.Text,
-            //   tenant,
-            //   lista
-            //   );
-
-            //GerenciarPastas.CriaDtos(
-            //    NomeProjeto.Text,
-            //    NomeSolucao.Text,
-            //    NomeClassePlural.Text,
-            //    NomeEntidade.Text,
-            //    TipoChavePrimaria.Text,
-            //    lista
-            //);
-
-            ////GerenciarPastas.CriaInterfaceImplementacaoManager(
-            ////    NomeProjeto.Text,
-            ////    NomeSolucao.Text,
-            ////    NomeEntidade.Text,
-            ////    NomeClassePlural.Text,
-            ////    TipoChavePrimaria.Text);
-
-            //GerenciarPastas.CriaInterfaceImplementacaoService(
-            //    NomeProjeto.Text,
-            //    NomeSolucao.Text,
-            //    NomeEntidade.Text,
-            //    NomeClassePlural.Text,
-            //    tenant,
-            //    NomeSolucao.Text);
-
-            //GerenciarPastas.CriaTestes(
-            //  NomeProjeto.Text,
-            //  NomeSolucao.Text,
-            //  NomeEntidade.Text,
-            //  NomeClassePlural.Text,
-            //  lista
-            //  );
 
             MessageBox.Show(Resources.ArquivoCriadoComSucesso_);
         }
@@ -120,6 +52,11 @@ namespace AbpGenerator
         private string SiglaBancoGravacao()
         {
             return LeituraEscritaCheck.Checked ? Utils.ApenasLeitura : Utils.LeituraEscrita;
+        }
+
+        private bool FrameworkSelecionado()
+        {
+            return isCore.Checked;
         }
 
         private string FiltroTenant()
@@ -212,6 +149,34 @@ namespace AbpGenerator
                 lista.Add(campoTemp);
             }
             return lista;
+        }
+
+        private void panel1_Paint(object sender, PaintEventArgs e)
+        {
+
+        }
+
+        private void isCore_CheckedChanged(object sender, EventArgs e)
+        {
+            if (!isCore.Checked) return;
+
+            NomeProjeto.Text = "Soitic";
+            NomeSolucao.Text = "Metra";
+            SiglaAplicacao.Text = "Mt";
+            TipoChavePrimaria.Text = "long";
+            isAspNet.Checked = false;
+        }
+
+        private void isAspNet_CheckedChanged(object sender, EventArgs e)
+        {
+
+            if (!isAspNet.Checked) return;
+            NomeProjeto.Text = "Soitic.Solution";
+            TipoChavePrimaria.Text = "long";
+            NomeSolucao.Text = "";
+            SiglaAplicacao.Text = "";
+
+            isCore.Checked = false;
         }
     }
 }

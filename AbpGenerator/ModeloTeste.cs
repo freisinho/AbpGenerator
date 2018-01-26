@@ -8,16 +8,17 @@ namespace AbpGenerator
         public static string NomePastaTeste { get; } = @"Teste";
         public static string NomeTeste { get; } = @"AppServiceTests";
 
-        public static string Teste(string nameSpace, string nome, string nomePlural, IEnumerable<CampoEntidade> listaDeCampos)
+        public static string Teste(string nameSpace, string nome, string nomePlural, IEnumerable<CampoEntidade> listaDeCampos, string nomeSolucao, bool isCore)
         {
+            var testBase = !isCore ? "Solution" : nomeSolucao;
+
             var namespaceDtos = nameSpace.Replace(".Tests", "");
             namespaceDtos = namespaceDtos.Replace(NomePastaTeste, "Dtos");
 
 
-
             var campoEntidades = listaDeCampos as CampoEntidade[] ?? listaDeCampos.ToArray();
             var service =
-@"using System.Data.Entity;
+(!isCore ? @"using System.Data.Entity; " : "using Microsoft.EntityFrameworkCore; ") + @"
 using System.Linq.Dynamic.Core;
 using System.Threading.Tasks;
 using Abp.AutoMapper;
@@ -32,10 +33,11 @@ using " + namespaceDtos + @".Obter;
 using " + namespaceDtos.Replace(".Dtos", "") + @".Entidade;
 using " + nameSpace.Replace(NomePastaTeste, "Builder") + @";
 using " + nameSpace.Replace(NomePastaTeste, "Utils") + @";
+using " + nomeSolucao + @".Tests;
 
 namespace " + nameSpace + @"
 {
-    public class " + nome + @"AppServiceTests : SolutionTestBase
+    public class " + nome + @"AppServiceTests : " + testBase + @"TestBase
     {
         private readonly I" + nome + @"AppService _servico" + nome + @";
 

@@ -45,14 +45,17 @@ namespace AbpGenerator
             return Utils.DeclaracaoCampo.Replace("insereAqui", nomeTipo);
         }
 
-        public static string CriarInput(string nameSpace, IEnumerable<CampoEntidade> listaDeCampos)
+        public static string CriarInput(string nameSpace, IEnumerable<CampoEntidade> listaDeCampos, string nome)
         {
             var dtoBase =
 @"using System;
+using Abp.AutoMapper;
 using Abp.Runtime.Validation;
+using " + nameSpace.Replace("Dtos.Criar", "Entidade") + @";
 
 namespace " + nameSpace + @"
 {
+    [AutoMapTo(typeof(" + nome + @"))]
     public class CriarInput : ICustomValidate
     {" +
                   MontaCamposDto(listaDeCampos).TrimEnd() + @"
@@ -65,15 +68,18 @@ namespace " + nameSpace + @"
             return dtoBase;
         }
 
-        public static string AtualizarInput(string nameSpace, IEnumerable<CampoEntidade> listaDeCampos, string tipoChave)
+        public static string AtualizarInput(string nameSpace, IEnumerable<CampoEntidade> listaDeCampos, string tipoChave, string nome)
         {
             var dtoBase =
 @"using System;
+using Abp.AutoMapper;
 using Abp.Runtime.Validation;
 using Abp.Application.Services.Dto;
+using " + nameSpace.Replace("Dtos.Atualizar", "Entidade") + @";
 
 namespace " + nameSpace + @"
 {
+    [AutoMapTo(typeof(" + nome + @"))]
     public class AtualizarInput : EntityDto<" + tipoChave + @">,ICustomValidate
     {" +
                   MontaCamposDto(listaDeCampos).TrimEnd() + @"
@@ -86,14 +92,18 @@ namespace " + nameSpace + @"
         }
 
         public static string AtualizarOutput(string nameSpace, IEnumerable<CampoEntidade> listaDeCampos,
-            string tipoChave)
+            string tipoChave, string nome)
         {
             var dtoBase =
 @"using System;
+using Abp.AutoMapper;
+using Abp.Runtime.Validation;
 using Abp.Application.Services.Dto;
+using " + nameSpace.Replace("Dtos.Atualizar", "Entidade") + @";
 
 namespace " + nameSpace + @"
 {
+    [AutoMapTo(typeof(" + nome + @"))]
     public class AtualizarOutput : EntityDto<" + tipoChave + @">
     {" +
                   MontaCamposDto(listaDeCampos).TrimEnd() + @"
@@ -107,10 +117,14 @@ namespace " + nameSpace + @"
         {
             var dtoBase =
 @"using System;
+using Abp.AutoMapper;
+using Abp.Runtime.Validation;
 using Abp.Application.Services.Dto;
+using " + nameSpace.Replace("Dtos.Entidade", "Entidade") + @";
 
 namespace " + nameSpace + @"
 {
+    [AutoMapTo(typeof(" + nome + @"))]
     public class ItemOutput : EntityDto<" + tipoChave + @">
     {" +
                   MontaCamposDto(listaDeCampos).TrimEnd() + @"
@@ -165,11 +179,18 @@ namespace " + nameSpace + @"
             return dtoBase;
         }
 
-        public static string ObterPorIdInput(string nameSpace, string tipoChave)
+        public static string ObterPorIdInput(string nameSpace, string tipoChave, string nome)
         {
             var dtoBase =
-@"namespace " + nameSpace + @"
+@"using System;
+using Abp.AutoMapper;
+using Abp.Runtime.Validation;
+using Abp.Application.Services.Dto;
+using " + nameSpace.Replace("Dtos.Obter", "Entidade") + @";
+
+namespace " + nameSpace + @"
 {
+    [AutoMapTo(typeof(" + nome + @"))]
     public class ObterPorIdInput
     {
         public " + tipoChave + @" Id { get; set; }
@@ -208,10 +229,14 @@ namespace " + nameSpace + @"
         {
             var dtoBase =
 @"using System;
+using Abp.AutoMapper;
+using Abp.Runtime.Validation;
 using Abp.Application.Services.Dto;
+using " + nameSpace.Replace(".Dtos", "") + @";
 
 namespace " + nameSpace + @"
 {
+    [AutoMapTo(typeof(" + nome + @"))]
     public class " + nome + @"Dto : EntityDto<" + tipoChave + @">
     {" +
                   MontaCamposDto(listaDeCampos).TrimEnd() + @"
