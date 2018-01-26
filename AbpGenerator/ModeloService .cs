@@ -34,10 +34,11 @@ namespace " + nameSpace + @"
             return iService;
         }
 
-        public static string Service(string nameSpace, string nomeEntidade, string nomePlural, string tenant, string nomeAplicacao)
+        public static string Service(string nameSpace, string nomeEntidade, string nomePlural, string tenant, string nomeAplicacao, string nomeSolucao, bool isCore)
         {
-            var stringTenant = "";
 
+            var stringTenant = "";
+            var serviceBase = !isCore ? nomeAplicacao : nomeSolucao;
             var namespaceEntidade = nameSpace.Replace("." + nomeAplicacao, "") + ";";
             namespaceEntidade = nameSpace.Replace(NomePastaService, "Entidade") + ";";
 
@@ -61,7 +62,7 @@ using " + nameSpace.Replace(NomePastaService, "") + @"Manager;
 
 namespace " + nameSpace + @"
 {
-    public class " + nomeEntidade + NomeService + @" : " + nomeAplicacao + "AppServiceBase, I" + nomeEntidade + NomeService +
+    public class " + nomeEntidade + NomeService + @" : " + serviceBase + "AppServiceBase, I" + nomeEntidade + NomeService +
                   @"
     {
         private readonly I" + nomeEntidade + "Manager _" + nomeEntidade.ToLower() + @"Manager;
